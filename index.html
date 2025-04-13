@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -164,15 +165,14 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
         import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-        // --- Firebase Configuration ---
         const firebaseConfig = {
-            apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE", // Replace with your actual API key
-            authDomain: "gjsbooking.firebaseapp.com", // Replace
-            projectId: "gjsbooking", // Replace
-            storageBucket: "gjsbooking.firebasestorage.app", // Replace
-            messagingSenderId: "586636677275", // Replace
-            appId: "1:586636677275:web:1a2385842e887db93bf63e", // Replace
-            measurementId: "G-9XR9FMSE44" // Replace
+            apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE",
+            authDomain: "gjsbooking.firebaseapp.com",
+            projectId: "gjsbooking",
+            storageBucket: "gjsbooking.firebasestorage.app",
+            messagingSenderId: "586636677275",
+            appId: "1:586636677275:web:1a2385842e887db93bf63e",
+            measurementId: "G-9XR9FMSE44"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -223,12 +223,7 @@
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                console.log("User registered:", user); // Log the user object
-
-                const docRef = doc(collection(db, "users"), user.uid);
-                console.log("Attempting to write user data to Firestore...");
-
-                await setDoc(docRef, {
+                await setDoc(doc(collection(db, "users"), user.uid), {
                     email: email,
                     username: username,
                     firstname: firstname,
@@ -238,15 +233,10 @@
                     createdAt: new Date()
                 });
 
-                console.log("User data written to Firestore"); // Log successful Firestore write
-
                 registerMessage.textContent = "Registration successful!";
                 registerMessage.style.color = "green";
-
             } catch (error) {
-                console.error("Registration error:", error); // Log the entire error object
-                console.error("Firebase error code:", error.code); // Log error code
-                console.error("Firebase error message:", error.message); // Log error message
+                console.error("Registration error:", error);
                 registerMessage.textContent = "Registration failed: " + error.message;
                 registerMessage.style.color = "red";
             } finally {
