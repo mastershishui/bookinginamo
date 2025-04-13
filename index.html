@@ -160,210 +160,209 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+    import { getFirestore, collection, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-        // --- Firebase Configuration ---
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY", // Replace with your actual API key
-            authDomain: "gjsbooking.firebaseapp.com",
-            projectId: "gjsbooking",
-            storageBucket: "gjsbooking.firebasestorage.app",
-            messagingSenderId: "586636677275",
-            appId: "1:586636677275:web:1a2385842e887db93bf63e",
-            measurementId: "G-9XR9FMSE44"
-        };
+    // --- Firebase Configuration ---
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY", // Replace with your actual API key
+        authDomain: "gjsbooking.firebaseapp.com",
+        projectId: "gjsbooking",
+        storageBucket: "gjsbooking.firebasestorage.app",
+        messagingSenderId: "586636677275",
+        appId: "1:586636677275:web:1a2385842e887db93bf63e",
+        measurementId: "G-9XR9FMSE44"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-        // --- Firebase Registration ---
-        const registrationForm = document.getElementById('registrationForm');
-        const emailInput = document.getElementById('reg-email');
-        const passwordInput = document.getElementById('reg-password');
-        const usernameInput = document.getElementById('reg-username');
-        const firstnameInput = document.getElementById('reg-firstname');
-        const lastnameInput = document.getElementById('reg-lastname');
-        const contactInput = document.getElementById('reg-contact');
-        const genderInputs = document.getElementsByName('gender');
-        const registerButton = document.querySelector('#registrationForm button[type="submit"]');
+    // --- Firebase Registration ---
+    const registrationForm = document.getElementById('registrationForm');
+    const emailInput = document.getElementById('reg-email');
+    const passwordInput = document.getElementById('reg-password');
+    const usernameInput = document.getElementById('reg-username');
+    const firstnameInput = document.getElementById('reg-firstname');
+    const lastnameInput = document.getElementById('reg-lastname');
+    const contactInput = document.getElementById('reg-contact');
+    const genderInputs = document.getElementsByName('gender');
+    const registerButton = document.querySelector('#registrationForm button[type="submit"]');
 
-        const registerMessage = document.createElement('p');
-        registerMessage.classList.add('registration-message');
-        registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
-        if (registrationForm) {
-            registrationForm.appendChild(registerMessage);
-        }
+    const registerMessage = document.createElement('p');
+    registerMessage.classList.add('registration-message');
+    registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
+    if (registrationForm) {
+        registrationForm.appendChild(registerMessage);
+    }
 
-        if (registrationForm) {
-            registrationForm.addEventListener('submit', (event) => {
-                event.preventDefault();
+    if (registrationForm) {
+        registrationForm.addEventListener('submit', (event) => {
+            event.preventDefault();
 
-                registerButton.disabled = true;
-                registerMessage.textContent = "Registering...";
+            registerButton.disabled = true;
+            registerMessage.textContent = "Registering...";
 
-                const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
+            const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
 
-                registerUser(
-                    emailInput.value,
-                    passwordInput.value,
-                    usernameInput.value,
-                    firstnameInput.value,
-                    lastnameInput.value,
-                    contactInput.value,
-                    selectedGender
-                );
+            registerUser(
+                emailInput.value,
+                passwordInput.value,
+                usernameInput.value,
+                firstnameInput.value,
+                lastnameInput.value,
+                contactInput.value,
+                selectedGender
+            );
+        });
+    }
+
+    async function registerUser(email, password, username, firstname, lastname, contact, gender) {
+        try {
+            // --- Firebase Authentication ---
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // --- Firestore ---
+            const userDocRef = doc(collection(db, "users"), user.uid);
+            await setDoc(userDocRef, {
+                email: email,
+                username: username,
+                firstname: firstname,
+                lastname: lastname,
+                contact: contact,
+                gender: gender,
+                createdAt: new Date()
             });
-        }
 
-        async function registerUser(email, password, username, firstname, lastname, contact, gender) {
-            try {
-                // --- Firebase Authentication ---
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
+            registerMessage.textContent = "Registration successful!";
+            registerMessage.style.color = "green";
 
-                // --- Firestore ---
-                const userDocRef = doc(collection(db, "users"), user.uid);
-                await setDoc(userDocRef, {
-                    email: email,
-                    username: username,
-                    firstname: firstname,
-                    lastname: lastname,
-                    contact: contact,
-                    gender: gender,
-                    createdAt: new Date()
-                });
+            // --- Optional: Retrieve and use the data ---
+            // If you want to do something with the data *immediately* after registration,
+            // you can call a function here to fetch it.
+            // For example:
+            // displayUserData(user.uid);
 
-                registerMessage.textContent = "Registration successful!";
-                registerMessage.style.color = "green";
-
-                // --- Optional: Retrieve and use the data ---
-                // If you want to do something with the data *immediately* after registration,
-                // you can call a function here to fetch it.
-                // For example:
-                // displayUserData(user.uid);
-
-            } catch (error) {
-                console.error("Registration error:", error);
-                let errorMessage = "Registration failed. Please try again.";
-                if (error.code === 'auth/email-already-in-use') {
-                    errorMessage = "This email is already in use.";
-                } else if (error.code === 'auth/invalid-email') {
-                    errorMessage = "Invalid email address.";
-                } else if (error.code === 'auth/weak-password') {
-                    errorMessage = "Password should be at least 6 characters.";
-                }
-                registerMessage.textContent = errorMessage;
-                registerMessage.style.color = "red";
-
-            } finally {
-                registerButton.disabled = false;
+        } catch (error) {
+            console.error("Registration error:", error);
+            let errorMessage = "Registration failed. Please try again.";
+            if (error.code === 'auth/email-already-in-use') {
+                errorMessage = "This email is already in use.";
+            } else if (error.code === 'auth/invalid-email') {
+                errorMessage = "Invalid email address.";
+            } else if (error.code === 'auth/weak-password') {
+                errorMessage = "Password should be at least 6 characters.";
             }
+            registerMessage.textContent = errorMessage;
+            registerMessage.style.color = "red";
+
+        } finally {
+            registerButton.disabled = false;
         }
+    }
 
-        // --- Optional: Function to retrieve and display user data ---
-        async function displayUserData(userId) {
-            try {
-                const userDocRef = doc(collection(db, "users"), userId);
-                const docSnap = await getDoc(userDocRef);
+    // --- Optional: Function to retrieve and display user data ---
+    async function displayUserData(userId) {
+        try {
+            const userDocRef = doc(collection(db, "users"), userId);
+            const docSnap = await getDoc(userDocRef);
 
-                if (docSnap.exists()) {
-                    const userData = docSnap.data();
-                    console.log("User Data:", userData);
-                    //  Here you would update your page to display the user data.
-                    //  For example, if you have elements with specific IDs:
-                    //  document.getElementById('display-username').textContent = userData.username;
-                    //  document.getElementById('display-email').textContent = userData.email;
-                } else {
-                    console.log("No such document!");
-                }
-            } catch (error) {
-                console.error("Error fetching user data:", error);
+            if (docSnap.exists()) {
+                const userData = docSnap.data();
+                console.log("User Data:", userData);
+                //  Here you would update your page to display the user data.
+                //  For example, if you have elements with specific IDs:
+                //  document.getElementById('display-username').textContent = userData.username;
+                //  document.getElementById('display-email').textContent = userData.email;
+            } else {
+                console.log("No such document!");
             }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
         }
+    }
 
-        // --- Firebase Login ---
-        const loginForm = document.getElementById('loginForm');
-        const loginEmailInput = document="login-email-user"
-        const loginPasswordInput = document.getElementById('login-password');
+    // --- Firebase Login ---
+    const loginForm = document.getElementById('loginForm');
+    const loginEmailInput = document.getElementById('login-email-user'); // Ensure unique ID
+    const loginPasswordInput = document.getElementById('login-password');
 
-        if (loginForm) {
-            loginForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                loginUser(loginEmailInput.value, loginPasswordInput.value);
-            });
+    if (loginForm) {
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            loginUser(loginEmailInput.value, loginPasswordInput.value);
+        });
+    }
+
+    async function loginUser(email, password) {
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            alert("Login successful!");
+            window.location.href = "dashboard.html";
+        } catch (error) {
+            console.error("Login error:", error.code, error.message);
+            alert("Login failed: " + error.message);
         }
+    }
 
-        async function loginUser(email, password) {
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                alert("Login successful!");
-                window.location.href = "dashboard.html";
-            } catch (error) {
-                console.error("Login error:", error.code, error.message);
-                alert("Login failed: " + error.message);
+    // --- Modal Logic ---
+    const loginLink = document.getElementById('loginLink');
+    const registerLink = document.getElementById('registerLink');
+    const loginModal = document.getElementById('loginModal');
+    const registerModal = document.getElementById('registerModal');
+    const loginCloseButton = document.querySelector('.login-close-button');
+    const registerCloseButton = document.querySelector('.register-close-button');
+    const switchToRegister = document.getElementById('switchToRegister');
+    const switchToLogin = document.getElementById('switchToLogin');
+
+    if (loginLink && loginModal && registerLink && registerModal && loginCloseButton && registerCloseButton && switchToRegister && switchToLogin) {
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'block';
+            registerModal.style.display = 'none';
+        });
+
+        registerLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerModal.style.display = 'block';
+            loginModal.style.display = 'none';
+        });
+
+        loginCloseButton.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+
+        registerCloseButton.addEventListener('click', () => {
+            registerModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
             }
-        }
-
-        // --- Modal Logic ---
-        const loginLink = document.getElementById('loginLink');
-        const registerLink = document.getElementById('registerLink');
-        const loginModal = document.getElementById('loginModal');
-        const registerModal = document.getElementById('registerModal');
-        const loginCloseButton = document.querySelector('.login-close-button');
-        const registerCloseButton = document.querySelector('.register-close-button');
-        const switchToRegister = document.getElementById('switchToRegister');
-        const switchToLogin = document.getElementById('switchToLogin');
-
-        if (loginLink && loginModal && registerLink && registerModal && loginCloseButton && registerCloseButton && switchToRegister && switchToLogin) {
-            loginLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                loginModal.style.display = 'block';
+            if (event.target === registerModal) {
                 registerModal.style.display = 'none';
-            });
+            }
+        });
 
-            registerLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                registerModal.style.display = 'block';
-                loginModal.style.display = 'none';
-            });
+        switchToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerModal.style.display = 'block';
+            loginModal.style.display = 'none';
+        });
 
-            loginCloseButton.addEventListener('click', () => {
-                loginModal.style.display = 'none';
-            });
-
-            registerCloseButton.addEventListener('click', () => {
-                registerModal.style.display = 'none';
-            });
-
-            window.addEventListener('click', (event) => {
-                if (event.target === loginModal) {
-                    loginModal.style.display = 'none';
-                }
-                if (event.target === registerModal) {
-                    registerModal.style.display = 'none';
-                }
-            });
-
-            switchToRegister.addEventListener('click', (e) => {
-                e.preventDefault();
-                registerModal.style.display = 'block';
-                loginModal.style.display = 'none';
-            });
-
-            switchToLogin.addEventListener('click', (e) => {
-                e.preventDefault();
-                loginModal.style.display = 'block';
-                registerModal.style.display = 'none';
-            });
-        } else {
-            console.error("One or more modal elements not found.");
-        }
-    </script>
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'block';
+            registerModal.style.display = 'none';
+        });
+    } else {
+        console.error("One or more modal elements not found.");
+    }
 </body>
 
 </html>
