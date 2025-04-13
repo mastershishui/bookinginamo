@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBxcGbtIQFIgaMtns+p/RHOvBBQ=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBxcGbtIQFIgaMtns+p/RHOvBBQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script type="module">
         // Import the functions you need from the SDKs you need
@@ -117,572 +117,256 @@
                 loginModal.style.display = "none";
             }
         }
+
+        // --- Firebase Registration ---
+
+        // Get the registration form and its elements
+        const registrationForm = document.getElementById('registrationForm');
+        const emailInput = document.getElementById('reg-email');
+        const passwordInput = document.getElementById('reg-password');
+        const usernameInput = document.getElementById('reg-username');
+        const registerButton = document.querySelector('#registrationForm button[type="submit"]');
+
+        // Create a paragraph element for the message
+        const registerMessage = document.createElement('p');
+        registerMessage.classList.add('registration-message');
+        registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
+
+        // Find the button's parent (the form) and append the message there
+        if (registrationForm) {
+            registrationForm.appendChild(registerMessage);
+            console.log("Registration form found:", registrationForm);
+            console.log("Registration message element appended:", registerMessage);
+        } else {
+            console.error("Registration form not found!");
+        }
+
+
+        // Prevent default form submission and call registerUser
+        if (registrationForm) {
+            registrationForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                registerButton.disabled = true;
+                registerMessage.textContent = ""; // Clear any previous message
+                registerUser(emailInput.value, passwordInput.value, usernameInput.value);
+            });
+        } else {
+            console.error("Registration form event listener not attached.");
+        }
+
+
+        // Implement the registerUser function
+        async function registerUser(email, password, username) {
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                console.log("User registered:", user);
+
+                // Optionally, save additional user data to Firestore
+                await setDoc(doc(collection(db, "users"), user.uid), {
+                    email: email,
+                    username: username,
+                    // Add other user data here (e.g., firstname, lastname, etc.)
+                });
+
+                // Display success message
+                registerMessage.textContent = "Registration successful!";
+                registerMessage.style.color = "green";
+
+            } catch (error) {
+                console.error("Registration error:", error.code, error.message);
+                registerMessage.textContent = "Registration failed: " + error.message;
+                registerMessage.style.color = "red";
+            } finally {
+                registerButton.disabled = false;
+            }
+        }
+
+        // --- End Firebase Registration ---
+
+        // --- Firebase Login ---
+
+        // Get the login form and its elements
+        const loginForm = document.getElementById('loginForm');
+        const loginEmailInput = document.getElementById('login-email-user');
+        const loginPasswordInput = document.getElementById('login-password');
+
+        // Prevent default login form submission and call loginUser
+        if (loginForm) {
+            loginForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent page reload
+                loginUser(loginEmailInput.value, loginPasswordInput.value); // Call loginUser function
+            });
+        } else {
+            console.error("Login form not found.");
+        }
+
+
+        // Implement the loginUser function
+        async function loginUser(email, password) {
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                console.log("User logged in:", user);
+
+                alert("Login successful!");
+                // Redirect or update UI as needed (e.g., go to a dashboard)
+            } catch (error) {
+                console.error("Login error:", error.code, error.message);
+                alert("Login failed: " + error.message);
+                // Handle errors (e.g., wrong email/password)
+            }
+        }
+
+        // --- End Firebase Login ---
     </script>
 </head>
 
 <body>
-<header>
-    <div class="logo">
-        <a href="#">
-            <img src="gjslogo.jpg" alt="GJ'S Beauty Lounge Logo">
-        </a>
-    </div>
-    <div class="header-text">
-        <h1>Nails, Facials, Brows, Lashes, Waxing, Gluta Spa <span>Clinic Hours: 9AM - 8PM</span></h1>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="reviews.html">Reviews</a>
-            </li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="#" id="loginLink">Login</a></li>
-            <li><a href="#" id="registerLink">Register</a></li>
-        </ul>
-    </nav>
-</header>
+    <header>
+        <div class="logo">
+            <a href="#">
+                <img src="gjslogo.jpg" alt="GJ'S Beauty Lounge Logo">
+            </a>
+        </div>
+        <div class="header-text">
+            <h1>Nails, Facials, Brows, Lashes, Waxing, Gluta Spa <span>Clinic Hours: 9AM - 8PM</span></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="reviews.html">Reviews</a>
+                </li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="#" id="loginLink">Login</a></li>
+                <li><a href="#" id="registerLink">Register</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<main>
-    <section class="hero">
-        <div class="hero-left">
-            <img src="1st hp.jpg" alt="Left Image" class="boxed-image">
-        </div>
+    <main>
+        <section class="hero">
+            <div class="hero-left">
+                <img src="1st hp.jpg" alt="Left Image" class="boxed-image">
+            </div>
 
-        <div class="hero-center">
-            <img src="book.png" alt="Center Image" class="circular-image">
-        </div>
-        <div class="hero-right">
-            <img src="2ndhp.jpg" alt="Right Image" class="boxed-image">
-        </div>
-    </section>
-</main>
+            <div class="hero-center">
+                <img src="book.png" alt="Center Image" class="circular-image">
+            </div>
+            <div class="hero-right">
+                <img src="2ndhp.jpg" alt="Right Image" class="boxed-image">
+            </div>
+        </section>
+    </main>
 
-<footer>
-    <div class="footer-section">
-        <h3>More about Company</h3>
-        <p>GJ's Beauty Lounge is dedicated to enhancing beauty and confidence through professional services, including nails, brows, lashes, waxing, and gluta spa treatments. With a commitment to quality and customer satisfaction, we create a relaxing space where clients can enjoy top-tier beauty care.</p>
-    </div>
-    <div class="footer-section">
-        <h3>Keep Connected</h3>
-        <div class="social-links">
-            <a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-            <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+    <footer>
+        <div class="footer-section">
+            <h3>More about Company</h3>
+            <p>GJ's Beauty Lounge is dedicated to enhancing beauty and confidence through professional services, including
+                nails, brows, lashes, waxing, and gluta spa treatments. With a commitment to quality and customer
+                satisfaction, we create a relaxing space where clients can enjoy top-tier beauty care.</p>
         </div>
-    </div>
-    <div class="footer-section">
-        <h3>Contact Information</h3>
-        <p><i class="fas fa-map-marker-alt"></i> Lower Ground Floor, Nova Plaza Mall, Quirino Highway, Novaliches Proper, Quezon City</p>
-    <p><i class="fas fa-phone"></i> 0962-847-2488</p>
-    <p><i class="fas fa-envelope"></i> <a href="mailto:gjsbeautylounge@gmail.com">gjsbeautylounge@gmail.com</a></p>
-</div>
-</footer>
+        <div class="footer-section">
+            <h3>Keep Connected</h3>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Information</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Lower Ground Floor, Nova Plaza Mall, Quirino Highway, Novaliches
+                Proper, Quezon City</p>
+            <p><i class="fas fa-phone"></i> 0962-847-2488</p>
+            <p><i class="fas fa-envelope"></i> <a href="mailto:gjsbeautylounge@gmail.com">gjsbeautylounge@gmail.com</a></p>
+        </div>
+    </footer>
 
-<div id="registerModal" class="modal">
-    <div class="modal-content register-modal-content">
-        <span class="close-button register-close-button">&times;</span>
-        <div class="modal-form-header">
-            <img src="gjslogo.jpg" alt="GJ'S Logo" class="modal-form-logo">
-            <h2 class="modal-form-title">Registration Form</h2>
-        </div>
-        <form id="registrationForm" class="modal-form-body">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="reg-lastname">Lastname:</label>
-                    <input type="text" id="reg-lastname" name="lastname" placeholder="Lastname" required>
+    <div id="registerModal" class="modal">
+        <div class="modal-content register-modal-content">
+            <span class="close-button register-close-button">&times;</span>
+            <div class="modal-form-header">
+                <img src="gjslogo.jpg" alt="GJ'S Logo" class="modal-form-logo">
+                <h2 class="modal-form-title">Registration Form</h2>
+            </div>
+            <form id="registrationForm" class="modal-form-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-lastname">Lastname:</label>
+                        <input type="text" id="reg-lastname" name="lastname" placeholder="Lastname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-firstname">Firstname:</label>
+                        <input type="text" id="reg-firstname" name="firstname" placeholder="Firstname" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="reg-firstname">Firstname:</label>
-                    <input type="text" id="reg-firstname" name="firstname" placeholder="Firstname" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-email">Email:</label>
+                        <input type="email" id="reg-email" name="email" placeholder="example@gmail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-contact">Contact No.:</label>
+                        <input type="tel" id="reg-contact" name="contact" placeholder="+63 123 123 123" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="reg-email">Email:</label>
-                    <input type="email" id="reg-email" name="email" placeholder="example@gmail.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-contact">Contact No.:</label>
-                    <input type="tel" id="reg-contact" name="contact" placeholder="+63 123 123 123" required>
-                </div>
-            </div>
-            <div class="form-group gender-group">
-                <label>Gender:</label>
-                <div class="radio-options">
-                    <input type="radio" id="male" name="gender" value="male" required>
-                    <label for="male">Male</label>
-                    <input type="radio" id="female" name="gender" value="female">
-                    <label for="female">Female</label>
-                    <input type="radio" id="prefer-not" name="gender" value="prefer_not_say">
-                    <label for="prefer-not">Prefer not to say</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="reg-username">Username:</label>
-                <input type="text" id="reg-username" name="username" placeholder="Username" required>
-            </div>
-            <div class="form-group">
-                <label for="reg-password">Password:</label>
-                <input type="password" id="reg-password" name="password" placeholder="Password" required>
-            </div>
-            <div class="form-group">
-                <label for="reg-confirm-password">Confirm Password:</label>
-                <input type="password" id="reg-confirm-password" name="confirm_password" placeholder="Password" required>
-            </div>
-            <button type="submit">Register Now!</button>
-            <p class="login-link">
-                Have already an account? <a href="#" id="switchToLogin">Login Here</a>
-            </p>
-        </form>
-    </div>
-</div>
-
-<div id="loginModal" class="modal">
-    <div class="modal-content login-modal-content">
-        <span class="close-button login-close-button">&times;</span>
-        <div class="modal-header login-modal-header">
-            <img src="gjslogo.jpg" alt="GJ'S Logo" class="modal-form-logo">
-            <h2 class="modal-form-title">Login Form</h2>
-        </div>
-        <div class="modal-form-body">
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="login-email-user">Email/Username:</label>
-                    <input type="text" id="login-email-user" name="email_username" required>
+                <div class="form-group gender-group">
+                    <label>Gender:</label>
+                    <div class="radio-options">
+                        <input type="radio" id="male" name="gender" value="male" required>
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Female</label>
+                        <input type="radio" id="prefer-not" name="gender" value="prefer_not_say">
+                        <label for="prefer-not">Prefer not to say</label>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="login-password">Password:</label>
-                    <input type="password" id="login-password" name="password" required>
+                    <label for="reg-username">Username:</label>
+                    <input type="text" id="reg-username" name="username" placeholder="Username" required>
                 </div>
-                <button type="submit">Login</button>
-                <p class="register-link">
-                    Don't have an Account? <a href="#" id="switchToRegister">Register here</a>
+                <div class="form-group">
+                    <label for="reg-password">Password:</label>
+                    <input type="password" id="reg-password" name="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm-password">Confirm Password:</label>
+                    <input type="password" id="reg-confirm-password" name="confirm_password" placeholder="Password"
+                        required>
+                </div>
+                <button type="submit">Register Now!</button>
+                <p class="login-link">
+                    Have already an account? <a href="#" id="switchToLogin">Login Here</a>
                 </p>
             </form>
         </div>
     </div>
-</div>
 
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-    import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE",
-        authDomain: "gjsbooking.firebaseapp.com",
-        projectId: "gjsbooking",
-        storageBucket: "gjsbooking.firebasestorage.app",
-        messagingSenderId: "586636677275",
-        appId: "1:586636677275:web:1a2385842e887db93bf63e",
-        measurementId: "G-9XR9FMSE44"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth(app); // Initialize Firebase Authentication
-    const db = getFirestore(app); // Initialize Firestore
-
-    // Get Register Modal elements
-    var registerModal = document.getElementById("registerModal");
-    var registerLink = document.getElementById("registerLink");
-    var registerCloseButton = registerModal ? registerModal.querySelector(".register-close-button") : null;
-    var switchToLoginLink = document.getElementById("switchToLogin");
-
-    // Get Login Modal elements
-    var loginModal = document.getElementById("loginModal");
-    var loginLink = document.getElementById("loginLink");
-    var loginCloseButton = loginModal ? loginModal.querySelector(".login-close-button") : null;
-    var switchToRegisterLink = document.getElementById("switchToRegister");
-
-    // Function to close all modals
-    function closeAllModals() {
-        if (registerModal) registerModal.style.display = "none";
-        if (loginModal) loginModal.style.display = "none";
-    }
-
-    // --- Event Listeners ---
-
-    // Open Register Modal
-    if (registerLink && registerModal) {
-        registerLink.onclick = function (event) {
-            event.preventDefault();
-            closeAllModals();
-            registerModal.style.display = "block";
-        }
-    }
-
-    // Open Login Modal
-    if (loginLink && loginModal) {
-        loginLink.onclick = function (event) {
-            event.preventDefault();
-            closeAllModals();
-            loginModal.style.display = "block";
-        }
-    }
-
-    // Close Register Modal via (X) button
-    if (registerCloseButton && registerModal) {
-        registerCloseButton.onclick = function () {
-            registerModal.style.display = "none";
-        }
-    }
-
-    // Close Login Modal via (X) button
-    if (loginCloseButton && loginModal) {
-        loginCloseButton.onclick = function () {
-            loginModal.style.display = "none";
-        }
-    }
-
-    // Switch from Register Modal to Login Modal
-    if (switchToLoginLink && registerModal && loginModal) {
-        switchToLoginLink.onclick = function (event) {
-            event.preventDefault();
-            registerModal.style.display = "none";
-            loginModal.style.display = "block";
-        }
-    }
-
-    // Switch from Login Modal to Register Modal
-    if (switchToRegisterLink && registerModal && loginModal) {
-        switchToRegisterLink.onclick = function (event) {
-            event.preventDefault();
-            loginModal.style.display = "none";
-            registerModal.style.display = "block";
-        }
-    }
-
-    // Close modal if background is clicked
-    window.onclick = function (event) {
-        if (registerModal && event.target == registerModal) {
-            registerModal.style.display = "none";
-        }
-        if (loginModal && event.target == loginModal) {
-            loginModal.style.display = "none";
-        }
-    }
-
-    // --- Firebase Registration ---
-
-    // Get the registration form and its elements
-    const registrationForm = document.getElementById('registrationForm');
-    const emailInput = document.getElementById('reg-email');
-    const passwordInput = document.getElementById('reg-password');
-    const usernameInput = document.getElementById('reg-username');
-    const registerButton = document.querySelector('#registrationForm button[type="submit"]');
-
-    // Create a paragraph element for the message
-    const registerMessage = document.createElement('p');
-    registerMessage.classList.add('registration-message');
-    registrationForm.appendChild(registerMessage);
-
-    // Prevent default form submission and call registerUser
-    registrationForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        registerButton.disabled = true;
-        registerMessage.textContent = ""; // Clear any previous message
-        registerUser(emailInput.value, passwordInput.value, usernameInput.value);
-    });
-
-    // Implement the registerUser function
-    async function registerUser(email, password, username) {
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log("User registered:", user);
-
-            // Optionally, save additional user data to Firestore
-            await setDoc(doc(collection(db, "users"), user.uid), {
-                email: email,
-                username: username,
-                // Add other user data here (e.g., firstname, lastname, etc.)
-            });
-
-            // Display success message
-            registerMessage.textContent = "Registration successful!";
-            registerMessage.style.color = "green";
-
-        } catch (error) {
-            console.error("Registration error:", error.code, error.message);
-            registerMessage.textContent = "Registration failed: " + error.message;
-            registerMessage.style.color = "red";
-        } finally {
-            registerButton.disabled = false;
-        }
-    }
-
-    // --- End Firebase Registration ---
-    // --- End Firebase Registration ---
-
-    // --- Firebase Login ---
-
-    // Get the login form and its elements
-    const loginForm = document.getElementById('loginForm');
-    const loginEmailInput = document.getElementById('login-email-user');
-    const loginPasswordInput = document.getElementById('login-password');
-
-    // Prevent default login form submission and call loginUser
-    loginForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent page reload
-        loginUser(loginEmailInput.value, loginPasswordInput.value); // Call loginUser function
-    });
-
-    // Implement the loginUser function
-    async function loginUser(email, password) {
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log("User logged in:", user);
-
-            alert("Login successful!");
-            // Redirect or update UI as needed (e.g., go to a dashboard)
-        } catch (error) {
-            console.error("Login error:", error.code, error.message);
-            alert("Login failed: " + error.message);
-            // Handle errors (e.g., wrong email/password)
-        }
-    }
-
-    // --- End Firebase Login ---
-</script>
-<style>
- .registration-message {
-     text-align: center;
-     margin-top: 10px;
-     font-weight: bold;
- }
-</style>
-</head>
-
-<body>
-<header>
- <div class="logo">
-     <a href="#">
-         <img src="gjslogo.jpg" alt="GJ'S Beauty Lounge Logo">
-     </a>
- </div>
- <div class="header-text">
-     <h1>Nails, Facials, Brows, Lashes, Waxing, Gluta Spa <span>Clinic Hours: 9AM - 8PM</span></h1>
- </div>
- <nav>
-     <ul>
-         <li><a href="reviews.html">Reviews</a>
-         </li>
-         <li><a href="faq.html">FAQ</a></li>
-         <li><a href="services.html">Services</a></li>
-         <li><a href="#" id="loginLink">Login</a></li>
-         <li><a href="#" id="registerLink">Register</a></li>
-     </ul>
- </nav>
-</header>
-
-<main>
- <section class="hero">
-     <div class="hero-left">
-         <img src="1st hp.jpg" alt="Left Image" class="boxed-image">
-     </div>
-
-     <div class="hero-center">
-         <img src="book.png" alt="Center Image" class="circular-image">
-     </div>
-     <div class="hero-right">
-         <img src="2ndhp.jpg" alt="Right Image" class="boxed-image">
-     </div>
- </section>
-</main>
-
-<footer>
- <div class="footer-section">
-     <h3>More about Company</h3>
-     <p>GJ's Beauty Lounge is dedicated to enhancing beauty and confidence through professional services, including nails, brows, lashes, waxing, and gluta spa treatments. With a commitment to quality and customer satisfaction, we create a relaxing space where clients can enjoy top-tier beauty care.</p>
- </div>
- <div class="footer-section">
-     <h3>Keep Connected</h3>
-     <div class="social-links">
-         <a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-         <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-     </div>
- </div>
- <div class="footer-section">
-     <h3>Contact Information</h3>
-     <p><i class="fas fa-map-marker-alt"></i> Lower Ground Floor, Nova Plaza Mall, Quirino Highway, Novaliches Proper, Quezon City</p>
- <p><i class="fas fa-phone"></i> 0962-847-2488</p>
- <p><i class="fas fa-envelope"></i> <a href="mailto:gjsbeautylounge@gmail.com">gjsbeautylounge@gmail.com</a></p>
-</div>
-</footer>
-
-<div id="registerModal" class="modal">
- <div class="modal-content register-modal-content">
-     <span class="close-button register-close-button">&times;</span>
-     <div class="modal-form-header">
-         <img src="gjslogo.jpg" alt="GJ'S Logo" class="modal-form-logo">
-         <h2 class="modal-form-title">Registration Form</h2>
-     </div>
-     <form id="registrationForm" class="modal-form-body">
-         <div class="form-row">
-             <div class="form-group">
-                 <label for="reg-lastname">Lastname:</label>
-                 <input type="text" id="reg-lastname" name="lastname" placeholder="Lastname" required>
-             </div>
-             <div class="form-group">
-                 <label for="reg-firstname">Firstname:</label>
-                 <input type="text" id="reg-firstname" name="firstname" placeholder="Firstname" required>
-             </div>
-         </div>
-         <div class="form-row">
-             <div class="form-group">
-                 <label for="reg-email">Email:</label>
-                 <input type="email" id="reg-email" name="email" placeholder="example@gmail.com" required>
-             </div>
-             <div class="form-group">
-                 <label for="reg-contact">Contact No.:</label>
-                 <input type="tel" id="reg-contact" name="contact" placeholder="+63 123 123 123" required>
-             </div>
-         </div>
-         <div class="form-group gender-group">
-             <label>Gender:</label>
-             <div class="radio-options">
-                 <input type="radio" id="male" name="gender" value="male" required>
-                 <label for="male">Male</label>
-                 <input type="radio" id="female" name="gender" value="female">
-                 <label for="female">Female</label>
-                 <input type="radio" id="prefer-not" name="gender" value="prefer_not_say">
-                 <label for="prefer-not">Prefer not to say</label>
-             </div>
-         </div>
-         <div class="form-group">
-             <label for="reg-username">Username:</label>
-             <input type="text" id="reg-username" name="username" placeholder="Username" required>
-         </div>
-         <div class="form-group">
-             <label for="reg-password">Password:</label>
-             <input type="password" id="reg-password" name="password" placeholder="Password" required>
-         </div>
-         <div class="form-group">
-             <label for="reg-confirm-password">Confirm Password:</label>
-             <input type="password" id="reg-confirm-password" name="confirm_password" placeholder="Password" required>
-         </div>
-         <button type="submit">Register Now!</button>
-         <p class="login-link">
-             Have already an account? <a href="#" id="switchToLogin">Login Here</a>
-         </p>
-     </form>
- </div>
-
- <div id="loginModal" class="modal">
-     <div class="modal-content login-modal-content">
-         <span class="close-button login-close-button">&times;</span>
-         <div class="modal-header login-modal-header">
-             <img src="gjslogo.jpg" alt="GJ'S Logo" class="modal-form-logo">
-             <h2 class="modal-form-title">Login Form</h2>
-         </div>
-         <div class="modal-form-body">
-             <form id="loginForm">
-                 <div class="form-group">
-                     <label for="login-email-user">Email/Username:</label>
-                     <input type="text" id="login-email-user" name="email_username" required>
-                 </div>
-                 <div class="form-group">
-                     <label for="login-password">Password:</label>
-                     <input type="password" id="login-password" name="password" required>
-                 </div>
-                 <button type="submit">Login</button>
-                 <p class="register-link">
-                     Don't have an Account? <a href="#" id="switchToRegister">Register here</a>
-                 </p>
-             </form>
-         </div>
-     </div>
- </div>
-
- <script>
-     // Get Register Modal elements
-     var registerModal = document.getElementById("registerModal");
-     var registerLink = document.getElementById("registerLink");
-     var registerCloseButton = registerModal ? registerModal.querySelector(".register-close-button") : null;
-     var switchToLoginLink = document.getElementById("switchToLogin");
-
-     // Get Login Modal elements
-     var loginModal = document.getElementById("loginModal");
-     var loginLink = document.getElementById("loginLink");
-     var loginCloseButton = loginModal ? loginModal.querySelector(".login-close-button") : null;
-     var switchToRegisterLink = document.getElementById("switchToRegister");
-
-     // Function to close all modals
-     function closeAllModals() {
-         if (registerModal) registerModal.style.display = "none";
-         if (loginModal) loginModal.style.display = "none";
-     }
-
-     // --- Event Listeners ---
-
-     // Open Register Modal
-     if (registerLink && registerModal) {
-         registerLink.onclick = function (event) {
-             event.preventDefault();
-             closeAllModals();
-             registerModal.style.display = "block";
-         }
-     }
-
-     // Open Login Modal
-     if (loginLink && loginModal) {
-         loginLink.onclick = function (event) {
-             event.preventDefault();
-             closeAllModals();
-             loginModal.style.display = "block";
-         }
-     }
-
-     // Close Register Modal via (X) button
-     if (registerCloseButton && registerModal) {
-         registerCloseButton.onclick = function () {
-             registerModal.style.display = "none";
-         }
-     }
-
-     // Close Login Modal via (X) button
-     if (loginCloseButton && loginModal) {
-         loginCloseButton.onclick = function () {
-             loginModal.style.display = "none";
-         }
-     }
-
-     // Switch from Register Modal to Login Modal
-     if (switchToLoginLink && registerModal && loginModal) {
-         switchToLoginLink.onclick = function (event) {
-             event.preventDefault();
-             registerModal.style.display = "none";
-             loginModal.style.display = "block";
-         }
-     }
-
-     // Switch from Login Modal to Register Modal
-     if (switchToRegisterLink && registerModal && loginModal) {
-         switchToRegisterLink.onclick = function (event) {
-             event.preventDefault();
-             loginModal.style.display = "none";
-             registerModal.style.display = "block";
-         }
-     }
-
-     // Close modal if background is clicked
-     window.onclick = function (event) {
-         if (registerModal && event.target == registerModal) {
-             registerModal.style.display = "none";
-         }
-         if (loginModal && event.target == loginModal) {
-             loginModal.style.display = "none";
-         }
-     }
- </script>
+    <div id="loginModal" class="modal">
+        <div class="modal-content login-modal-content">
+            <span class="close-button login-close-button">&times;</span>
+            <div class="modal-header login-modal-header">
+                <img src="gjslogo.jpg" alt="GJ'S Logo" class="modal-form-logo">
+                <h2 class="modal-form-title">Login Form</h2>
+            </div>
+            <div class="modal-form-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="login-email-user">Email/Username:</label>
+                        <input type="text" id="login-email-user" name="email_username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password:</label>
+                        <input type="password" id="login-password" name="password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                    <p class="register-link">
+                        Don't have an Account? <a href="#" id="switchToRegister">Register here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
