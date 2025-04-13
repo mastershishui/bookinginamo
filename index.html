@@ -70,30 +70,29 @@
             });
         }
 
-        async function registerUser(email, password, username, firstname, lastname, contact, gender) {
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
+       async function registerUser(email, password, username, firstname, lastname, contact, gender) {
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-                await setDoc(doc(collection(db, "users"), user.uid), {
-                    email: email,
-                    username: username,
-                    firstname: firstname,
-                    lastname: lastname,
-                    contact: contact,
-                    gender: gender,
-                    createdAt: new Date()
-                });
+        await setDoc(doc(collection(db, "users"), user.uid), {
+            email: email,
+            username: username,
+            firstname: firstname,
+            lastname: lastname,
+            contact: contact,
+            gender: gender,
+            createdAt: new Date()
+        });
 
-                registerMessage.textContent = "Registration successful!";
-                registerMessage.style.color = "green";
-            } catch (error) {
-                console.error("Registration error:", error.code, error.message);
-                registerMessage.textContent = "Registration failed: " + error.message;
-                registerMessage.style.color = "red";
-            } finally {
-                registerButton.disabled = false;
-            }
+        alert("Registration successful!"); // Added success message
+    } catch (error) {
+        console.error("Registration error:", error.code, error.message);
+        alert("Registration failed: " + error.message); // Added failure message
+    } finally {
+        registerButton.disabled = false;
+    }
+}
         }
 
         // --- Firebase Login ---
