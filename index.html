@@ -162,37 +162,12 @@
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE",
-            authDomain: "gjsbooking.firebaseapp.com",
-            projectId: "gjsbooking",
-            storageBucket: "gjsbooking.firebasestorage.app",
-            messagingSenderId: "586636677275",
-            appId: "1:586636677275:web:1a2385842e887db93bf63e",
-            measurementId: "G-9XR9FMSE44"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+   <script type="module">
+        // [Previous Firebase imports and config remain the same]
 
         // --- Firebase Registration ---
         const registrationForm = document.getElementById('registrationForm');
-        const emailInput = document.getElementById('reg-email');
-        const passwordInput = document.getElementById('reg-password');
-        const usernameInput = document.getElementById('reg-username');
-        const firstnameInput = document.getElementById('reg-firstname');
-        const lastnameInput = document.getElementById('reg-lastname');
-        const contactInput = document.getElementById('reg-contact');
-        const genderInputs = document.getElementsByName('gender');
-        const registerButton = document.querySelector('#registrationForm button[type="submit"]');
+        // [Previous input declarations remain the same]
 
         // Create message element if it doesn't exist
         let registerMessage = document.querySelector('.registration-message');
@@ -207,13 +182,19 @@
             registrationForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 registerButton.disabled = true;
-                registerMessage.textContent = "Processing registration...";
-                registerMessage.style.cssText = "color: blue; text-align: center; margin: 10px 0; padding: 10px; background-color: rgba(255,255,255,0.7); border-radius: 4px;";
+                
+                // Clear previous messages
+                registerMessage.textContent = "";
+                registerMessage.className = 'registration-message';
 
                 const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
 
                 try {
-                    const userCredential = await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+                    const userCredential = await createUserWithEmailAndPassword(
+                        auth, 
+                        emailInput.value, 
+                        passwordInput.value
+                    );
                     const user = userCredential.user;
 
                     await setDoc(doc(collection(db, "users"), user.uid), {
@@ -226,21 +207,41 @@
                         createdAt: new Date()
                     });
 
-                    registerMessage.textContent = "Registration successful!";
-                    registerMessage.style.cssText = "color: green; text-align: center; margin: 10px 0; padding: 10px; background-color: rgba(46, 125, 50, 0.1); border-radius: 4px;";
+                    // Success message
+                    registerMessage.textContent = "✅ Registration successful! You can now login.";
+                    registerMessage.className = 'registration-message success';
                     
                     // Clear form after successful registration
                     registrationForm.reset();
                     
-                    // Optional: Close modal after 2 seconds
+                    // Optional: Auto-close modal after 3 seconds
                     setTimeout(() => {
-                        document.getElementById('registerModal').style.display = 'none';
-                    }, 2000);
+                        registerModal.style.display = 'none';
+                        // Reset message when modal closes
+                        registerMessage.textContent = "";
+                    }, 3000);
                     
                 } catch (error) {
                     console.error("Registration error:", error);
-                    registerMessage.textContent = "Registration failed: " + error.message;
-                    registerMessage.style.cssText = "color: red; text-align: center; margin: 10px 0; padding: 10px; background-color: rgba(198, 40, 40, 0.1); border-radius: 4px;";
+                    
+                    // Friendly error messages for common cases
+                    let errorMessage = "Registration failed. ";
+                    switch(error.code) {
+                        case 'auth/email-already-in-use':
+                            errorMessage += "This email is already registered.";
+                            break;
+                        case 'auth/weak-password':
+                            errorMessage += "Password should be at least 6 characters.";
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage += "Please enter a valid email address.";
+                            break;
+                        default:
+                            errorMessage += "Please try again later.";
+                    }
+                    
+                    registerMessage.textContent = "❌ " + errorMessage;
+                    registerMessage.className = 'registration-message error';
                 } finally {
                     registerButton.disabled = false;
                 }
