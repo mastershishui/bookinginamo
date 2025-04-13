@@ -287,7 +287,7 @@
 
     // --- Firebase Login ---
     const loginForm = document.getElementById('loginForm');
-    const loginEmailInput = document.getElementById('login-email-user'); // Ensure unique ID
+    const loginEmailInput = document.getElementById('login-email-user');
     const loginPasswordInput = document.getElementById('login-password');
 
     if (loginForm) {
@@ -319,50 +319,53 @@
     const switchToRegister = document.getElementById('switchToRegister');
     const switchToLogin = document.getElementById('switchToLogin');
 
-    if (loginLink && loginModal && registerLink && registerModal && loginCloseButton && registerCloseButton && switchToRegister && switchToLogin) {
-        loginLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginModal.style.display = 'block';
-            registerModal.style.display = 'none';
-        });
-
-        registerLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerModal.style.display = 'block';
-            loginModal.style.display = 'none';
-        });
-
-        loginCloseButton.addEventListener('click', () => {
-            loginModal.style.display = 'none';
-        });
-
-        registerCloseButton.addEventListener('click', () => {
-            registerModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (event) => {
-            if (event.target === loginModal) {
-                loginModal.style.display = 'none';
-            }
-            if (event.target === registerModal) {
+    // **Crucially, wrap the event listener code in a DOMContentLoaded event**
+    document.addEventListener('DOMContentLoaded', () => {
+        if (loginLink && loginModal && registerLink && registerModal && loginCloseButton && registerCloseButton && switchToRegister && switchToLogin) {
+            loginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'block';
                 registerModal.style.display = 'none';
-            }
-        });
+            });
 
-        switchToRegister.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerModal.style.display = 'block';
-            loginModal.style.display = 'none';
-        });
+            registerLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerModal.style.display = 'block';
+                loginModal.style.display = 'none';
+            });
 
-        switchToLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginModal.style.display = 'block';
-            registerModal.style.display = 'none';
-        });
-    } else {
-        console.error("One or more modal elements not found.");
-    }
+            loginCloseButton.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+            });
+
+            registerCloseButton.addEventListener('click', () => {
+                registerModal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
+                if (event.target === registerModal) {
+                    registerModal.style.display = 'none';
+                }
+            });
+
+            switchToRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerModal.style.display = 'block';
+                loginModal.style.display = 'none';
+            });
+
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'block';
+                registerModal.style.display = 'none';
+            });
+        } else {
+            console.error("One or more modal elements not found.");
+        }
+    }); // **END DOMContentLoaded**
 </body>
 
 </html>
