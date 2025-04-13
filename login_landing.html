@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - GJ's Beauty Lounge</title>
+    <title>User Dashboard - GJ's Beauty Lounge</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap">
@@ -13,55 +12,21 @@
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBxcGbtIQFIgaMtns+p/RHOvBBQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* Additional styles for the login landing page */
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: calc(100vh - 150px); /* Adjust as needed */
-        }
-
-        .login-form-wrapper {
-            background-color: #f9f9f9;
+        /* Additional styles for the user dashboard */
+        .dashboard-container {
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
         }
 
-        .login-form-wrapper h2 {
-            text-align: center;
+        .dashboard-section {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
 
-        .login-form-wrapper .form-group {
-            margin-bottom: 15px;
-        }
-
-        .login-form-wrapper label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .login-form-wrapper input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .login-form-wrapper button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff; /* Or your theme's primary color */
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .login-form-wrapper button:hover {
-            background-color: #0056b3; /* Darker shade for hover effect */
+        .dashboard-section h2 {
+            margin-top: 0;
         }
     </style>
 </head>
@@ -81,34 +46,40 @@
                 <li><a href="reviews.html">Reviews</a></li>
                 <li><a href="faq.html">FAQ</a></li>
                 <li><a href="services.html">Services</a></li>
-                <li><a href="mybook.html">My Book</a></li> <li>
+                <li><a href="mybook.html">My Book</a></li>
+                <li>
                     <a href="#">
                         <i class="fas fa-user-circle"></i>
-                        </a>
+                    </a>
                 </li>
             </ul>
         </nav>
     </header>
 
-    <main class="login-container">
-        <div class="login-form-wrapper">
-            <h2>Welcome Back!</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="login-email-user">Email/Username:</label>
-                    <input type="text" id="login-email-user" name="email_username" required>
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Password:</label>
-                    <input type="password" id="login-password" name="password" required>
-                </div>
-                <button type="submit">Login</button>
-                <p class="register-link">
-                    Don't have an Account? <a href="index.html">Register here</a>
-                </p>
-            </form>
+    <main class="dashboard-container">
+        <div class="dashboard-section">
+            <h2>Welcome, \[Username]!</h2>
+            <p>Here's an overview of your account.</p>
         </div>
-    </main>
+
+        <div class="dashboard-section">
+            <h2>Upcoming Appointments</h2>
+            <p>You have no upcoming appointments.</p>
+            <a href="book_appointment.html">Book an Appointment</a>
+        </div>
+
+        <div class="dashboard-section">
+            <h2>Booking History</h2>
+            <p>You have no past bookings.</p>
+        </div>
+
+        <div class="dashboard-section">
+            <h2>Profile Settings</h2>
+            <p>Manage your account information.</p>
+            <a href="profile.html">Edit Profile</a>
+        </div>
+
+        </main>
 
     <footer>
         <div class="footer-section">
@@ -136,53 +107,6 @@
         </div>
     </footer>
 
-    <script type="module">
-        import {
-            initializeApp
-        } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-        import {
-            getAuth,
-            signInWithEmailAndPassword
-        } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE",
-            authDomain: "gjsbooking.firebaseapp.com",
-            projectId: "gjsbooking",
-            storageBucket: "gjsbooking.firebasestorage.app",
-            messagingSenderId: "586636677275",
-            appId: "1:586636677275:web:1a2385842e887db93bf63e",
-            measurementId: "G-9XR9FMSE44"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        // --- Firebase Login ---
-        const loginForm = document.getElementById('loginForm');
-        const loginEmailInput = document.getElementById('login-email-user');
-        const loginPasswordInput = document.getElementById('login-password');
-
-        if (loginForm) {
-            loginForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                loginUser(loginEmailInput.value, loginPasswordInput.value);
-            });
-        }
-
-        async function loginUser(email, password) {
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                alert("Login successful!");
-                window.location.href = "index.html";
-
-            } catch (error) {
-                console.error("Login error:", error.code, error.message);
-                alert("Login failed: " + error.message);
-            }
-        }
-    </script>
-</body>
+    </body>
 
 </html>
