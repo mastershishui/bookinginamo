@@ -159,8 +159,7 @@
     </div>
 
     <script type="module">
-       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { getFirestore, collection, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
@@ -374,6 +373,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else {
         console.error("One or more modal elements not found.");
+        console.log({
+            loginLink,
+            loginModal,
+            registerLink,
+            registerModal,
+            loginCloseButton,
+            registerCloseButton,
+            switchToRegister,
+            switchToLogin
+        }); // Log the elements for debugging
     }
 });
 </body>
