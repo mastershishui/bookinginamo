@@ -28,6 +28,46 @@
         .dashboard-section h2 {
             margin-top: 0;
         }
+
+        .user-account {
+            position: relative;
+        }
+
+        .user-icon {
+            cursor: pointer;
+            display: block;
+            padding: 10px;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: none;
+            /* Initially hidden */
+            z-index: 1000;
+            /* Ensure it's on top */
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 8px 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .user-account.active .user-dropdown {
+            display: block;
+            /* Show when active */
+        }
     </style>
 </head>
 
@@ -47,10 +87,14 @@
                 <li><a href="faq.html">FAQ</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="mybook.html">My Book</a></li>
-                <li>
-                    <a href="#">
+                <li class="user-account">
+                    <a href="#" class="user-icon">
                         <i class="fas fa-user-circle"></i>
                     </a>
+                    <div class="user-dropdown">
+                        <a href="profile.html">My Profile</a>
+                        <a href="logout.html">Logout</a>
+                    </div>
                 </li>
             </ul>
         </nav>
@@ -79,13 +123,12 @@
             <a href="profile.html">Edit Profile</a>
         </div>
 
-        </main>
+    </main>
 
     <footer>
         <div class="footer-section">
             <h3>More about Company</h3>
-            <p>GJ's Beauty Lounge is dedicated to enhancing beauty and confidence through professional services,
-                including
+            <p>GJ's Beauty Lounge is dedicated to enhancing beauty and confidence through professional services, including
                 nails, brows, lashes, waxing, and gluta spa treatments. With a commitment to quality and customer
                 satisfaction, we create a relaxing space where clients can enjoy top-tier beauty care.</p>
         </div>
@@ -107,6 +150,23 @@
         </div>
     </footer>
 
-    </body>
+    <script>
+        const userAccount = document.querySelector('.user-account');
+        const userIcon = document.querySelector('.user-icon');
+
+        if (userAccount && userIcon) {
+            userIcon.addEventListener('click', (e) => {
+                e.preventDefault();
+                userAccount.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!userAccount.contains(e.target)) {
+                    userAccount.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
 
 </html>
