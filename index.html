@@ -387,6 +387,7 @@
     registrationForm.addEventListener('submit', (event) => {
         event.preventDefault();
         registerButton.disabled = true;
+        registerMessage.textContent = ""; // Clear any previous message
         registerUser(emailInput.value, passwordInput.value, usernameInput.value);
     });
 
