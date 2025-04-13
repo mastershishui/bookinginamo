@@ -12,113 +12,168 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-    import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE",
-        authDomain: "gjsbooking.firebaseapp.com",
-        projectId: "gjsbooking",
-        storageBucket: "gjsbooking.firebasestorage.app",
-        messagingSenderId: "586636677275",
-        appId: "1:586636677275:web:1a2385842e887db93bf63e",
-        measurementId: "G-9XR9FMSE44"
-    };
+        const firebaseConfig = {
+            apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE",
+            authDomain: "gjsbooking.firebaseapp.com",
+            projectId: "gjsbooking",
+            storageBucket: "gjsbooking.firebasestorage.app",
+            messagingSenderId: "586636677275",
+            appId: "1:586636677275:web:1a2385842e887db93bf63e",
+            measurementId: "G-9XR9FMSE44"
+        };
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-    // --- Firebase Registration ---
-    const registrationForm = document.getElementById('registrationForm');
-    const emailInput = document.getElementById('reg-email');
-    const passwordInput = document.getElementById('reg-password');
-    const usernameInput = document.getElementById('reg-username');
-    const firstnameInput = document.getElementById('reg-firstname');
-    const lastnameInput = document.getElementById('reg-lastname');
-    const contactInput = document.getElementById('reg-contact');
-    const genderInputs = document.getElementsByName('gender');
-    const registerButton = document.querySelector('#registrationForm button[type="submit"]');
+        // --- Firebase Registration ---
+        const registrationForm = document.getElementById('registrationForm');
+        const emailInput = document.getElementById('reg-email');
+        const passwordInput = document.getElementById('reg-password');
+        const usernameInput = document.getElementById('reg-username');
+        const firstnameInput = document.getElementById('reg-firstname');
+        const lastnameInput = document.getElementById('reg-lastname');
+        const contactInput = document.getElementById('reg-contact');
+        const genderInputs = document.getElementsByName('gender');
+        const registerButton = document.querySelector('#registrationForm button[type="submit"]');
 
-    const registerMessage = document.createElement('p');
-    registerMessage.classList.add('registration-message');
-    registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
-    if (registrationForm) {
-        registrationForm.appendChild(registerMessage);
-    }
+        const registerMessage = document.createElement('p');
+        registerMessage.classList.add('registration-message');
+        registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
+        if (registrationForm) {
+            registrationForm.appendChild(registerMessage);
+        }
 
-    if (registrationForm) {
-        registrationForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            registerButton.disabled = true;
-            registerMessage.textContent = "";
+        if (registrationForm) {
+            registrationForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                registerButton.disabled = true;
+                registerMessage.textContent = "";
 
-            const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
+                const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
 
-            registerUser(
-                emailInput.value,
-                passwordInput.value,
-                usernameInput.value,
-                firstnameInput.value,
-                lastnameInput.value,
-                contactInput.value,
-                selectedGender
-            );
-        });
-    }
+                registerUser(
+                    emailInput.value,
+                    passwordInput.value,
+                    usernameInput.value,
+                    firstnameInput.value,
+                    lastnameInput.value,
+                    contactInput.value,
+                    selectedGender
+                );
+            });
+        }
 
-    async function registerUser(email, password, username, firstname, lastname, contact, gender) {
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+        async function registerUser(email, password, username, firstname, lastname, contact, gender) {
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-            await setDoc(doc(collection(db, "users"), user.uid), {
-                email: email,
-                username: username,
-                firstname: firstname,
-                lastname: lastname,
-                contact: contact,
-                gender: gender,
-                createdAt: new Date()
+                await setDoc(doc(collection(db, "users"), user.uid), {
+                    email: email,
+                    username: username,
+                    firstname: firstname,
+                    lastname: lastname,
+                    contact: contact,
+                    gender: gender,
+                    createdAt: new Date()
+                });
+
+                registerMessage.textContent = "Registration successful!";
+                registerMessage.style.color = "green";
+            } catch (error) {
+                console.error("Registration error:", error.code, error.message);
+                registerMessage.textContent = "Registration failed: " + error.message;
+                registerMessage.style.color = "red";
+            } finally {
+                registerButton.disabled = false;
+            }
+        }
+
+        // --- Firebase Login ---
+        const loginForm = document.getElementById('loginForm');
+        const loginEmailInput = document.getElementById('login-email-user');
+        const loginPasswordInput = document.getElementById('login-password');
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                loginUser(loginEmailInput.value, loginPasswordInput.value);
+            });
+        }
+
+        async function loginUser(email, password) {
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                alert("Login successful!");
+            } catch (error) {
+                console.error("Login error:", error.code, error.message);
+                alert("Login failed: " + error.message);
+            }
+        }
+
+        // --- Modal Logic ---
+        const loginLink = document.getElementById('loginLink');
+        const registerLink = document.getElementById('registerLink');
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const loginCloseButton = document.querySelector('.login-close-button');
+        const registerCloseButton = document.querySelector('.register-close-button');
+        const switchToRegister = document.getElementById('switchToRegister');
+        const switchToLogin = document.getElementById('switchToLogin');
+
+        if (loginLink && loginModal && registerLink && registerModal && loginCloseButton && registerCloseButton && switchToRegister && switchToLogin) {
+            loginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'block';
+                registerModal.style.display = 'none';
             });
 
-            registerMessage.textContent = "Registration successful!";
-            registerMessage.style.color = "green";
-        } catch (error) {
-            console.error("Registration error:", error.code, error.message);
-            registerMessage.textContent = "Registration failed: " + error.message;
-            registerMessage.style.color = "red";
-        } finally {
-            registerButton.disabled = false;
+            registerLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerModal.style.display = 'block';
+                loginModal.style.display = 'none';
+            });
+
+            loginCloseButton.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+            });
+
+            registerCloseButton.addEventListener('click', () => {
+                registerModal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
+                if (event.target === registerModal) {
+                    registerModal.style.display = 'none';
+                }
+            });
+
+            switchToRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerModal.style.display = 'block';
+                loginModal.style.display = 'none';
+            });
+
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.style.display = 'block';
+                registerModal.style.display = 'none';
+            });
+        } else {
+            console.error("One or more modal elements not found.");
         }
-    }
-
-    // --- Firebase Login ---
-    const loginForm = document.getElementById('loginForm');
-    const loginEmailInput = document.getElementById('login-email-user');
-    const loginPasswordInput = document.getElementById('login-password');
-
-    if (loginForm) {
-        loginForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            loginUser(loginEmailInput.value, loginPasswordInput.value);
-        });
-    }
-
-    async function loginUser(email, password) {
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            alert("Login successful!");
-        } catch (error) {
-            console.error("Login error:", error.code, error.message);
-            alert("Login failed: " + error.message);
-        }
-    }
-</script>
+    </script>
 
 </head>
 
