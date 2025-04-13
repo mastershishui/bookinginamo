@@ -261,7 +261,7 @@
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 alert("Login successful!");
-                window.location.href = "index.html"; // Add this line to redirect
+                window.location.href = "login_landing.html"; // Add this line to redirect
             } catch (error) {
                 console.error("Login error:", error.code, error.message);
                 alert("Login failed: " + error.message);
