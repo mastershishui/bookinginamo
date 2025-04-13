@@ -351,32 +351,130 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    position: relative;
 }
 
-/* Registration Message Styles */
-.registration-message {
+.register-modal-content .modal-form-body .form-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.register-modal-content .modal-form-body .form-group {
+    margin-bottom: 5px;
+    min-width: 150px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.register-modal-content .modal-form-body label {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.9em;
     display: block;
-    padding: 10px;
-    margin: 10px 0 5px;
+}
+
+.register-modal-content .modal-form-body input[type="text"],
+.register-modal-content .modal-form-body input[type="email"],
+.register-modal-content .modal-form-body input[type="tel"],
+.register-modal-content .modal-form-body input[type="password"] {
+    background-color: #fff;
+    border: 1px solid #f0c1d3;
+    color: #333;
+    width: 100%;
+    padding: 10px 12px;
     border-radius: 4px;
-    text-align: center;
-    font-weight: bold;
     font-size: 0.95em;
-    background-color: rgba(255,255,255,0.7);
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.register-modal-content .modal-form-body input::placeholder {
+    font-family: 'Montserrat', sans-serif;
+    color: #999;
+}
+.register-modal-content .modal-form-body input:focus {
+    border-color: #f06292;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(240, 98, 146, 0.2);
 }
 
-.registration-message.success {
-    color: #2e7d32;
-    background-color: rgba(46, 125, 50, 0.1);
+.register-modal-content .gender-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin-top: 5px;
+}
+.register-modal-content .gender-group > label {
+    margin-bottom: 0;
+    font-weight: 600;
+}
+.register-modal-content .radio-options {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px 20px;
+    flex-wrap: wrap;
+}
+.register-modal-content .radio-options input[type="radio"] {
+    margin-right: 5px;
+    accent-color: #d81b60;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+.register-modal-content .radio-options label {
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 0.9em;
+    color: #333;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 0;
 }
 
-.registration-message.error {
-    color: #c62828;
-    background-color: rgba(198, 40, 40, 0.1);
+.register-modal-content .modal-form-body button[type="submit"] {
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 15px;
+}
+.register-modal-content .modal-form-body button[type="submit"]:hover,
+.register-modal-content .modal-form-body button[type="submit"]:focus {
+    background-color: #555;
+    outline: none;
 }
 
-/* ... rest of your existing registration modal styles ... */
+.register-modal-content .login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #333;
+}
+.register-modal-content .login-link a {
+    color: #d81b60;
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+.register-modal-content .login-link a:hover,
+.register-modal-content .login-link a:focus {
+    color: #ad1457;
+    outline: none;
+}
+
+
 /* ------- Login Modal Styles ------- */
 #loginModal .login-modal-content {
     max-width: 450px; /* Login modal narrower */
@@ -866,4 +964,3 @@ nav ul li a.active-page {
 
 
 /* ------- END Optional Promo Styles ------- */
-/* ------- END Services Page Styles ------- */
