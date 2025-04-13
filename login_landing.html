@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - GJ's Beauty Lounge</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBxcGbtIQFIgaMtns+p/RHOvBBQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Additional styles for the login landing page */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 150px); /* Adjust as needed */
+        }
+
+        .login-form-wrapper {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .login-form-wrapper h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-form-wrapper .form-group {
+            margin-bottom: 15px;
+        }
+
+        .login-form-wrapper label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .login-form-wrapper input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login-form-wrapper button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff; /* Or your theme's primary color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-form-wrapper button:hover {
+            background-color: #0056b3; /* Darker shade for hover effect */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="#">
+                <img src="gjslogo.jpg" alt="GJ'S Beauty Lounge Logo">
+            </a>
+        </div>
+        <div class="header-text">
+            <h1>Nails, Facials, Brows, Lashes, Waxing, Gluta Spa <span>Clinic Hours: 9AM - 8PM</span></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="mybook.html">My Book</a></li> <li>
+                    <a href="#">
+                        <i class="fas fa-user-circle"></i>
+                        </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="login-container">
+        <div class="login-form-wrapper">
+            <h2>Welcome Back!</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="login-email-user">Email/Username:</label>
+                    <input type="text" id="login-email-user" name="email_username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+                <p class="register-link">
+                    Don't have an Account? <a href="index.html">Register here</a>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-section">
+            <h3>More about Company</h3>
+            <p>GJ's Beauty Lounge is dedicated to enhancing beauty and confidence through professional services,
+                including
+                nails, brows, lashes, waxing, and gluta spa treatments. With a commitment to quality and customer
+                satisfaction, we create a relaxing space where clients can enjoy top-tier beauty care.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Keep Connected</h3>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Information</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Lower Ground Floor, Nova Plaza Mall, Quirino Highway,
+                Novaliches
+                Proper, Quezon City</p>
+            <p><i class="fas fa-phone"></i> 0962-847-2488</p>
+            <p><i class="fas fa-envelope"></i> <a href="mailto:gjsbeautylounge@gmail.com">gjsbeautylounge@gmail.com</a>
+            </p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import {
+            getAuth,
+            signInWithEmailAndPassword
+        } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE",
+            authDomain: "gjsbooking.firebaseapp.com",
+            projectId: "gjsbooking",
+            storageBucket: "gjsbooking.firebasestorage.app",
+            messagingSenderId: "586636677275",
+            appId: "1:586636677275:web:1a2385842e887db93bf63e",
+            measurementId: "G-9XR9FMSE44"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // --- Firebase Login ---
+        const loginForm = document.getElementById('loginForm');
+        const loginEmailInput = document.getElementById('login-email-user');
+        const loginPasswordInput = document.getElementById('login-password');
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                loginUser(loginEmailInput.value, loginPasswordInput.value);
+            });
+        }
+
+        async function loginUser(email, password) {
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                alert("Login successful!");
+                window.location.href = "index.html";
+
+            } catch (error) {
+                console.error("Login error:", error.code, error.message);
+                alert("Login failed: " + error.message);
+            }
+        }
+    </script>
+</body>
+
+</html>
