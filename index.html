@@ -166,7 +166,7 @@
 
     // --- Firebase Configuration ---
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY", // Replace with your actual API key
+        apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE", // Replace with your actual API key
         authDomain: "gjsbooking.firebaseapp.com",
         projectId: "gjsbooking",
         storageBucket: "gjsbooking.firebasestorage.app",
@@ -224,6 +224,7 @@
             // --- Firebase Authentication ---
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
+            console.log("Firebase Authentication successful. User UID:", user.uid);
 
             // --- Firestore ---
             const userDocRef = doc(collection(db, "users"), user.uid);
@@ -236,6 +237,7 @@
                 gender: gender,
                 createdAt: new Date()
             });
+            console.log("Firestore data saved successfully for UID:", user.uid);
 
             registerMessage.textContent = "Registration successful!";
             registerMessage.style.color = "green";
