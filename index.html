@@ -232,10 +232,10 @@
                     createdAt: new Date()
                 });
 
-                alert("Registration successful!"); // Added success message
+                alert("Registration successful!"); // Moved inside try, after await setDoc
             } catch (error) {
-                console.error("Registration error:", error.code, error.message);
-                alert("Registration failed: " + error.message); // Added failure message
+                console.error("Registration error:", error); // Log the full error
+                alert("Registration failed: " + error.message);
             } finally {
                 registerButton.disabled = false;
             }
