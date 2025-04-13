@@ -375,21 +375,23 @@
     const registrationForm = document.getElementById('registrationForm');
     const emailInput = document.getElementById('reg-email');
     const passwordInput = document.getElementById('reg-password');
-    const usernameInput = document.getElementById('reg-username'); // Get username input
-    const registerButton = document.querySelector('#registrationForm button[type="submit"]'); // Get the submit button
-    const registerMessage = document.createElement('p'); // Create a paragraph element for the message
-    registerMessage.classList.add('registration-message'); // Add a class for styling (optional)
-    registrationForm.appendChild(registerMessage); // Add the message element to the form
+    const usernameInput = document.getElementById('reg-username');
+    const registerButton = document.querySelector('#registrationForm button[type="submit"]');
+
+    // Create a paragraph element for the message
+    const registerMessage = document.createElement('p');
+    registerMessage.classList.add('registration-message');
+    registrationForm.appendChild(registerMessage);
 
     // Prevent default form submission and call registerUser
     registrationForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent page reload
-        registerButton.disabled = true; // Disable the button to prevent multiple clicks
-        registerUser(emailInput.value, passwordInput.value, usernameInput.value); // Call registerUser function
+        event.preventDefault();
+        registerButton.disabled = true;
+        registerUser(emailInput.value, passwordInput.value, usernameInput.value);
     });
 
     // Implement the registerUser function
-    async function registerUser(email, password, username) { // Add username parameter
+    async function registerUser(email, password, username) {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
@@ -398,23 +400,24 @@
             // Optionally, save additional user data to Firestore
             await setDoc(doc(collection(db, "users"), user.uid), {
                 email: email,
-                username: username, // Save username
+                username: username,
                 // Add other user data here (e.g., firstname, lastname, etc.)
             });
 
-            registerMessage.textContent = "Registration successful!"; // Set success message
-            registerMessage.style.color = "green"; // Style the success message (optional)
-            // You might want to redirect the user or update the UI here
+            // Display success message
+            registerMessage.textContent = "Registration successful!";
+            registerMessage.style.color = "green";
+
         } catch (error) {
             console.error("Registration error:", error.code, error.message);
-            registerMessage.textContent = "Registration failed: " + error.message; // Set error message
-            registerMessage.style.color = "red"; // Style the error message (optional)
-            // Handle errors more gracefully (e.g., display specific error messages)
+            registerMessage.textContent = "Registration failed: " + error.message;
+            registerMessage.style.color = "red";
         } finally {
-            registerButton.disabled = false; // Re-enable the button
+            registerButton.disabled = false;
         }
     }
 
+    // --- End Firebase Registration ---
     // --- End Firebase Registration ---
 
     // --- Firebase Login ---
