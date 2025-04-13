@@ -964,3 +964,39 @@ nav ul li a.active-page {
 
 
 /* ------- END Optional Promo Styles ------- */
+.user-account {
+    position: relative;
+}
+
+.user-icon {
+    cursor: pointer;
+    display: block;
+    padding: 10px;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: none; /* Initially hidden */
+    z-index: 1000; /* Ensure it's on top */
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 8px 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.user-dropdown a:hover {
+    background-color: #f0f0f0;
+}
+
+.user-account.active .user-dropdown {
+    display: block; /* Show when active */
+}
