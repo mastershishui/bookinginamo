@@ -867,3 +867,143 @@ footer {
 }
 
 .services
+
+/* ------- Media Queries for Responsiveness ------- */
+
+/* For tablets and larger phones (max-width: 768px) */
+@media screen and (max-width: 768px) {
+  header {
+    padding: 10px 15px;
+    flex-direction: column; /* Stack header items vertically */
+    align-items: center;
+  }
+
+  .logo a img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .header-text {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  nav ul {
+    justify-content: center; /* Center navigation links */
+    margin-top: 10px;
+  }
+
+  nav ul li {
+    margin: 5px 8px;
+  }
+
+  .hero {
+    flex-direction: column; /* Stack hero sections vertically */
+    align-items: center;
+    gap: 30px;
+    padding: 0 20px; /* Add some padding on the sides */
+  }
+
+  .hero-left,
+  .hero-right {
+    width: 90%; /* Make hero images take up more width */
+    max-width: 400px; /* Maintain a maximum width */
+    height: auto; /* Adjust height automatically */
+  }
+
+  .hero-center {
+    text-align: center;
+  }
+
+  .hero-center img.circular-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero-center .appointment-button {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  main {
+    padding: 20px;
+  }
+
+  .reviews-list {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .footer-section {
+    flex: 1 1 150px;
+    min-width: 150px;
+    margin: 10px 0; /* Adjust margin for better stacking */
+    text-align: center; /* Center text in footer sections */
+  }
+
+  .footer-section h3 {
+    font-size: 1.1em;
+  }
+
+  .footer-section p,
+  .footer-section a {
+    font-size: 0.9em;
+    justify-content: center; /* Center link icons */
+  }
+}
+
+/* For smaller phones (max-width: 480px) */
+@media screen and (max-width: 480px) {
+  header {
+    padding: 10px;
+  }
+
+  .logo a img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .header-text h1 {
+    font-size: 1em;
+  }
+
+  nav ul li {
+    margin: 5px 5px;
+  }
+
+  nav ul li a {
+    padding: 6px 10px;
+    font-size: 0.9em;
+  }
+
+  .hero-left,
+  .hero-right {
+    width: 100%; /* Take full width on small phones */
+    max-width: none;
+  }
+
+  .hero-center img.circular-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .reviews-list {
+    grid-template-columns: 1fr; /* Stack reviews on very small screens */
+  }
+
+  .footer-section {
+    min-width: auto; /* Allow footer sections to take full width */
+  }
+
+  .modal-content {
+    margin: 10% auto; /* Adjust modal margin on smaller screens */
+  }
+
+  .register-modal-content .modal-form-body .form-row {
+    flex-direction: column; /* Stack form elements */
+  }
+
+  .register-modal-content .modal-form-body .form-group {
+    min-width: auto;
+  }
+}
