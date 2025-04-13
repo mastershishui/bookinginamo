@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -165,6 +164,7 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
         import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+        // --- Firebase Configuration ---
         const firebaseConfig = {
             apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE",
             authDomain: "gjsbooking.firebaseapp.com",
@@ -201,6 +201,20 @@
         if (registrationForm) {
             registrationForm.addEventListener('submit', (event) => {
                 event.preventDefault();
+                console.log("Registration form submitted!");
+
+                // Log form data
+                const formData = {
+                    email: emailInput.value,
+                    password: passwordInput.value,
+                    username: usernameInput.value,
+                    firstname: firstnameInput.value,
+                    lastname: lastnameInput.value,
+                    contact: contactInput.value,
+                    gender: [...genderInputs].find(input => input.checked)?.value || ""
+                };
+                console.log("Form data:", formData);
+
                 registerButton.disabled = true;
                 registerMessage.textContent = "";
 
@@ -219,11 +233,19 @@
         }
 
         async function registerUser(email, password, username, firstname, lastname, contact, gender) {
+            console.log("registerUser function called with:", { email, password, username, firstname, lastname, contact, gender });
+
             try {
+                // --- Firebase Authentication ---
+                console.log("Attempting to create user with email and password...");
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
+                console.log("User created in Authentication:", user);
 
-                await setDoc(doc(collection(db, "users"), user.uid), {
+                // --- Firestore ---
+                console.log("Attempting to store user data in Firestore...");
+                const userDocRef = doc(collection(db, "users"), user.uid);
+                await setDoc(userDocRef, {
                     email: email,
                     username: username,
                     firstname: firstname,
@@ -232,15 +254,30 @@
                     gender: gender,
                     createdAt: new Date()
                 });
+                console.log("User data stored in Firestore");
 
                 registerMessage.textContent = "Registration successful!";
                 registerMessage.style.color = "green";
+
             } catch (error) {
                 console.error("Registration error:", error);
-                registerMessage.textContent = "Registration failed: " + error.message;
+                console.error("Error code:", error.code);
+                console.error("Error message:", error.message);
+
+                let errorMessage = "Registration failed. Please try again.";
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = "This email is already in use.";
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = "Invalid email address.";
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = "Password should be at least 6 characters.";
+                }
+                registerMessage.textContent = errorMessage;
                 registerMessage.style.color = "red";
+
             } finally {
                 registerButton.disabled = false;
+                console.log("Registration process completed (finally block)");
             }
         }
 
@@ -261,7 +298,7 @@
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 alert("Login successful!");
-                window.location.href = "dashboard.html"; // Add this line to redirect
+                window.location.href = "dashboard.html";
             } catch (error) {
                 console.error("Login error:", error.code, error.message);
                 alert("Login failed: " + error.message);
