@@ -4,14 +4,17 @@ html {
     box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: inherit;
 }
 
 /* --- CORRECTED DEFAULT BODY RULE (Allows Scrolling) --- */
 body {
     /* DEFAULT body style for all pages - allows scrolling */
-    min-height: 100%; /* Ensures footer reaches bottom, allows content to expand */
+    min-height: 100%;
+    /* Ensures footer reaches bottom, allows content to expand */
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -21,28 +24,32 @@ body {
     /* Removed height: 100vh; */
     /* Removed overflow: hidden; */
 }
-/* --- END CORRECTED DEFAULT BODY RULE --- */
-
 
 /* --- Styles SPECIFICALLY for Homepage No-Scroll --- */
 /* --- Add class="homepage-no-scroll" ONLY to the body tag in index.html --- */
 body.homepage-no-scroll {
-    height: 100vh;     /* Fix body height to viewport */
-    overflow: hidden;  /* Prevent scrolling ONLY on homepage */
+    height: 100vh;
+    /* Fix body height to viewport */
+    overflow: hidden;
+    /* Prevent scrolling ONLY on homepage */
 }
-/* --- END Homepage No-Scroll --- */
 
+/* --- END Homepage No-Scroll --- */
 
 /* ------- Header Styles ------- */
 header {
-    background-color: #fce4ec; /* Reference Pink */
+    background-color: #fce4ec;
+    /* Reference Pink */
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0; /* Prevent header shrinking */
-    gap: 20px; /* Add gap between logo, text, nav */
-    flex-wrap: wrap; /* Allow header items to wrap on very small screens */
+    flex-shrink: 0;
+    /* Prevent header shrinking */
+    gap: 20px;
+    /* Add gap between logo, text, nav */
+    flex-wrap: wrap;
+    /* Allow header items to wrap on very small screens */
 }
 
 .logo {
@@ -56,28 +63,37 @@ header {
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    display: block; /* Remove extra space below image */
+    display: block;
+    /* Remove extra space below image */
 }
 
 .header-text {
     text-align: left;
     display: flex;
     align-items: center;
-    flex-grow: 1; /* Allow text to take available space */
-    min-width: 200px; /* Prevent text from getting too squished */
+    flex-grow: 1;
+    /* Allow text to take available space */
+    min-width: 200px;
+    /* Prevent text from getting too squished */
 }
 
 .header-text h1 {
-    font-size: 1.2em; /* Slightly reduce size to help fit */
+    font-size: 1.2em;
+    /* Slightly reduce size to help fit */
     font-weight: bold;
     margin: 0;
-    white-space: nowrap; /* Prevent text from wrapping */
-    overflow: hidden; /* Hide overflow if it's too long */
-    text-overflow: ellipsis; /* Add '...' if text is hidden */
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+    overflow: hidden;
+    /* Hide overflow if it's too long */
+    text-overflow: ellipsis;
+    /* Add '...' if text is hidden */
 }
 
-.header-text h1 span { /* Style for span inside H1 if used */
-    font-size: 0.9em; /* Adjust size relative to H1 */
+.header-text h1 span {
+    /* Style for span inside H1 if used */
+    font-size: 0.9em;
+    /* Adjust size relative to H1 */
     font-weight: normal;
     margin-left: 10px;
     white-space: nowrap;
@@ -86,7 +102,8 @@ header {
 nav {
     display: flex;
     align-items: center;
-    flex-shrink: 0; /* Prevent nav shrinking */
+    flex-shrink: 0;
+    /* Prevent nav shrinking */
 }
 
 nav ul {
@@ -96,11 +113,13 @@ nav ul {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    flex-wrap: wrap; /* Allow nav items to wrap on small screens */
+    flex-wrap: wrap;
+    /* Allow nav items to wrap on small screens */
 }
 
 nav ul li {
-    margin: 5px 10px; /* Add vertical margin for wrapping */
+    margin: 5px 10px;
+    /* Add vertical margin for wrapping */
 }
 
 nav ul li a {
@@ -111,21 +130,25 @@ nav ul li a {
     padding: 8px 12px;
     border-radius: 5px;
     transition: background-color 0.2s ease, color 0.2s ease;
-    white-space: nowrap; /* Keep nav links on one line */
+    white-space: nowrap;
+    /* Keep nav links on one line */
 }
 
 nav ul li a:hover,
 nav ul li a:focus {
     background-color: #e0e0e0;
-    color: #d81b60; /* Darker Pink Hover */
+    color: #d81b60;
+    /* Darker Pink Hover */
     outline: none;
 }
 
 /* ------- Main Content Area ------- */
 main {
     padding: 30px 40px;
-    flex-grow: 1; /* Allows main content to push footer down */
-    display: block; /* Default display */
+    flex-grow: 1;
+    /* Allows main content to push footer down */
+    display: block;
+    /* Default display */
 }
 
 /* ------- Hero Section Styles (Homepage) ------- */
@@ -194,10 +217,11 @@ main {
     transition: background-color 0.2s ease;
     margin-top: 15px;
 }
+
 .hero-center .appointment-button:hover,
 .hero-center .appointment-button:focus {
-     background-color: #555;
-     outline: none;
+    background-color: #555;
+    outline: none;
 }
 
 /* ------- Footer Styles ------- */
@@ -210,7 +234,8 @@ footer {
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 20px;
-    flex-shrink: 0; /* Prevent footer shrinking */
+    flex-shrink: 0;
+    /* Prevent footer shrinking */
 }
 
 .footer-section {
@@ -235,6 +260,7 @@ footer {
     display: flex;
     align-items: center;
 }
+
 .footer-section a {
     display: inline-flex;
     transition: color 0.2s ease;
@@ -258,49 +284,51 @@ footer {
     margin-bottom: 10px;
 }
 
-
 /* ------- Modal Styles (General) ------- */
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto; /* Allow modal itself to scroll if content too long */
-  background-color: rgba(0,0,0,0.6);
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Allow modal itself to scroll if content too long */
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .modal-content {
-  position: relative;
-  margin: 5% auto;
-  width: 90%;
-  max-width: 500px; /* Default max for register */
-  font-family: 'Montserrat', sans-serif;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-  overflow: hidden;
+    position: relative;
+    margin: 5% auto;
+    width: 90%;
+    max-width: 500px;
+    /* Default max for register */
+    font-family: 'Montserrat', sans-serif;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
 }
 
 .close-button {
-  color: #aaa;
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 32px;
-  font-weight: bold;
-  line-height: 1;
-  z-index: 1001;
-  cursor: pointer;
-  transition: color 0.2s ease;
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1;
+    z-index: 1001;
+    cursor: pointer;
+    transition: color 0.2s ease;
 }
+
 .close-button:hover,
 .close-button:focus {
-  color: #333;
-  text-decoration: none;
-  outline: none;
+    color: #333;
+    text-decoration: none;
+    outline: none;
 }
 
 /* ------- Registration Modal Styles ------- */
@@ -340,6 +368,7 @@ footer {
 .register-modal-content .register-close-button {
     color: #ccc;
 }
+
 .register-modal-content .register-close-button:hover,
 .register-modal-content .register-close-button:focus {
     color: #fff;
@@ -358,6 +387,7 @@ footer {
     gap: 15px;
     flex-wrap: wrap;
 }
+
 .register-modal-content .modal-form-body .form-group {
     margin-bottom: 5px;
     min-width: 150px;
@@ -389,10 +419,12 @@ footer {
     box-sizing: border-box;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+
 .register-modal-content .modal-form-body input::placeholder {
     font-family: 'Montserrat', sans-serif;
     color: #999;
 }
+
 .register-modal-content .modal-form-body input:focus {
     border-color: #f06292;
     outline: none;
@@ -407,10 +439,12 @@ footer {
     width: 100%;
     margin-top: 5px;
 }
-.register-modal-content .gender-group > label {
+
+.register-modal-content .gender-group>label {
     margin-bottom: 0;
     font-weight: 600;
 }
+
 .register-modal-content .radio-options {
     display: flex;
     justify-content: flex-start;
@@ -418,12 +452,14 @@ footer {
     gap: 10px 20px;
     flex-wrap: wrap;
 }
+
 .register-modal-content .radio-options input[type="radio"] {
     margin-right: 5px;
     accent-color: #d81b60;
     transform: scale(1.1);
     cursor: pointer;
 }
+
 .register-modal-content .radio-options label {
     margin-bottom: 0;
     font-weight: 500;
@@ -450,6 +486,7 @@ footer {
     font-family: 'Montserrat', sans-serif;
     margin-top: 15px;
 }
+
 .register-modal-content .modal-form-body button[type="submit"]:hover,
 .register-modal-content .modal-form-body button[type="submit"]:focus {
     background-color: #555;
@@ -462,22 +499,24 @@ footer {
     font-size: 0.9em;
     color: #333;
 }
+
 .register-modal-content .login-link a {
     color: #d81b60;
     font-weight: 600;
     text-decoration: underline;
     transition: color 0.2s ease;
 }
+
 .register-modal-content .login-link a:hover,
 .register-modal-content .login-link a:focus {
     color: #ad1457;
     outline: none;
 }
 
-
 /* ------- Login Modal Styles ------- */
 #loginModal .login-modal-content {
-    max-width: 450px; /* Login modal narrower */
+    max-width: 450px;
+    /* Login modal narrower */
 }
 
 #loginModal .login-modal-header {
@@ -497,6 +536,7 @@ footer {
     border: 2px solid #fff;
     flex-shrink: 0;
 }
+
 #loginModal .login-modal-header .modal-form-title {
     color: #fff;
     font-size: 1.6em;
@@ -509,6 +549,7 @@ footer {
 #loginModal .login-close-button {
     color: #ccc;
 }
+
 #loginModal .login-close-button:hover,
 #loginModal .login-close-button:focus {
     color: #fff;
@@ -556,6 +597,7 @@ footer {
     box-sizing: border-box;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+
 #loginModal .modal-form-body input::placeholder {
     font-family: 'Montserrat', sans-serif;
     color: #999;
@@ -582,6 +624,7 @@ footer {
     font-family: 'Montserrat', sans-serif;
     margin-top: 10px;
 }
+
 #loginModal .modal-form-body button[type="submit"]:hover,
 #loginModal .modal-form-body button[type="submit"]:focus {
     background-color: #555;
@@ -644,7 +687,7 @@ footer {
     border: 1px solid #fce4ec;
     border-radius: 8px;
     padding: 25px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.07);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
     display: flex;
     flex-direction: column;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -652,7 +695,7 @@ footer {
 
 .review-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .review-header {
@@ -681,8 +724,9 @@ footer {
 .review-rating .far.fa-star {
     color: #e0e0e0;
 }
+
 .review-rating .fas.fa-star-half-alt {
-     color: #f06292;
+    color: #f06292;
 }
 
 .review-text {
@@ -741,6 +785,7 @@ footer {
 .faq-item {
     border-bottom: 1px solid #fce4ec;
 }
+
 .faq-item:last-child {
     border-bottom: none;
 }
@@ -821,182 +866,4 @@ footer {
     font-size: 1.8em;
 }
 
-.services-container p {
-    text-align: center;
-    color: #555;
-    margin-bottom: 50px;
-    font-size: 1em;
-    line-height: 1.6;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.service-category {
-    margin-bottom: 50px;
-}
-
-.category-title {
-    font-size: 1.6em;
-    font-weight: 700;
-    color: #d81b60;
-    margin-bottom: 25px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #fce4ec;
-}
-
-.service-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-}
-
-.service-card {
-    background-color: #fff;
-    border: 1px solid #fce4ec;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.12);
-}
-
-.service-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-    border-bottom: 1px solid #fce4ec;
-}
-
-.service-details {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.service-name {
-    font-size: 1.15em;
-    font-weight: 600;
-    color: #333;
-    margin: 0 0 10px 0;
-}
-
-.service-description {
-    font-size: 0.9em;
-    line-height: 1.6;
-    color: #555;
-    flex-grow: 1;
-    margin-bottom: 15px;
-}
-
-.service-price {
-    font-size: 0.95em;
-    font-weight: 700;
-    color: #d81b60;
-    margin: 0;
-    margin-top: auto;
-    text-align: right;
-}
-
-/* --- Shared Active Page Style --- */
-nav ul li a.active-page {
-    font-weight: bold;
-    color: #d81b60;
-    background-color: #fdf6f8;
-}
-
-/* ------- Optional Styles for Special Offers Section ------- */
-
-.special-offers .category-title {
-    color: #ff7043; /* Example: Different color for promo title */
-    border-bottom-color: #ffccbc; /* Lighter version of promo color */
-}
-
-.special-offers .category-title i.fa-tags {
-    margin-right: 10px; /* Space after icon */
-}
-
-.promo-card {
-    background-color: #fff9c4; /* Example: Light yellow background for promo */
-    border-color: #fff176; /* Example: Yellow border */
-    box-shadow: 0 4px 12px rgba(255, 179, 0, 0.2); /* Example: Subtle yellow shadow */
-}
-
-.promo-card:hover {
-     box-shadow: 0 8px 18px rgba(255, 179, 0, 0.3);
-     /* Keep transform from base .service-card:hover */
-}
-
-.promo-card .service-details {
-    padding-top: 15px; /* Adjust padding if needed */
-}
-
-.promo-card .service-name {
-    color: #ef6c00; /* Example: Orange for promo name */
-}
-
-.promo-validity {
-    font-size: 0.8em;
-    font-style: italic;
-    color: #777;
-    margin: 10px 0 5px 0;
-}
-
-.promo-card .service-price {
-    color: #d84315; /* Example: Stronger color for promo price */
-    font-weight: bold;
-}
-
-.promo-card .service-price del { /* Style for original price */
-    color: #999;
-    font-weight: normal;
-    margin-right: 8px;
-    font-size: 0.9em;
-}
-
-
-/* ------- END Optional Promo Styles ------- */
-.user-account {
-    position: relative;
-}
-
-.user-icon {
-    cursor: pointer;
-    display: block;
-    padding: 10px;
-}
-
-.user-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    display: none; /* Initially hidden */
-    z-index: 1000; /* Ensure it's on top */
-}
-
-.user-dropdown a {
-    display: block;
-    padding: 8px 15px;
-    text-decoration: none;
-    color: #333;
-}
-
-.user-dropdown a:hover {
-    background-color: #f0f0f0;
-}
-
-.user-account.active .user-dropdown {
-    display: block; /* Show when active */
-}
+.services
