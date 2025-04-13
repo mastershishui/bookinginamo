@@ -12,214 +12,114 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+    import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-            apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE",
-            authDomain: "gjsbooking.firebaseapp.com",
-            projectId: "gjsbooking",
-            storageBucket: "gjsbooking.firebasestorage.app",
-            messagingSenderId: "586636677275",
-            appId: "1:586636677275:web:1a2385842e887db93bf63e",
-            measurementId: "G-9XR9FMSE44"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyARTBggSYO2nUWb0Ay2AvjS_ZSaYdTFDQE",
+        authDomain: "gjsbooking.firebaseapp.com",
+        projectId: "gjsbooking",
+        storageBucket: "gjsbooking.firebasestorage.app",
+        messagingSenderId: "586636677275",
+        appId: "1:586636677275:web:1a2385842e887db93bf63e",
+        measurementId: "G-9XR9FMSE44"
+    };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app); // Initialize Firebase Authentication
-        const db = getFirestore(app); // Initialize Firestore
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-        // Get Register Modal elements
-        var registerModal = document.getElementById("registerModal");
-        var registerLink = document.getElementById("registerLink");
-        var registerCloseButton = registerModal ? registerModal.querySelector(".register-close-button") : null;
-        var switchToLoginLink = document.getElementById("switchToLogin");
+    // --- Firebase Registration ---
+    const registrationForm = document.getElementById('registrationForm');
+    const emailInput = document.getElementById('reg-email');
+    const passwordInput = document.getElementById('reg-password');
+    const usernameInput = document.getElementById('reg-username');
+    const firstnameInput = document.getElementById('reg-firstname');
+    const lastnameInput = document.getElementById('reg-lastname');
+    const contactInput = document.getElementById('reg-contact');
+    const genderInputs = document.getElementsByName('gender');
+    const registerButton = document.querySelector('#registrationForm button[type="submit"]');
 
-        // Get Login Modal elements
-        var loginModal = document.getElementById("loginModal");
-        var loginLink = document.getElementById("loginLink");
-        var loginCloseButton = loginModal ? loginModal.querySelector(".login-close-button") : null;
-        var switchToRegisterLink = document.getElementById("switchToRegister");
+    const registerMessage = document.createElement('p');
+    registerMessage.classList.add('registration-message');
+    registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
+    if (registrationForm) {
+        registrationForm.appendChild(registerMessage);
+    }
 
-        // Function to close all modals
-        function closeAllModals() {
-            if (registerModal) registerModal.style.display = "none";
-            if (loginModal) loginModal.style.display = "none";
-        }
+    if (registrationForm) {
+        registrationForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            registerButton.disabled = true;
+            registerMessage.textContent = "";
 
-        // --- Event Listeners ---
+            const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
 
-        // Open Register Modal
-        if (registerLink && registerModal) {
-            registerLink.onclick = function (event) {
-                event.preventDefault();
-                closeAllModals();
-                registerModal.style.display = "block";
-            }
-        }
+            registerUser(
+                emailInput.value,
+                passwordInput.value,
+                usernameInput.value,
+                firstnameInput.value,
+                lastnameInput.value,
+                contactInput.value,
+                selectedGender
+            );
+        });
+    }
 
-        // Open Login Modal
-        if (loginLink && loginModal) {
-            loginLink.onclick = function (event) {
-                event.preventDefault();
-                closeAllModals();
-                loginModal.style.display = "block";
-            }
-        }
+    async function registerUser(email, password, username, firstname, lastname, contact, gender) {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-        // Close Register Modal via (X) button
-        if (registerCloseButton && registerModal) {
-            registerCloseButton.onclick = function () {
-                registerModal.style.display = "none";
-            }
-        }
-
-        // Close Login Modal via (X) button
-        if (loginCloseButton && loginModal) {
-            loginCloseButton.onclick = function () {
-                loginModal.style.display = "none";
-            }
-        }
-
-        // Switch from Register Modal to Login Modal
-        if (switchToLoginLink && registerModal && loginModal) {
-            switchToLoginLink.onclick = function (event) {
-                event.preventDefault();
-                registerModal.style.display = "none";
-                loginModal.style.display = "block";
-            }
-        }
-
-        // Switch from Login Modal to Register Modal
-        if (switchToRegisterLink && registerModal && loginModal) {
-            switchToRegisterLink.onclick = function (event) {
-                event.preventDefault();
-                loginModal.style.display = "none";
-                registerModal.style.display = "block";
-            }
-        }
-
-        // Close modal if background is clicked
-        window.onclick = function (event) {
-            if (registerModal && event.target == registerModal) {
-                registerModal.style.display = "none";
-            }
-            if (loginModal && event.target == loginModal) {
-                loginModal.style.display = "none";
-            }
-        }
-
-        // --- Firebase Registration ---
-
-        // Get the registration form and its elements
-        const registrationForm = document.getElementById('registrationForm');
-        const emailInput = document.getElementById('reg-email');
-        const passwordInput = document.getElementById('reg-password');
-        const usernameInput = document.getElementById('reg-username');
-        const registerButton = document.querySelector('#registrationForm button[type="submit"]');
-
-        // Create a paragraph element for the message
-        const registerMessage = document.createElement('p');
-        registerMessage.classList.add('registration-message');
-        registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
-
-        // Find the button's parent (the form) and append the message there
-        if (registrationForm) {
-            registrationForm.appendChild(registerMessage);
-            console.log("Registration form found:", registrationForm);
-            console.log("Registration message element appended:", registerMessage);
-        } else {
-            console.error("Registration form not found!");
-        }
-
-
-        // Prevent default form submission and call registerUser
-        if (registrationForm) {
-            registrationForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                registerButton.disabled = true;
-                registerMessage.textContent = ""; // Clear any previous message
-                registerUser(emailInput.value, passwordInput.value, usernameInput.value);
+            await setDoc(doc(collection(db, "users"), user.uid), {
+                email: email,
+                username: username,
+                firstname: firstname,
+                lastname: lastname,
+                contact: contact,
+                gender: gender,
+                createdAt: new Date()
             });
-        } else {
-            console.error("Registration form event listener not attached.");
+
+            registerMessage.textContent = "Registration successful!";
+            registerMessage.style.color = "green";
+        } catch (error) {
+            console.error("Registration error:", error.code, error.message);
+            registerMessage.textContent = "Registration failed: " + error.message;
+            registerMessage.style.color = "red";
+        } finally {
+            registerButton.disabled = false;
         }
+    }
 
+    // --- Firebase Login ---
+    const loginForm = document.getElementById('loginForm');
+    const loginEmailInput = document.getElementById('login-email-user');
+    const loginPasswordInput = document.getElementById('login-password');
 
-        // Implement the registerUser function
-        async function registerUser(email, password, username) {
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                console.log("User registered:", user);
+    if (loginForm) {
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            loginUser(loginEmailInput.value, loginPasswordInput.value);
+        });
+    }
 
-                // Optionally, save additional user data to Firestore
-                await setDoc(doc(collection(db, "users"), user.uid), {
-                    email: email,
-                    username: username,
-                    // Add other user data here (e.g., firstname, lastname, etc.)
-                });
-
-                // Display success message
-                registerMessage.textContent = "Registration successful!";
-                registerMessage.style.color = "green";
-
-            } catch (error) {
-                console.error("Registration error:", error.code, error.message);
-                registerMessage.textContent = "Registration failed: " + error.message;
-                registerMessage.style.color = "red";
-            } finally {
-                registerButton.disabled = false;
-            }
+    async function loginUser(email, password) {
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            alert("Login successful!");
+        } catch (error) {
+            console.error("Login error:", error.code, error.message);
+            alert("Login failed: " + error.message);
         }
+    }
+</script>
 
-        // --- End Firebase Registration ---
-
-        // --- Firebase Login ---
-
-        // Get the login form and its elements
-        const loginForm = document.getElementById('loginForm');
-        const loginEmailInput = document.getElementById('login-email-user');
-        const loginPasswordInput = document.getElementById('login-password');
-
-        // Prevent default login form submission and call loginUser
-        if (loginForm) {
-            loginForm.addEventListener('submit', (event) => {
-                event.preventDefault(); // Prevent page reload
-                loginUser(loginEmailInput.value, loginPasswordInput.value); // Call loginUser function
-            });
-        } else {
-            console.error("Login form not found.");
-        }
-
-
-        // Implement the loginUser function
-        async function loginUser(email, password) {
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                console.log("User logged in:", user);
-
-                alert("Login successful!");
-                // Redirect or update UI as needed (e.g., go to a dashboard)
-            } catch (error) {
-                console.error("Login error:", error.code, error.message);
-                alert("Login failed: " + error.message);
-                // Handle errors (e.g., wrong email/password)
-            }
-        }
-
-        // --- End Firebase Login ---
-    </script>
 </head>
 
 <body>
