@@ -43,6 +43,11 @@ header {
     flex-shrink: 0; /* Prevent header shrinking */
     gap: 20px; /* Add gap between logo, text, nav */
     flex-wrap: wrap; /* Allow header items to wrap on very small screens */
+
+    /* --- ADD THESE TWO LINES --- */
+    position: relative; /* Establishes positioning context */
+    z-index: 10;        /* Ensures header is stacked above static elements */
+    /* --- END OF ADDED LINES --- */
 }
 
 .logo {
