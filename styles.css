@@ -1005,3 +1005,61 @@ nav ul li a.active-page {
 .user-account.active .user-dropdown {
     display: block; /* Show when active */
 }
+/* ======================================== */
+/* Styles specifically for Admin Dashboard  */
+/* ======================================== */
+
+/* Style for the main content area (adjust selector if needed) */
+/* You might already have a general 'main' style in styles.css */
+/* If so, you might not need this, or you could make it more specific */
+/* like: body.admin-page main { padding: 20px; } */
+main {
+    padding: 20px;
+}
+
+/* Styling for the bookings table */
+#bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#bookings-table th,
+#bookings-table td {
+    border: 1px solid #ddd; /* Light grey border */
+    padding: 8px;          /* Padding inside cells */
+    text-align: left;      /* Align text to the left */
+}
+
+#bookings-table th {
+    background-color: #f2f2f2; /* Light grey background for headers */
+    font-weight: 600; /* Make headers bold */
+}
+
+/* Center text within the loading message row */
+.loading-message td {
+    text-align: center;
+    padding: 20px;
+    color: #555;
+}
+
+/* Styling for the logout button in the admin header */
+/* If you have general button styles, you might adjust this */
+#admin-actions button#logout-button { /* More specific selector */
+    padding: 8px 15px;
+    background-color: #dc3545; /* Red color */
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif; /* Match font if needed */
+    font-size: 0.9em; /* Adjust size if needed */
+}
+
+#admin-actions button#logout-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* ======================================== */
+/* End of Admin Dashboard Styles          */
+/* ======================================== */
