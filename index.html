@@ -77,9 +77,7 @@
             <div class="modal-form-body">
                 <form id="loginForm">
                     <div class="form-group">
-                        <label for="login-email-user">Email/Username:</label>
-                        <input type="text" id="login-email-user" name="email_username" required>
-                    </div>
+                        <label for="login-email-user">Username:</label> <input type="text" id="login-email-user" name="username" required> </div>
                     <div class="form-group">
                         <label for="login-password">Password:</label>
                         <input type="password" id="login-password" name="password" required>
@@ -157,10 +155,11 @@
         // Import the functions you need from the SDKs
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-        import { getFirestore, collection, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+        // *** UPDATED FIRESTORE IMPORT ***
+        import { getFirestore, collection, doc, setDoc, getDoc, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js"; // Optional
 
-        // Your web app's Firebase configuration (FROM YOUR LATEST SNIPPET)
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             // --- MAKE SURE THIS API KEY IS YOUR COMPLETE AND CORRECT KEY ---
             apiKey: "AIzaSyAp19_1RwloTbJLZ_K723-m8C2zka8Oh10",
@@ -182,7 +181,7 @@
         // --- Wait for the DOM to be fully loaded ---
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- Firebase Registration ---
+            // --- Firebase Registration (No changes needed here for login update) ---
             const registrationForm = document.getElementById('registrationForm');
             const emailInput = document.getElementById('reg-email');
             const passwordInput = document.getElementById('reg-password');
@@ -209,15 +208,12 @@
                     const password = passwordInput ? passwordInput.value : '';
                     const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
 
-                    // --- > Check Password Length (Optional but recommended) <---
-                    if (password.length < 8) { // Example: Enforcing 8 characters
-                         registerMessage.textContent = "Password must be at least 8 characters long.";
-                         registerMessage.style.color = "red";
-                         registerButton.disabled = false;
-                         return; // Stop submission
+                    if (password.length < 8) { // Optional: 8 char check
+                        registerMessage.textContent = "Password must be at least 8 characters long.";
+                        registerMessage.style.color = "red";
+                        registerButton.disabled = false;
+                        return;
                     }
-                    // --- > End Length Check < ---
-
                     if (password !== confirmPassword) {
                         registerMessage.textContent = "Passwords do not match.";
                         registerMessage.style.color = "red";
@@ -225,21 +221,25 @@
                         return;
                     }
                     if (!emailInput?.value || !password || !usernameInput?.value || !firstnameInput?.value || !lastnameInput?.value || !contactInput?.value || !selectedGender) {
-                         registerMessage.textContent = "Please fill in all required fields.";
-                         registerMessage.style.color = "red";
-                         registerButton.disabled = false;
-                         return;
+                        registerMessage.textContent = "Please fill in all required fields.";
+                        registerMessage.style.color = "red";
+                        registerButton.disabled = false;
+                        return;
                      }
                     registerUser(emailInput.value, password, usernameInput.value, firstnameInput.value, lastnameInput.value, contactInput.value, selectedGender);
                 });
             } else { console.error("Registration form or button not found!"); }
 
             async function registerUser(email, password, username, firstname, lastname, contact, gender) {
+                // --- Consider adding username uniqueness check here in future ---
                 try {
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     const user = userCredential.user;
                     console.log("Auth success. UID:", user.uid);
                     const userDocRef = doc(db, "users", user.uid);
+                    // Save username in lowercase for case-insensitive lookup during login? Optional.
+                    // const usernameLower = username.toLowerCase();
+                    // await setDoc(userDocRef, { email, username: usernameLower, ... });
                     await setDoc(userDocRef, { email, username, firstname, lastname, contact, gender, createdAt: new Date(), isAdmin: false });
                     console.log("Firestore save success.");
                     registerMessage.textContent = "Registration successful!";
@@ -249,15 +249,15 @@
                     let errorMessage = "Registration failed.";
                     if (error.code === 'auth/email-already-in-use') errorMessage = "Email already in use.";
                     else if (error.code === 'auth/invalid-email') errorMessage = "Invalid email.";
-                    else if (error.code === 'auth/weak-password') errorMessage = "Password needs 6+ characters."; // Firebase default is 6
+                    else if (error.code === 'auth/weak-password') errorMessage = "Password needs 6+ characters.";
                     registerMessage.textContent = errorMessage;
                     registerMessage.style.color = "red";
                 } finally { if (registerButton) registerButton.disabled = false; }
             }
 
-            // --- Firebase Login ---
+            // --- Firebase Login (UPDATED for Username/Password) ---
             const loginForm = document.getElementById('loginForm');
-            const loginEmailInput = document.getElementById('login-email-user');
+            const loginUsernameInput = document.getElementById('login-email-user'); // Keep ID, it accepts username now
             const loginPasswordInput = document.getElementById('login-password');
             const loginButton = loginForm ? loginForm.querySelector('button[type="submit"]') : null;
             const loginMessage = document.createElement('p');
@@ -266,27 +266,72 @@
                 loginMessage.classList.add('login-message');
                 loginMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
                 loginForm.appendChild(loginMessage);
+
                 loginForm.addEventListener('submit', (event) => {
                     event.preventDefault();
                     loginButton.disabled = true;
-                    loginMessage.textContent = "Logging in...";
+                    loginMessage.textContent = "Logging in..."; // Changed initial message
                     loginMessage.style.color = "blue";
-                    loginUser(loginEmailInput.value, loginPasswordInput.value);
+                    // Pass the username input value to the updated loginUser function
+                    loginUser(loginUsernameInput.value, loginPasswordInput.value);
                 });
             } else { console.error("Login form or button not found!"); }
 
-            async function loginUser(emailOrUsername, password) {
-                 // Assumes EMAIL login for now. Username login requires extra steps.
-                if (!emailOrUsername || !password) {
-                    loginMessage.textContent = "Please enter email and password.";
+
+            // *** REPLACED loginUser function ***
+            async function loginUser(usernameInput, password) {
+                if (!usernameInput || !password) {
+                    loginMessage.textContent = "Please enter username and password.";
                     loginMessage.style.color = "red";
                     if (loginButton) loginButton.disabled = false;
                     return;
                 }
+
+                let userEmail = null; // Variable to store the email found
+
                 try {
-                    const userCredential = await signInWithEmailAndPassword(auth, emailOrUsername, password);
+                    // --- Step 1: Look up username in Firestore ---
+                    loginMessage.textContent = "Verifying username...";
+                    loginMessage.style.color = "blue";
+
+                    const usersRef = collection(db, "users");
+                    // Consider querying lowercase version if you save usernames as lowercase
+                    // const usernameLower = usernameInput.toLowerCase();
+                    // const q = query(usersRef, where("username", "==", usernameLower), limit(1));
+                    const q = query(usersRef, where("username", "==", usernameInput), limit(1)); // Case-sensitive query
+
+                    const querySnapshot = await getDocs(q);
+
+                    if (querySnapshot.empty) {
+                        console.log("No user found with username:", usernameInput);
+                        loginMessage.textContent = "Invalid username or password."; // Generic error
+                        loginMessage.style.color = "red";
+                        if (loginButton) loginButton.disabled = false;
+                        return;
+                    }
+
+                    // Username found, get the associated email
+                    querySnapshot.forEach((doc) => {
+                        userEmail = doc.data().email;
+                        console.log(`Found email ${userEmail} for username ${usernameInput}`);
+                    });
+
+                    if (!userEmail) {
+                         console.error("Username found but email was missing in Firestore document.");
+                         loginMessage.textContent = "Login failed (error code: LUE). Please contact support.";
+                         loginMessage.style.color = "red";
+                         if (loginButton) loginButton.disabled = false;
+                         return;
+                    }
+
+                    // --- Step 2: Attempt Firebase Auth sign-in using the FOUND email ---
+                    loginMessage.textContent = "Logging in..."; // Update status
+
+                    const userCredential = await signInWithEmailAndPassword(auth, userEmail, password); // Use the FOUND email
                     const user = userCredential.user;
                     console.log("Login success. UID:", user.uid);
+
+                    // *** Admin Check (Same as before) ***
                     const userDocRef = doc(db, "users", user.uid);
                     const docSnap = await getDoc(userDocRef);
                     let isAdmin = false;
@@ -296,18 +341,19 @@
                     loginMessage.textContent = "Login successful! Redirecting...";
                     loginMessage.style.color = "green";
                     setTimeout(() => { window.location.href = isAdmin ? "admin-dashboard.html" : "dashboard.html"; }, 1500);
+
                 } catch (error) {
-                    console.error("Login error:", error);
-                    let errorMessage = "Login failed.";
-                     if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') errorMessage = "Invalid email or password.";
-                     else if (error.code === 'auth/invalid-email') errorMessage = "Invalid email format.";
-                    loginMessage.textContent = errorMessage;
+                    // This catch block handles errors from BOTH Firestore query AND Auth sign-in
+                    console.error("Login process error:", error);
+                    // Make the error generic because we don't know if it was username lookup or password
+                    loginMessage.textContent = "Invalid username or password.";
                     loginMessage.style.color = "red";
                     if (loginButton) loginButton.disabled = false;
                 }
-            }
+            } // End of updated loginUser function
 
-            // --- Modal Logic ---
+
+            // --- Modal Logic (No changes needed here for login update) ---
             const loginLink = document.getElementById('loginLink');
             const registerLink = document.getElementById('registerLink');
             const loginModal = document.getElementById('loginModal');
