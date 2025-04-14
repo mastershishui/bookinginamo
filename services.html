@@ -23,13 +23,16 @@
             <h1>Our Beauty Services</h1>
         </div>
         <nav>
-            <ul>
-                <li><a href="reviews.html">Reviews</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="services.html" class="active-page">Services</a></li> <li><a href="#" id="loginLink">Login</a></li>
-                <li><a href="#" id="registerLink">Register</a></li>
-            </ul>
-        </nav>
+    <ul>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li id="loginNavItem"><a href="#" id="loginLink">Login</a></li>
+        <li id="registerNavItem"><a href="#" id="registerLink">Register</a></li>
+        <li id="userNav" style="display: none;"> <span id="usernameDisplay" style="margin-right: 10px;">Welcome</span> <a href="dashboard.html" style="margin-right: 10px;">Dashboard</a> <a href="#" id="logoutButton">Logout</a>
+        </li>
+    </ul>
+</nav>
     </header>
 
     <main>
@@ -380,77 +383,10 @@
         </div>
     </div>
 
-    <script>
-        // --- START: Full Modal Control Script ---
-        var registerModal = document.getElementById("registerModal");
-        var registerLink = document.getElementById("registerLink");
-        var registerCloseButton = registerModal ? registerModal.querySelector(".register-close-button") : null;
-        var switchToLoginLink = document.getElementById("switchToLogin");
+    <script type="module" src="firebase-config.js"></script>
+<script type="module" src="auth-handler.js"></script>
 
-        var loginModal = document.getElementById("loginModal");
-        var loginLink = document.getElementById("loginLink");
-        var loginCloseButton = loginModal ? loginModal.querySelector(".login-close-button") : null;
-        var switchToRegisterLink = document.getElementById("switchToRegister");
-
-        function closeAllModals() {
-            if (registerModal) registerModal.style.display = "none";
-            if (loginModal) loginModal.style.display = "none";
-        }
-
-        if (registerLink && registerModal) {
-            registerLink.onclick = function(event) {
-              event.preventDefault();
-              closeAllModals();
-              registerModal.style.display = "block";
-            }
-        }
-
-        if (loginLink && loginModal) {
-            loginLink.onclick = function(event) {
-              event.preventDefault();
-              closeAllModals();
-              loginModal.style.display = "block";
-            }
-        }
-
-        if (registerCloseButton && registerModal) {
-            registerCloseButton.onclick = function() {
-              registerModal.style.display = "none";
-            }
-        }
-
-        if (loginCloseButton && loginModal) {
-            loginCloseButton.onclick = function() {
-              loginModal.style.display = "none";
-            }
-        }
-
-        if (switchToLoginLink && registerModal && loginModal) {
-            switchToLoginLink.onclick = function(event) {
-                event.preventDefault();
-                registerModal.style.display = "none";
-                loginModal.style.display = "block";
-            }
-        }
-
-        if (switchToRegisterLink && registerModal && loginModal) {
-            switchToRegisterLink.onclick = function(event) {
-                event.preventDefault();
-                loginModal.style.display = "none";
-                registerModal.style.display = "block";
-            }
-        }
-
-        window.onclick = function(event) {
-          if (registerModal && event.target == registerModal) {
-            registerModal.style.display = "none";
-          }
-          if (loginModal && event.target == loginModal) {
-            loginModal.style.display = "none";
-          }
-        }
-       // --- END: Full Modal Control Script ---
-    </script>
+<script type="module" src="modal-script.js"></script>
 
 </body>
 </html>
