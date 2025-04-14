@@ -162,7 +162,9 @@
 
         // Your web app's Firebase configuration (FROM YOUR LATEST SNIPPET)
         const firebaseConfig = {
-            apiKey: "AIzaSyAp19_1RwloTbJLZ_K723-m8C2zka8Oh10", // ENSURE THIS IS YOUR FULL, CORRECT KEY
+            // --- MAKE SURE THIS API KEY IS YOUR COMPLETE AND CORRECT KEY ---
+            apiKey: "AIzaSyAp19_1RwloTbJLZ_K723-m8C2zka8Oh10",
+            // --- ----------------------------------------------------- ---
             authDomain: "gjsbooking-faba9.firebaseapp.com",
             projectId: "gjsbooking-faba9",
             storageBucket: "gjsbooking-faba9.firebasestorage.app",
@@ -207,6 +209,15 @@
                     const password = passwordInput ? passwordInput.value : '';
                     const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
 
+                    // --- > Check Password Length (Optional but recommended) <---
+                    if (password.length < 8) { // Example: Enforcing 8 characters
+                         registerMessage.textContent = "Password must be at least 8 characters long.";
+                         registerMessage.style.color = "red";
+                         registerButton.disabled = false;
+                         return; // Stop submission
+                    }
+                    // --- > End Length Check < ---
+
                     if (password !== confirmPassword) {
                         registerMessage.textContent = "Passwords do not match.";
                         registerMessage.style.color = "red";
@@ -238,7 +249,7 @@
                     let errorMessage = "Registration failed.";
                     if (error.code === 'auth/email-already-in-use') errorMessage = "Email already in use.";
                     else if (error.code === 'auth/invalid-email') errorMessage = "Invalid email.";
-                    else if (error.code === 'auth/weak-password') errorMessage = "Password needs 6+ characters.";
+                    else if (error.code === 'auth/weak-password') errorMessage = "Password needs 6+ characters."; // Firebase default is 6
                     registerMessage.textContent = errorMessage;
                     registerMessage.style.color = "red";
                 } finally { if (registerButton) registerButton.disabled = false; }
