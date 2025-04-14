@@ -1,68 +1,67 @@
-// modal-script.js (Replace the existing loginUser function with this)
+// Inside modal-script.js, within the DOMContentLoaded listener
 
-async function loginUser(emailInput, password) { // Renamed parameter for clarity
-    // --- Input Validation ---
-    if (!emailInput || !password) {
-        loginMessage.textContent = "Please enter email and password.";
-        loginMessage.style.color = "red";
-        if (loginButton) loginButton.disabled = false;
-        return;
-    }
+// --- Modal Opening/Closing Logic ---
+const loginLink = document.getElementById('loginLink');
+const registerLink = document.getElementById('registerLink');
+const loginModal = document.getElementById('loginModal');
+const registerModal = document.getElementById('registerModal');
+const loginCloseButton = loginModal ? loginModal.querySelector('.login-close-button') : null;
+const registerCloseButton = registerModal ? registerModal.querySelector('.register-close-button') : null;
+const switchToRegister = document.getElementById('switchToRegister');
+const switchToLogin = document.getElementById('switchToLogin');
 
-    // --- Disable button and show progress ---
-    if (loginButton) loginButton.disabled = true;
-    loginMessage.textContent = "Logging in...";
-    loginMessage.style.color = "blue";
+// Function to close modals (should also be inside DOMContentLoaded or globally accessible)
+function closeAllModals() {
+    const loginMessage = loginForm ? loginForm.querySelector('.login-message') : null; // Find message elements if needed
+    const registerMessage = registrationForm ? registrationForm.querySelector('.registration-message') : null; // Find message elements if needed
 
-    try {
-        // --- Attempt Direct Email/Password Sign-in ---
-        console.log("Attempting login with email:", emailInput);
-        const userCredential = await signInWithEmailAndPassword(auth, emailInput, password);
-        const user = userCredential.user;
-        console.log("Login successful. UID:", user.uid);
-
-        // --- Check for Admin Status (Keep this part) ---
-        const userDocRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(userDocRef);
-        let isAdmin = false;
-        if (docSnap.exists() && docSnap.data().isAdmin === true) {
-            isAdmin = true;
-            console.log("User is an admin.");
-        } else {
-            console.log("User is not an admin or user doc not found.");
-        }
-
-        // --- Success Message and Redirect ---
-        loginMessage.textContent = "Login successful! Redirecting...";
-        loginMessage.style.color = "green";
-        setTimeout(() => {
-            window.location.href = isAdmin ? "admin-dashboard.html" : "dashboard.html";
-        }, 1500); // 1.5 second delay before redirect
-
-    } catch (error) {
-        // --- Handle Login Errors ---
-        console.error("Login failed:", error);
-        // Provide user-friendly error messages based on Firebase error codes
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-            loginMessage.textContent = "Invalid email or password.";
-        } else if (error.code === 'auth/invalid-email') {
-            loginMessage.textContent = "Invalid email format.";
-        } else {
-            loginMessage.textContent = "Login failed. Please try again."; // Generic error
-        }
-        loginMessage.style.color = "red";
-        if (loginButton) loginButton.disabled = false; // Re-enable button on failure
-    }
-} // End of updated loginUser function
-
-// --- Make sure the event listener calls this updated function ---
-// (This part should already be in your modal-script.js)
-if (loginForm && loginButton) {
-    // ... (message element setup) ...
-    loginForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const email = loginUsernameInput.value; // Get value from the input field
-        const password = loginPasswordInput.value;
-        loginUser(email, password); // Call the updated function
-    });
+    if (registerModal) registerModal.style.display = "none";
+    if (loginModal) loginModal.style.display = "none";
+    // Clear messages when closing modals (optional)
+    if (loginMessage) loginMessage.textContent = '';
+    if (registerMessage) registerMessage.textContent = '';
 }
+
+// --- THIS IS THE CRUCIAL PART ---
+// Add event listeners for modal controls
+if (loginLink) {
+    loginLink.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default anchor behavior
+        closeAllModals();
+        if (loginModal) loginModal.style.display = 'block';
+        console.log("Login link clicked"); // Add for debugging
+    });
+} else {
+    console.error("Login link element not found!"); // Check console for this
+}
+
+if (registerLink) {
+    registerLink.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default anchor behavior
+        closeAllModals();
+        if (registerModal) registerModal.style.display = 'block';
+        console.log("Register link clicked"); // Add for debugging
+    });
+} else {
+    console.error("Register link element not found!"); // Check console for this
+}
+
+// Add listeners for close buttons, switch links, and background clicks
+if (loginCloseButton) loginCloseButton.addEventListener('click', closeAllModals);
+if (registerCloseButton) registerCloseButton.addEventListener('click', closeAllModals);
+if (switchToRegister) switchToRegister.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); if (registerModal) registerModal.style.display = 'block'; });
+if (switchToLogin) switchToLogin.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); if (loginModal) loginModal.style.display = 'block'; });
+
+// Close modal if clicking outside of it
+window.addEventListener('click', (event) => {
+    if (event.target === loginModal || event.target === registerModal) {
+        closeAllModals();
+    }
+});
+// --- END OF CRUCIAL PART ---
+
+// Ensure the login/register form variables are defined before being used in closeAllModals if messages are cleared there
+const loginForm = document.getElementById('loginForm');
+const registrationForm = document.getElementById('registrationForm');
+
+// ... (rest of your modal-script.js, including loginUser, registerUser, etc.)
