@@ -18,14 +18,11 @@ body {
     padding: 0;
     font-family: 'Montserrat', sans-serif;
     background-color: #fff;
-    /* Removed height: 100vh; */
-    /* Removed overflow: hidden; */
 }
 /* --- END CORRECTED DEFAULT BODY RULE --- */
 
 
 /* --- Styles SPECIFICALLY for Homepage No-Scroll --- */
-/* --- Add class="homepage-no-scroll" ONLY to the body tag in index.html --- */
 body.homepage-no-scroll {
     height: 100vh;     /* Fix body height to viewport */
     overflow: hidden;  /* Prevent scrolling ONLY on homepage */
@@ -40,14 +37,11 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0; /* Prevent header shrinking */
-    gap: 20px; /* Add gap between logo, text, nav */
-    flex-wrap: wrap; /* Allow header items to wrap on very small screens */
-
-    /* --- ADD THESE TWO LINES --- */
-    position: relative; /* Establishes positioning context */
-    z-index: 10;        /* Ensures header is stacked above static elements */
-    /* --- END OF ADDED LINES --- */
+    flex-shrink: 0;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
 }
 
 .logo {
@@ -61,28 +55,28 @@ header {
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    display: block; /* Remove extra space below image */
+    display: block;
 }
 
 .header-text {
     text-align: left;
     display: flex;
     align-items: center;
-    flex-grow: 1; /* Allow text to take available space */
-    min-width: 200px; /* Prevent text from getting too squished */
+    flex-grow: 1;
+    min-width: 200px;
 }
 
 .header-text h1 {
-    font-size: 1.2em; /* Slightly reduce size to help fit */
+    font-size: 1.2em;
     font-weight: bold;
     margin: 0;
-    white-space: nowrap; /* Prevent text from wrapping */
-    overflow: hidden; /* Hide overflow if it's too long */
-    text-overflow: ellipsis; /* Add '...' if text is hidden */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .header-text h1 span { /* Style for span inside H1 if used */
-    font-size: 0.9em; /* Adjust size relative to H1 */
+    font-size: 0.9em;
     font-weight: normal;
     margin-left: 10px;
     white-space: nowrap;
@@ -91,7 +85,7 @@ header {
 nav {
     display: flex;
     align-items: center;
-    flex-shrink: 0; /* Prevent nav shrinking */
+    flex-shrink: 0;
 }
 
 nav ul {
@@ -101,11 +95,11 @@ nav ul {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    flex-wrap: wrap; /* Allow nav items to wrap on small screens */
+    flex-wrap: wrap;
 }
 
 nav ul li {
-    margin: 5px 10px; /* Add vertical margin for wrapping */
+    margin: 5px 10px;
 }
 
 nav ul li a {
@@ -116,21 +110,21 @@ nav ul li a {
     padding: 8px 12px;
     border-radius: 5px;
     transition: background-color 0.2s ease, color 0.2s ease;
-    white-space: nowrap; /* Keep nav links on one line */
+    white-space: nowrap;
 }
 
 nav ul li a:hover,
 nav ul li a:focus {
     background-color: #e0e0e0;
-    color: #d81b60; /* Darker Pink Hover */
+    color: #d81b60;
     outline: none;
 }
 
 /* ------- Main Content Area ------- */
 main {
     padding: 30px 40px;
-    flex-grow: 1; /* Allows main content to push footer down */
-    display: block; /* Default display */
+    flex-grow: 1;
+    display: block;
 }
 
 /* ------- Hero Section Styles (Homepage) ------- */
@@ -215,7 +209,7 @@ footer {
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 20px;
-    flex-shrink: 0; /* Prevent footer shrinking */
+    flex-shrink: 0;
 }
 
 .footer-section {
@@ -548,19 +542,24 @@ footer {
     display: block;
 }
 
-#loginModal .modal-form-body input[type="text"],
+/* **** MODIFIED THIS RULE TO INCLUDE input[type="email"] **** */
+#loginModal .modal-form-body input[type="email"], /* Added this type */
+#loginModal .modal-form-body input[type="text"], /* Kept text just in case */
 #loginModal .modal-form-body input[type="password"] {
     background-color: #fff;
     border: 1px solid #f0c1d3;
     color: #333;
     width: 100%;
-    padding: 10px 12px;
+    padding: 10px 12px; /* You can adjust padding here if needed */
     border-radius: 4px;
     font-size: 0.95em;
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    /* Add height here if you want to force it, e.g., height: 40px; */
 }
+/* **** END OF MODIFIED RULE **** */
+
 #loginModal .modal-form-body input::placeholder {
     font-family: 'Montserrat', sans-serif;
     color: #999;
