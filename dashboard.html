@@ -23,37 +23,37 @@
         <div class="header-text">
             <h1>Nails, Facials, Brows, Lashes, Waxing, Gluta Spa <span>Clinic Hours: 9AM - 8PM</span></h1>
         </div>
-    <nav>
-     <ul>
-                 <li><a href="index.html">Home</a></li>
-         <li><a href="reviews.html">Reviews</a></li>
-         <li><a href="faq.html">FAQ</a></li>
-         <li><a href="services.html">Services</a></li>
+        <nav>
+           <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="services.html">Services</a></li>
 
-                         <li id="nav-mybook-link-li" style="display: none;"><a href="mybook.html">My Book</a></li>
+                <li id="nav-mybook-link-li" style="display: none;"><a href="mybook.html">My Book</a></li>
 
-                                 <li id="nav-login-link-li" style="display: block;">
-             <a href="#" id="loginLink">Login</a>
-         </li>
-                         <li id="nav-register-link-li" style="display: block;">
-              <a href="#" id="registerLink">Register</a>
-         </li>
+                <li id="nav-login-link-li" style="display: block;">
+                    <a href="#" id="loginLink">Login</a>
+                </li>
+                <li id="nav-register-link-li" style="display: block;">
+                    <a href="#" id="registerLink">Register</a>
+                </li>
 
-                                 <li id="nav-user-account-li" class="user-account" style="display: none;">
-             <a href="#" class="user-icon">
-                 <i class="fas fa-user-circle"></i> </a>
-             <div class="user-dropdown">
-                 <a href="profile.html">My Profile</a>
-                 <a href="#" id="logout-link">Logout</a>
-             </div>
-         </li>
-     </ul>
- </nav>
+                <li id="nav-user-account-li" class="user-account" style="display: none;">
+                    <a href="#" class="user-icon">
+                        <i class="fas fa-user-circle"></i> </a>
+                    <div class="user-dropdown">
+                        <a href="profile.html">My Profile</a>
+                        <a href="#" id="logout-link">Logout</a>
+                    </div>
+                </li>
+           </ul>
+        </nav>
     </header>
 
     <main class="dashboard-container">
         <div class="dashboard-section">
-            <h2>Welcome, \[Username]!</h2>
+            <h2 id="dashboard-welcome-message">Welcome!</h2>
             <p>Here's an overview of your account.</p>
         </div>
 
@@ -79,9 +79,7 @@
     <footer>
         <div class="footer-section">
             <h3>More about Company</h3>
-            <p>GJ's Beauty Lounge is dedicated to enhancing beauty and confidence through professional services, including
-                nails, brows, lashes, waxing, and gluta spa treatments. With a commitment to quality and customer
-                satisfaction, we create a relaxing space where clients can enjoy top-tier beauty care.</p>
+            <p>GJ's Beauty Lounge is dedicated...</p>
         </div>
         <div class="footer-section">
             <h3>Keep Connected</h3>
@@ -92,9 +90,7 @@
         </div>
         <div class="footer-section">
             <h3>Contact Information</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Lower Ground Floor, Nova Plaza Mall, Quirino Highway,
-                Novaliches
-                Proper, Quezon City</p>
+            <p><i class="fas fa-map-marker-alt"></i> Lower Ground Floor, Nova Plaza Mall...</p>
             <p><i class="fas fa-phone"></i> 0962-847-2488</p>
             <p><i class="fas fa-envelope"></i> <a
                     href="mailto:gjsbeautylounge@gmail.com">gjsbeautylounge@gmail.com</a>
@@ -102,23 +98,7 @@
         </div>
     </footer>
 
-    <script>
-        const userAccount = document.querySelector('.user-account');
-        const userIcon = document.querySelector('.user-icon');
+    <script type="module" src="firebase-auth.js"></script>
 
-        if (userAccount && userIcon) {
-            userIcon.addEventListener('click', (e) => {
-                e.preventDefault();
-                userAccount.classList.toggle('active');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!userAccount.contains(e.target)) {
-                    userAccount.classList.remove('active');
-                }
-            });
-        }
-    </script>
 </body>
-
 </html>
