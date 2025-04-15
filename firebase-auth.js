@@ -21,7 +21,7 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase
 // --- Firebase Config ---
 const firebaseConfig = {
     // IMPORTANT: Make sure this apiKey is correct and complete!
-    apiKey: "YOUR_API_KEY", // Replace with your actual API key if needed
+    apiKey: "AIzaSyAp19_1RwloTbJLZ_K723-m8C2zka8Oh10", // Replace with your actual API key if needed
     authDomain: "gjsbooking-faba9.firebaseapp.com",
     projectId: "gjsbooking-faba9",
     storageBucket: "gjsbooking-faba9.appspot.com",
