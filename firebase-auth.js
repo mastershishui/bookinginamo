@@ -1,208 +1,221 @@
 // firebase-auth.js
 
-// Import the functions you need from the SDKs
+// --- Imports ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged, // <-- Import this
+    signOut             // <-- Import this
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import {
+    getFirestore,
+    collection,
+    doc,
+    setDoc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js"; // Optional
 
-// Your web app's Firebase configuration
+// --- Firebase Config ---
 const firebaseConfig = {
-    apiKey: "AIzaSyAp19_1RwloTbJLZ_K723-m8C2zka8Oh10", // ENSURE THIS IS YOUR FULL, CORRECT KEY
+    apiKey: "YOUR_API_KEY", // Replace with your actual key if hidden earlier
     authDomain: "gjsbooking-faba9.firebaseapp.com",
     projectId: "gjsbooking-faba9",
-    storageBucket: "gjsbooking-faba9.firebasestorage.app", // Corrected typo: firebasestorage -> firebaseapp
+    storageBucket: "gjsbooking-faba9.appspot.com", // Use default bucket domain
     messagingSenderId: "708149149410",
     appId: "1:708149149410:web:dde6a5b99b4900dd8c28bb",
     measurementId: "G-5QB9413PJH" // Optional
 };
 
-// Initialize Firebase
+// --- Initialize Firebase ---
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const analytics = getAnalytics(app); // Optional
+// const analytics = getAnalytics(app); // Optional
 
-// --- Wait for the DOM to be fully loaded ---
+// --- Global variables for UI elements (to avoid repeated selections) ---
+let loginLinkLi = null;
+let registerLinkLi = null;
+let userAccountLi = null;
+let logoutLink = null;
+let dashboardWelcomeMessage = null;
+let myBookLink = null; // <-- Added for My Book link
+
+// --- Helper Function to Update UI ---
+function updateNavUI(user) {
+    // Select elements once if not already selected
+    if (!loginLinkLi) loginLinkLi = document.getElementById('nav-login-link-li');
+    if (!registerLinkLi) registerLinkLi = document.getElementById('nav-register-link-li');
+    if (!userAccountLi) userAccountLi = document.getElementById('nav-user-account-li');
+    if (!logoutLink) logoutLink = document.getElementById('logout-link');
+    if (!myBookLink) myBookLink = document.getElementById('nav-mybook-link-li'); // <-- Select My Book li
+
+    if (user) {
+        // User is logged in
+        if (loginLinkLi) loginLinkLi.style.display = 'none';
+        if (registerLinkLi) registerLinkLi.style.display = 'none';
+        if (userAccountLi) userAccountLi.style.display = 'block'; // Or 'list-item' etc.
+        if (myBookLink) myBookLink.style.display = 'block'; // <-- Show My Book link
+
+        // Setup logout link functionality (if it exists on the page)
+        if (logoutLink && !logoutLink.dataset.listenerAttached) {
+             logoutLink.addEventListener('click', handleLogout);
+             logoutLink.dataset.listenerAttached = 'true'; // Prevent adding multiple listeners
+        }
+
+        // --- Dropdown Toggle Logic (moved here) ---
+        const userIcon = userAccountLi ? userAccountLi.querySelector('.user-icon') : null;
+        if (userIcon && !userIcon.dataset.listenerAttached) {
+            userIcon.addEventListener('click', (e) => {
+                e.preventDefault();
+                userAccountLi.classList.toggle('active');
+            });
+             // Close dropdown if clicking outside
+             document.addEventListener('click', (e) => {
+                if (userAccountLi && !userAccountLi.contains(e.target)) {
+                    userAccountLi.classList.remove('active');
+                }
+            });
+            userIcon.dataset.listenerAttached = 'true'; // Prevent adding multiple listeners
+        }
+
+    } else {
+        // User is logged out
+        if (loginLinkLi) loginLinkLi.style.display = 'block'; // Or 'list-item' etc.
+        if (registerLinkLi) registerLinkLi.style.display = 'block'; // Or 'list-item' etc.
+        if (userAccountLi) userAccountLi.style.display = 'none';
+         if (myBookLink) myBookLink.style.display = 'none'; // <-- Hide My Book link
+    }
+}
+
+// --- Helper Function to Protect Routes ---
+function protectRoute(user) {
+    const protectedPages = ['/dashboard.html', '/profile.html', '/mybook.html']; // Add pages that require login
+    const currentPage = window.location.pathname;
+
+    if (!user && protectedPages.some(page => currentPage.endsWith(page))) {
+        console.log("User not logged in. Redirecting from protected route:", currentPage);
+        // Redirect to homepage or login page
+        window.location.href = '/index.html'; // Adjust if your homepage is different
+    }
+}
+
+// --- Update Dashboard Welcome Message ---
+ async function updateDashboardWelcome(user) {
+    if (!dashboardWelcomeMessage) {
+        dashboardWelcomeMessage = document.getElementById('dashboard-welcome-message');
+    }
+    if (dashboardWelcomeMessage && user) {
+        try {
+             // Fetch user's first name from Firestore
+             const userDocRef = doc(db, "users", user.uid);
+             const docSnap = await getDoc(userDocRef);
+             if (docSnap.exists()) {
+                 const userData = docSnap.data();
+                 // Use firstname if available, otherwise fallback to email/username
+                 const name = userData.firstname || userData.username || user.email;
+                 dashboardWelcomeMessage.textContent = `Welcome, ${name}!`;
+             } else {
+                 dashboardWelcomeMessage.textContent = `Welcome!`; // Fallback
+             }
+        } catch (error) {
+             console.error("Error fetching user data for welcome message:", error);
+             dashboardWelcomeMessage.textContent = `Welcome!`; // Fallback on error
+        }
+    }
+}
+
+
+// --- Firebase Logout Function ---
+async function handleLogout(event) {
+    event.preventDefault(); // Prevent link navigation
+    console.log("Logging out...");
+    try {
+        await signOut(auth);
+        console.log("User signed out successfully.");
+        // The onAuthStateChanged listener will automatically update the UI
+        // and redirect if necessary. Optionally, redirect immediately:
+        window.location.href = '/index.html'; // Redirect to homepage after logout
+    } catch (error) {
+        console.error("Logout Error:", error);
+        alert("Failed to log out. Please try again.");
+    }
+}
+
+
+// --- DOMContentLoaded Listener (runs when HTML is ready) ---
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Firebase Registration ---
+    // --- Get references to Nav elements (important to do this *inside* DOMContentLoaded) ---
+    loginLinkLi = document.getElementById('nav-login-link-li');
+    registerLinkLi = document.getElementById('nav-register-link-li');
+    userAccountLi = document.getElementById('nav-user-account-li');
+    logoutLink = document.getElementById('logout-link');
+    myBookLink = document.getElementById('nav-mybook-link-li'); // <-- Get My Book li
+    dashboardWelcomeMessage = document.getElementById('dashboard-welcome-message'); // For dashboard page
+
+    // --- Setup Auth State Observer ---
+    onAuthStateChanged(auth, (user) => {
+        console.log("Auth state changed. User:", user ? user.uid : 'None');
+        updateNavUI(user); // Update navigation based on user state
+        protectRoute(user); // Check if the current route needs protection
+
+        // If on dashboard, update welcome message
+         if (window.location.pathname.endsWith('/dashboard.html') && user) {
+            updateDashboardWelcome(user);
+        }
+
+        // If modals exist on the page, ensure they are closed if user state changes somehow
+        // (This might be redundant if they are closed on successful login/reg anyway)
+        // closeAllModals(); // You might not need this here
+    });
+
+
+    // --- Existing Login/Registration Form Logic (keep as is) ---
     const registrationForm = document.getElementById('registrationForm');
-    const emailInput = document.getElementById('reg-email');
-    const passwordInput = document.getElementById('reg-password');
-    const confirmPasswordInput = document.getElementById('reg-confirm-password');
-    const usernameInput = document.getElementById('reg-username');
-    const firstnameInput = document.getElementById('reg-firstname');
-    const lastnameInput = document.getElementById('reg-lastname');
-    const contactInput = document.getElementById('reg-contact');
-    const genderInputs = document.getElementsByName('gender');
-    const registerButton = registrationForm ? registrationForm.querySelector('button[type="submit"]') : null;
-    const registerMessage = document.createElement('p'); // Create message element
-
-    if (registrationForm && registerButton) {
-        // Style and append the message element ONLY if the form exists
-        registerMessage.classList.add('registration-message');
-        registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
-        // Ensure it's added relative to the button or form end
-        registerButton.parentNode.insertBefore(registerMessage, registerButton.nextSibling);
-
-        registrationForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            registerButton.disabled = true;
-            registerMessage.textContent = "Registering...";
-            registerMessage.style.color = "blue";
-            const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
-            const password = passwordInput ? passwordInput.value : '';
-            const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
-
-            if (password.length < 8) { // Example: Enforcing 8 characters
-                registerMessage.textContent = "Password must be at least 8 characters long.";
-                registerMessage.style.color = "red";
-                registerButton.disabled = false;
-                return; // Stop submission
-            }
-
-            if (password !== confirmPassword) {
-                registerMessage.textContent = "Passwords do not match.";
-                registerMessage.style.color = "red";
-                registerButton.disabled = false;
-                return;
-            }
-            if (!emailInput?.value || !password || !usernameInput?.value || !firstnameInput?.value || !lastnameInput?.value || !contactInput?.value || !selectedGender) {
-                registerMessage.textContent = "Please fill in all required fields.";
-                registerMessage.style.color = "red";
-                registerButton.disabled = false;
-                return;
-            }
-            registerUser(emailInput.value, password, usernameInput.value, firstnameInput.value, lastnameInput.value, contactInput.value, selectedGender);
-        });
-    } else { console.error("Registration form or button not found!"); }
-
+    // ... (rest of your registration variables and event listener) ...
     async function registerUser(email, password, username, firstname, lastname, contact, gender) {
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log("Auth success. UID:", user.uid);
-            const userDocRef = doc(db, "users", user.uid);
-            await setDoc(userDocRef, { email, username, firstname, lastname, contact, gender, createdAt: new Date(), isAdmin: false });
-            console.log("Firestore save success.");
-            registerMessage.textContent = "Registration successful!";
-            registerMessage.style.color = "green";
-            // Optional: Close modal after a delay
-            // setTimeout(closeAllModals, 2000);
-        } catch (error) {
-            console.error("Registration error:", error);
-            let errorMessage = "Registration failed.";
-            if (error.code === 'auth/email-already-in-use') errorMessage = "Email already in use.";
-            else if (error.code === 'auth/invalid-email') errorMessage = "Invalid email.";
-            else if (error.code === 'auth/weak-password') errorMessage = "Password needs 6+ characters."; // Firebase default is 6
-            registerMessage.textContent = errorMessage;
-            registerMessage.style.color = "red";
-        } finally { if (registerButton) registerButton.disabled = false; }
+       // ... (your existing registerUser code) ...
+       // Make sure to close modal on success
+        setTimeout(closeAllModals, 1500); // Example
     }
 
-
-    // --- Firebase Login ---
     const loginForm = document.getElementById('loginForm');
-    // *** IMPORTANT: Use the correct ID from your login form HTML ***
-    // In index.html it's 'login-email', in reviews.html it's 'login-email-user'
-    // For consistency, let's assume you'll update reviews.html to use 'login-email'
-    const loginEmailInput = document.getElementById('login-email') || document.getElementById('login-email-user'); // Try both common IDs
-    const loginPasswordInput = document.getElementById('login-password');
-    const loginButton = loginForm ? loginForm.querySelector('button[type="submit"]') : null;
-    const loginMessage = document.createElement('p'); // Create message element
+    // ... (rest of your login variables and event listener) ...
+     async function loginUser(emailOrUsername, password) {
+         // ... (your existing loginUser code, BUT remove the redirect from here) ...
+        // The redirect is handled by onAuthStateChanged now or implicitly by UI update
 
-    if (loginForm && loginButton && loginEmailInput) { // Check if loginEmailInput exists
-        // Style and append the message element ONLY if the form exists
-        loginMessage.classList.add('login-message');
-        loginMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
-         // Ensure it's added relative to the button or form end
-        loginButton.parentNode.insertBefore(loginMessage, loginButton.nextSibling);
+         // --- MODIFICATION inside loginUser's try block on success ---
+         try {
+             const userCredential = await signInWithEmailAndPassword(auth, email, password);
+             const user = userCredential.user;
+             console.log("Login success via form. UID:", user.uid);
+             // DON'T redirect here anymore. onAuthStateChanged will handle UI update.
+             loginMessage.textContent = "Login successful!"; // Just show message
+             loginMessage.style.color = "green";
+             // Optional: Close the modal after a short delay
+             setTimeout(closeAllModals, 1500); // Close modal
 
-
-        loginForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            loginButton.disabled = true;
-            loginMessage.textContent = "Logging in...";
-            loginMessage.style.color = "blue";
-            loginUser(loginEmailInput.value, loginPasswordInput.value);
-        });
-    } else { console.error("Login form, button, or email input not found!"); }
-
-    async function loginUser(emailOrUsername, password) { // Parameter can be email or username now
-        if (!emailOrUsername || !password) {
-            loginMessage.textContent = "Please enter email/username and password.";
-            loginMessage.style.color = "red";
-            if (loginButton) loginButton.disabled = false;
-            return;
-        }
-
-        // For Firebase Auth, we need the email. If the user entered a username,
-        // we'd typically need to look up the email in Firestore first.
-        // For simplicity now, we'll assume they enter the EMAIL here.
-        // If you want username login, it requires an extra step (querying Firestore).
-        const email = emailOrUsername; // Assuming input is email for now
-
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log("Login success. UID:", user.uid);
-
-            const userDocRef = doc(db, "users", user.uid);
-            const docSnap = await getDoc(userDocRef);
-            let isAdmin = false;
-            if (docSnap.exists()) { isAdmin = docSnap.data().isAdmin === true; }
-            else { console.warn("User doc not found:", user.uid); }
-
-            loginMessage.textContent = "Login successful! Redirecting...";
-            loginMessage.style.color = "green";
-            setTimeout(() => { window.location.href = isAdmin ? "admin-dashboard.html" : "dashboard.html"; }, 1500);
-
-        } catch (error) {
-            console.error("Login error:", error);
-            let errorMessage = "Login failed.";
-             if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') errorMessage = "Invalid email or password.";
-             else if (error.code === 'auth/invalid-email') errorMessage = "Invalid email format.";
-            loginMessage.textContent = errorMessage;
-            loginMessage.style.color = "red";
-            if (loginButton) loginButton.disabled = false;
-        }
+         } catch (error) {
+            // ... (existing error handling) ...
+         } finally {
+             if (loginButton) loginButton.disabled = false;
+         }
+         // --- End of modification ---
     }
 
-
-    // --- Modal Logic ---
-    const loginLink = document.getElementById('loginLink');
-    const registerLink = document.getElementById('registerLink');
+    // --- Modal Handling Logic (keep as is) ---
     const loginModal = document.getElementById('loginModal');
-    const registerModal = document.getElementById('registerModal');
-    const loginCloseButton = loginModal ? loginModal.querySelector('.login-close-button') : null;
-    const registerCloseButton = registerModal ? registerModal.querySelector('.register-close-button') : null;
-    const switchToRegister = document.getElementById('switchToRegister');
-    const switchToLogin = document.getElementById('switchToLogin');
-
+    // ... (rest of your modal variables and functions like closeAllModals) ...
     function closeAllModals() {
-        if (registerModal) registerModal.style.display = "none";
-        if (loginModal) loginModal.style.display = "none";
-        // Clear messages when closing modals
-        if (loginMessage) loginMessage.textContent = '';
-        if (registerMessage) registerMessage.textContent = '';
+        // ... (your existing closeAllModals code) ...
     }
-
-    // Check if all modal trigger elements exist before adding listeners
-    if (loginLink && registerLink && loginModal && registerModal && loginCloseButton && registerCloseButton && switchToRegister && switchToLogin) {
-        loginLink.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); loginModal.style.display = 'block'; });
-        registerLink.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); registerModal.style.display = 'block'; });
-        loginCloseButton.addEventListener('click', closeAllModals);
-        registerCloseButton.addEventListener('click', closeAllModals);
-        window.addEventListener('click', (event) => { if (event.target === loginModal || event.target === registerModal) { closeAllModals(); } });
-        switchToRegister.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); registerModal.style.display = 'block'; });
-        switchToLogin.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); loginModal.style.display = 'block'; });
-    } else {
-         // Be more specific about which elements might be missing
-         console.warn("Modal Warning: Not all modal trigger/control elements were found. Modals might not open/close correctly.");
-         // You could add individual checks here if needed:
-         // if (!loginLink) console.error("loginLink not found");
-         // etc.
-     }
+    // ... (rest of your modal event listeners) ...
 
 }); // End of DOMContentLoaded listener
+
+// Make closeAllModals globally accessible if needed by inline JS, though better not to
+// window.closeAllModals = closeAllModals;
