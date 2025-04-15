@@ -22,22 +22,34 @@
         <div class="header-text">
             <h1>Our Beauty Services</h1>
         </div>
-       <nav>
+      <nav>
     <ul>
+        <li><a href="index.html">Home</a></li> {/* Example Home link */}
         <li><a href="reviews.html">Reviews</a></li>
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="services.html">Services</a></li>
 
+        {/* Link shown ONLY when logged IN (Initially hidden) */}
+        {/* Needs the <li> ID */}
         <li id="nav-mybook-link-li" style="display: none;"><a href="mybook.html">My Book</a></li>
 
-        <li id="nav-login-link-li" style="display: block;"><a href="#" id="loginLink">Login</a></li>
-        <li id="nav-register-link-li" style="display: block;"><a href="#" id="registerLink">Register</a></li>
+        {/* Links shown ONLY when logged OUT (Initially visible) */}
+        {/* Needs the <li> ID AND the <a> ID */}
+        <li id="nav-login-link-li" style="display: block;">
+            <a href="#" id="loginLink">Login</a>
+        </li>
+        <li id="nav-register-link-li" style="display: block;">
+             <a href="#" id="registerLink">Register</a>
+         </li>
 
+        {/* User dropdown ONLY shown when logged IN (Initially hidden) */}
+        {/* Needs the <li> ID AND the logout <a> ID */}
         <li id="nav-user-account-li" class="user-account" style="display: none;">
             <a href="#" class="user-icon">
                 <i class="fas fa-user-circle"></i> </a>
             <div class="user-dropdown">
                 <a href="profile.html">My Profile</a>
+                {/* Logout link needs its specific ID */}
                 <a href="#" id="logout-link">Logout</a>
             </div>
         </li>
