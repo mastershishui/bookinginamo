@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - GJ'S Beauty Lounge</title>
+    <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBxcGbtIQFIgaMtns+p/RHOvBBQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html"> <img src="gjslogo.jpg" alt="GJ'S Beauty Lounge Logo">
+            </a>
+        </div>
+        <div class="header-text">
+            <h1>My Bookings</h1> </div>
+        <nav>
+             <ul>
+                 <li><a href="index.html">Home</a></li>
+                 <li><a href="reviews.html">Reviews</a></li>
+                 <li><a href="faq.html">FAQ</a></li>
+                 <li><a href="services.html">Services</a></li>
+
+                 <li id="nav-mybook-link-li" style="display: none;"><a href="mybook.html">
+                         My Book<span id="mybook-counter" style="display: none;">0</span>
+                     </a>
+                 </li>
+
+                 <li id="nav-login-link-li" style="display: list-item;"> <a href="#" id="loginLink">Login</a>
+                 </li>
+                 <li id="nav-register-link-li" style="display: list-item;"> <a href="#" id="registerLink">Register</a>
+                 </li>
+
+                 <li id="nav-profile-link-li" style="display: none;"> <a href="profile.html">My Profile</a>
+                 </li>
+                 <li id="nav-logout-link-li" style="display: none;"> <a href="#" id="logout-link">Logout</a>
+                 </li>
+             </ul>
+         </nav>
+    </header>
+
+    <main>
+        <div class="mybookings-container"> <h2>My Booked Services</h2>
+            <p>Here are the services you have booked. Status is indicative and appointments will be confirmed separately.</p>
+
+            <div id="bookings-list">
+                <p id="loading-bookings-message">Loading your bookings...</p>
+                <p id="no-bookings-message" style="display: none;">You have no bookings yet. Visit our <a href="services.html">Services</a> page to book!</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-section">
+            <h3>More about Company</h3>
+            <p>GJ's Beauty Lounge is dedicated to enhancing beauty and confidence through professional services, including nails, brows, lashes, waxing, and gluta spa treatments. With a commitment to quality and customer satisfaction, we create a relaxing space where clients can enjoy top-tier beauty care.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Keep Connected</h3>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Contact Information</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Lower Ground Floor, Nova Plaza Mall, Quirino Highway, Novaliches Proper, Quezon City</p>
+            <p><i class="fas fa-phone"></i> 0962-847-2488</p>
+            <p><i class="fas fa-envelope"></i> <a href="mailto:gjsbeautylounge@gmail.com">gjsbeautylounge@gmail.com</a></p>
+        </div>
+    </footer>
+
+    <div id="registerModal" class="modal">
+         <div class="modal-content register-modal-content">...</div>
+     </div>
+     <div id="loginModal" class="modal">
+         <div class="modal-content login-modal-content">...</div>
+     </div>
+
+    <script type="module" src="firebase-auth.js"></script>
+    <script src="mybook.js"></script>
+
+</body>
+</html>
