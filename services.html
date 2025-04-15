@@ -22,14 +22,24 @@
         <div class="header-text">
             <h1>Our Beauty Services</h1>
         </div>
-        <nav>
+       <nav>
     <ul>
         <li><a href="reviews.html">Reviews</a></li>
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="services.html">Services</a></li>
-        <li id="loginNavItem"><a href="#" id="loginLink">Login</a></li>
-        <li id="registerNavItem"><a href="#" id="registerLink">Register</a></li>
-        <li id="userNav" style="display: none;"> <span id="usernameDisplay" style="margin-right: 10px;">Welcome</span> <a href="dashboard.html" style="margin-right: 10px;">Dashboard</a> <a href="#" id="logoutButton">Logout</a>
+
+        <li id="nav-mybook-link-li" style="display: none;"><a href="mybook.html">My Book</a></li>
+
+        <li id="nav-login-link-li" style="display: block;"><a href="#" id="loginLink">Login</a></li>
+        <li id="nav-register-link-li" style="display: block;"><a href="#" id="registerLink">Register</a></li>
+
+        <li id="nav-user-account-li" class="user-account" style="display: none;">
+            <a href="#" class="user-icon">
+                <i class="fas fa-user-circle"></i> </a>
+            <div class="user-dropdown">
+                <a href="profile.html">My Profile</a>
+                <a href="#" id="logout-link">Logout</a>
+            </div>
         </li>
     </ul>
 </nav>
