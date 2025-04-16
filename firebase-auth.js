@@ -21,7 +21,7 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase
 // --- Firebase Config ---
 const firebaseConfig = {
     // IMPORTANT: Make sure this apiKey is correct and complete!
-    apiKey: "AIzaSyAp19_1RwloTbJLZ_K723-m8C2zka8Oh10", // Replace with your actual API key if needed
+    apiKey: "AIzaSyAp19_1RwloTbJLZ_K723-m8C2zka8Oh10", // Using the API key you provided
     authDomain: "gjsbooking-faba9.firebaseapp.com",
     projectId: "gjsbooking-faba9",
     storageBucket: "gjsbooking-faba9.appspot.com",
@@ -44,12 +44,12 @@ let loginModal = null;
 let registerModal = null;
 let loginMessage = null;
 let registerMessage = null;
-let loginLinkLi = null;         // <li> containing Login link
-let registerLinkLi = null;      // <li> containing Register link
-let myBookLinkLi = null;        // <li> containing My Book link (renamed for consistency)
-let profileLinkLi = null;       // <li> containing My Profile link <-- NEW
-let logoutLinkLi = null;        // <li> containing Logout link <-- NEW
-let logoutLink = null;          // <a> tag for Logout <-- Still needed for event listener
+let loginLinkLi = null;          // <li> containing Login link
+let registerLinkLi = null;       // <li> containing Register link
+let myBookLinkLi = null;         // <li> containing My Book link (renamed for consistency)
+let profileLinkLi = null;        // <li> containing My Profile link <-- NEW
+let logoutLinkLi = null;         // <li> containing Logout link <-- NEW
+let logoutLink = null;           // <a> tag for Logout <-- Still needed for event listener
 let dashboardWelcomeMessage = null;
 
 // --- Helper Function to Close Modals ---
@@ -77,11 +77,11 @@ function updateNavUI(user) {
 
     if (user) {
         // --- User is Logged In ---
-        if (loginLinkLi) loginLinkLi.style.display = 'none';      // Hide Login
+        if (loginLinkLi) loginLinkLi.style.display = 'none';     // Hide Login
         if (registerLinkLi) registerLinkLi.style.display = 'none';  // Hide Register
         if (myBookLinkLi) myBookLinkLi.style.display = 'block';    // Show My Book (use 'list-item' or 'flex' if 'block' looks wrong)
-        if (profileLinkLi) profileLinkLi.style.display = 'block';   // Show My Profile (use 'list-item' or 'flex' etc.) <-- NEW
-        if (logoutLinkLi) logoutLinkLi.style.display = 'block';    // Show Logout (use 'list-item' or 'flex' etc.) <-- NEW
+        if (profileLinkLi) profileLinkLi.style.display = 'block';    // Show My Profile (use 'list-item' or 'flex' etc.) <-- NEW
+        if (logoutLinkLi) logoutLinkLi.style.display = 'block';     // Show Logout (use 'list-item' or 'flex' etc.) <-- NEW
 
         // Setup logout link functionality ONLY if the link exists and listener not yet attached
         // This targets the <a id="logout-link"> inside the new nav-logout-link-li
@@ -94,10 +94,10 @@ function updateNavUI(user) {
 
     } else {
         // --- User is Logged Out ---
-        if (loginLinkLi) loginLinkLi.style.display = 'block';      // Show Login (use 'list-item' or 'flex' etc.)
+        if (loginLinkLi) loginLinkLi.style.display = 'block';     // Show Login (use 'list-item' or 'flex' etc.)
         if (registerLinkLi) registerLinkLi.style.display = 'block';  // Show Register (use 'list-item' or 'flex' etc.)
         if (myBookLinkLi) myBookLinkLi.style.display = 'none';      // Hide My Book
-        if (profileLinkLi) profileLinkLi.style.display = 'none';    // Hide My Profile <-- NEW
+        if (profileLinkLi) profileLinkLi.style.display = 'none';     // Hide My Profile <-- NEW
         if (logoutLinkLi) logoutLinkLi.style.display = 'none';     // Hide Logout <-- NEW
 
         // No need to explicitly remove logout listener here,
@@ -109,8 +109,17 @@ function updateNavUI(user) {
 // --- Helper Function to Protect Routes ---
 function protectRoute(user) {
     const protectedPages = ['/dashboard.html', '/profile.html', '/mybook.html']; // Add sensitive pages
-    const currentPagePath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
-    const isProtected = protectedPages.some(page => currentPagePath.endsWith(page.endsWith('/') ? page : page + '/'));
+    // Check if the current path *ends* with one of the protected page names, handling optional trailing slash
+    const currentPagePath = window.location.pathname;
+    const isProtected = protectedPages.some(page => {
+        // Normalize both current path and protected page path for comparison
+        const normalizedCurrent = currentPagePath.endsWith('/') ? currentPagePath : currentPagePath + '/';
+        const normalizedProtected = page.endsWith('/') ? page : page + '/';
+        // Check if the normalized current path *ends* with the normalized protected path
+        // This is safer than includes() if you have similar paths like /admin/dashboard.html
+        return normalizedCurrent.endsWith(normalizedProtected);
+    });
+
 
     if (!user && isProtected) {
         console.log("User not logged in. Redirecting from protected route:", window.location.pathname);
@@ -203,10 +212,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Firebase Registration Logic ---
     // This section remains the same, handles registration form
     const registrationForm = document.getElementById('registrationForm');
-    const emailInput = document.getElementById('reg-email');
+    // const emailInput = document.getElementById('reg-email'); // No longer needed here if only used in submit
     // ... other registration inputs ...
     const registerButton = registrationForm ? registrationForm.querySelector('button[type="submit"]') : null;
-    registerMessage = document.createElement('p');
+    registerMessage = document.createElement('p'); // Assign to global
 
     if (registrationForm && registerButton) {
         // ... (rest of registration form setup remains the same) ...
@@ -225,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
              const genderInputs = document.getElementsByName('gender');
              const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
 
-              // Basic validation (add more as needed)
+             // Basic validation (add more as needed)
              if (!email || !password || !confirmPassword || !username || !firstname || !lastname || !contact || !selectedGender) {
                  registerMessage.textContent = "Please fill in all fields.";
                  registerMessage.style.color = "red";
@@ -251,12 +260,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Firebase Login Logic ---
-    // This section remains the same, handles login form
+    // This section remains the same, handles login form setup
     const loginForm = document.getElementById('loginForm');
     const loginEmailInput = document.getElementById('login-email') || document.getElementById('login-email-user');
     const loginPasswordInput = document.getElementById('login-password');
     const loginButton = loginForm ? loginForm.querySelector('button[type="submit"]') : null;
-    loginMessage = document.createElement('p');
+    loginMessage = document.createElement('p'); // Assign to global
 
     if (loginForm && loginButton && loginEmailInput && loginPasswordInput) {
         // ... (rest of login form setup remains the same) ...
@@ -274,11 +283,13 @@ document.addEventListener('DOMContentLoaded', () => {
                  return;
              }
 
+             // Disable button and set message here, before calling loginUser
              loginButton.disabled = true;
              loginMessage.textContent = "Logging in...";
              loginMessage.style.color = "blue";
-             loginUser(email, password);
-        });
+
+             loginUser(email, password); // Call the updated loginUser function
+         });
     }
 
     // --- Setup Auth State Observer ---
@@ -286,10 +297,11 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Setting up Firebase Auth state observer...");
     onAuthStateChanged(auth, (user) => {
         console.log("Auth state changed! User:", user ? user.uid : 'None');
-        updateNavUI(user);    // Call the updated function to show/hide correct links
-        protectRoute(user);   // Redirect if on protected page while logged out
+        updateNavUI(user);     // Call the updated function to show/hide correct links
+        protectRoute(user);    // Redirect if on protected page while logged out
 
         // Update dashboard welcome message if applicable
+        // Use includes() for flexibility (e.g., handles dashboard.html?param=1)
         if (window.location.pathname.includes('dashboard.html') && user) {
             updateDashboardWelcome(user);
         }
@@ -312,7 +324,17 @@ async function registerUser(email, password, username, firstname, lastname, cont
         const user = userCredential.user;
         console.log("Auth success. UID:", user.uid);
         const userDocRef = doc(db, "users", user.uid);
-        await setDoc(userDocRef, { email, username, firstname, lastname, contact, gender, createdAt: new Date(), isAdmin: false });
+        // --- IMPORTANT: Ensure isAdmin is set to false for new registrations ---
+        await setDoc(userDocRef, {
+             email,
+             username,
+             firstname,
+             lastname,
+             contact,
+             gender,
+             createdAt: new Date().toISOString(), // Store as ISO string for consistency
+             isAdmin: false // Explicitly set non-admin status
+         });
         console.log("Firestore save success.");
         if (currentRegisterMessage) {
             currentRegisterMessage.textContent = "Registration successful!";
@@ -335,34 +357,90 @@ async function registerUser(email, password, username, firstname, lastname, cont
     }
 }
 
+
 // --- Login Function ---
-// This function remains the same
+// ***** THIS IS THE UPDATED FUNCTION *****
 async function loginUser(email, password) {
     const currentLoginMessage = document.querySelector('#loginModal .login-message');
     const loginButton = document.querySelector('#loginForm button[type="submit"]');
-    // Validation moved to the submit event listener
+
+    // Button disabling and initial message are now handled in the submit listener
 
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log("Login form success. UID:", userCredential.user.uid);
+        const user = userCredential.user; // Get the user object
+        console.log("Login Auth success. UID:", user.uid);
 
-        if (currentLoginMessage) {
-            currentLoginMessage.textContent = "Login successful!";
-            currentLoginMessage.style.color = "green";
+        // --- START: Admin Check and Redirect Logic ---
+        const userDocRef = doc(db, "users", user.uid); // Reference to the user's document
+        try {
+            const docSnap = await getDoc(userDocRef);
+
+            if (docSnap.exists() && docSnap.data().isAdmin === true) {
+                // --- User IS an Admin ---
+                console.log("Admin user detected. Redirecting to admin dashboard.");
+                if (currentLoginMessage) {
+                    currentLoginMessage.textContent = "Admin login successful! Redirecting...";
+                    currentLoginMessage.style.color = "green";
+                }
+                // Redirect AFTER a short delay to allow user to see message
+                setTimeout(() => {
+                    closeAllModals();
+                    window.location.href = 'admin-dashboard.html'; // <<< Redirect Admin here
+                }, 1000); // 1 second delay
+
+            } else {
+                // --- User is NOT an Admin (or isAdmin field missing/false) ---
+                console.log("Regular user detected. Redirecting to dashboard.");
+                if (currentLoginMessage) {
+                    currentLoginMessage.textContent = "Login successful! Redirecting...";
+                    currentLoginMessage.style.color = "green";
+                }
+                // Redirect AFTER a short delay
+                setTimeout(() => {
+                    closeAllModals();
+                    // <<< Redirect Regular Customer here (CHANGE 'dashboard.html' if needed)
+                    window.location.href = 'dashboard.html'; // Or index.html? Choose the correct customer page
+                }, 1000); // 1 second delay
+            }
+        } catch (error) {
+            // --- Error fetching Firestore document ---
+            console.error("Error fetching user data for admin check:", error);
+            if (currentLoginMessage) {
+                currentLoginMessage.textContent = "Login successful, but couldn't verify role. Redirecting to default page.";
+                currentLoginMessage.style.color = "orange"; // Use a warning color
+            }
+             // Re-enable button ONLY if fetching role failed AFTER successful login
+            if (loginButton) loginButton.disabled = false;
+            // Fallback redirect in case of Firestore error
+            setTimeout(() => {
+                closeAllModals();
+                window.location.href = 'index.html'; // Fallback to home
+            }, 1500);
         }
-        setTimeout(closeAllModals, 1500); // Close modal on success
+        // --- END: Admin Check and Redirect Logic ---
 
     } catch (error) {
-        console.error("Login error:", error);
+        // --- Error during signInWithEmailAndPassword ---
+        console.error("Login Auth error:", error);
         let errorMessage = "Login failed.";
-        // ... (error handling remains the same) ...
-         if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') errorMessage = "Invalid email or password.";
-         else if (error.code === 'auth/invalid-email') errorMessage = "Invalid email format.";
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+            errorMessage = "Invalid email or password.";
+        } else if (error.code === 'auth/invalid-email') {
+            errorMessage = "Invalid email format.";
+        }
+        // Only update message and re-enable button if login failed
         if (currentLoginMessage) {
             currentLoginMessage.textContent = errorMessage;
             currentLoginMessage.style.color = "red";
         }
-    } finally {
+         // Re-enable button on login failure
         if (loginButton) loginButton.disabled = false;
     }
+    // NOTE: The 'finally' block was removed as button re-enabling is handled
+    // within the success (role check error) and failure catch blocks specifically.
 }
+
+// --- Optional: Add Exports if needed by other modules ---
+// If another JS file needs to import auth or db *from this file*, uncomment below:
+// export { auth, db, app };
