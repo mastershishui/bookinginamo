@@ -1306,6 +1306,32 @@ footer {
   .header-text h1 {
     font-size: 1.5em; /* Slightly increase font size for better readability */
   }
+
+  /* Adjustments for the hero section on smaller screens */
+  .hero {
+    flex-direction: column; /* Stack the images vertically */
+    align-items: center; /* Center the images horizontally */
+    gap: 15px; /* Reduce the gap between images further */
+    margin-bottom: 15px; /* Reduce bottom margin further */
+  }
+
+  .hero-left,
+  .hero-center,
+  .hero-right {
+    width: 100%; /* Make the image containers take up the full screen width */
+    max-width: none; /* Remove the maximum width constraint */
+    height: auto; /* Allow the height to adjust based on the image aspect ratio */
+  }
+
+  .hero-left .boxed-image,
+  .hero-right .boxed-image {
+    height: auto; /* Adjust image height to maintain aspect ratio */
+  }
+
+  .hero-center img.circular-image {
+    width: 150px; /* Further reduce the size of the circular image */
+    height: 150px;
+  }
 }
 
 /* Media query for even smaller screens (e.g., smaller phones) */
