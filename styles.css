@@ -227,13 +227,13 @@ footer {
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 20px; /* You can keep gap or remove if using margin on sections */
+    gap: 30px; /* MODIFIED: Increased gap for more space between sections */
     flex-shrink: 0;
 }
 
 .footer-section {
     flex: 1 1 250px;
-    /* margin: 10px; */ /* Using gap instead of margin might be cleaner */
+    /* margin: 10px; */ /* Using gap instead of margin */
     min-width: 220px;
 }
 
@@ -251,10 +251,10 @@ footer {
     font-size: 0.95em;
     line-height: 1.5;
     display: flex; /* Ensures icon and text align nicely */
-    align-items: center;
+    align-items: center; /* Default vertical alignment */
 }
 .footer-section a {
-    /* display: inline-flex; */ /* Changed back to flex for consistency, adjust if needed */
+    /* display: inline-flex; */ /* Keep as flex */
     transition: color 0.2s ease;
 }
 
@@ -273,10 +273,70 @@ footer {
 }
 
 .social-links a {
-    /* display: flex; */ /* Already handled by general .footer-section a rule */
+    /* display: flex; */ /* Handled by general rule */
     margin-bottom: 10px;
 }
 
+/* --- ADDED Rules for Contact Section Spacing & Alignment --- */
+.footer-contact .email-heading {
+  margin-top: 25px; /* Adds space above the Email heading */
+}
+
+.footer-contact p {
+    /* Specific alignment for multi-line text like address */
+    align-items: flex-start; /* Align icon to the top of multi-line text */
+}
+.footer-contact p i {
+    /* Tiny adjustment for icon vertical alignment with flex-start */
+    margin-top: 0.15em;
+}
+/* --- End of Added Contact Section Rules --- */
+
+
+/* --- ADDED CSS Rule for Copyright Bar --- */
+.footer-copyright {
+  width: 100%;             /* Span full width */
+  text-align: center;      /* Center the text */
+  margin-top: 30px;        /* Space above the copyright line */
+  padding: 20px 0 10px 0;  /* Padding top/bottom */
+  border-top: 1px solid #444; /* Separator line (dark grey) */
+  font-size: 0.9em;        /* Smaller font size */
+  color: #bbb;             /* Muted light grey color */
+  flex-basis: 100%;       /* Ensure it takes full row when flex items wrap */
+}
+/* --- End of Copyright Rule --- */
+
+
+/* --- ADDED Basic Responsive adjustments --- */
+@media (max-width: 576px) {
+  footer {
+    padding: 20px 15px; /* Less padding on small screens */
+    /* Sections will stack naturally due to flex-wrap and min-width */
+  }
+  .footer-section {
+     text-align: center; /* Center text in sections when stacked */
+     flex-basis: 100%; /* Ensure sections take full width when stacked */
+     margin-bottom: 15px; /* Space between stacked sections */
+  }
+   .footer-section p, .footer-section a {
+      justify-content: center; /* Center align items like address/phone/links when stacked */
+  }
+  /* Remove icon adjustment if centering text */
+  /* .footer-contact p i {
+      margin-top: 0;
+  } */
+  .footer-section h3 {
+      text-align: center; /* Center headings too */
+  }
+   .social-links a {
+       justify-content: center; /* Center social links */
+   }
+   .footer-copyright {
+       margin-top: 15px; /* Adjust margin when stacked */
+       padding-top: 15px;
+   }
+}
+/* --- End of Responsive rules --- */
 /* --- NEW CSS Rule for Copyright --- */
 .footer-copyright {
   width: 100%;             /* Span full width */
