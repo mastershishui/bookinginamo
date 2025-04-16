@@ -1276,3 +1276,46 @@ footer {
 .cancel-booking-btn:hover {
     background-color: #d32f2f;
 }
+
+/* -------------------------------------------------- */
+/* Responsive Navigation Styles             */
+/* -------------------------------------------------- */
+
+/* Media query for screens with a maximum width of 768px (typical for tablets and phones) */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column; /* Stack the list items vertically */
+    text-align: center; /* Center the text within each item */
+  }
+
+  nav ul li {
+    display: block; /* Make each list item take up the full width */
+    margin: 10px 0; /* Add some vertical spacing between items */
+  }
+
+  .logo a img {
+    max-width: 150px; /* Adjust logo size for smaller screens */
+  }
+
+  /* If you have a header-text, you might want to adjust its behavior too */
+  .header-text {
+    text-align: center; /* Center the header text on smaller screens */
+    margin-bottom: 10px; /* Add some space below the text */
+  }
+
+  .header-text h1 {
+    font-size: 1.5em; /* Slightly increase font size for better readability */
+  }
+}
+
+/* Media query for even smaller screens (e.g., smaller phones) */
+@media (max-width: 480px) {
+  .logo a img {
+    max-width: 120px; /* Further adjust logo size for very small screens */
+  }
+
+  nav ul li a {
+    padding: 10px; /* Adjust padding for better touch targets */
+    font-size: 0.9em; /* Slightly reduce font size */
+  }
+}
