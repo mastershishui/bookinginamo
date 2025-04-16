@@ -227,40 +227,40 @@ footer {
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 20px; /* You can keep gap or remove if using margin on sections */
     flex-shrink: 0;
 }
 
 .footer-section {
     flex: 1 1 250px;
-    margin: 10px;
+    /* margin: 10px; */ /* Using gap instead of margin might be cleaner */
     min-width: 220px;
 }
 
 .footer-section h3 {
     font-size: 1.2em;
     margin-bottom: 15px;
-    color: #fce4ec;
+    color: #fce4ec; /* Light pink for headings */
 }
 
 .footer-section p,
 .footer-section a {
-    color: #ddd;
+    color: #ddd; /* Light grey for text/links */
     text-decoration: none;
     margin-bottom: 8px;
     font-size: 0.95em;
     line-height: 1.5;
-    display: flex;
+    display: flex; /* Ensures icon and text align nicely */
     align-items: center;
 }
 .footer-section a {
-    display: inline-flex; /* Keep this specific style for links */
+    /* display: inline-flex; */ /* Changed back to flex for consistency, adjust if needed */
     transition: color 0.2s ease;
 }
 
 .footer-section a:hover,
 .footer-section a:focus {
-    color: #fff;
+    color: #fff; /* Brighter white on hover */
     outline: none;
 }
 
@@ -268,12 +268,49 @@ footer {
     margin-right: 10px;
     width: 1.2em;
     text-align: center;
-    flex-shrink: 0;
+    flex-shrink: 0; /* Prevents icon from shrinking */
+    color: #fce4ec; /* Match heading color for icons */
 }
 
 .social-links a {
-    display: flex; /* Already specified above, but harmless redundancy */
+    /* display: flex; */ /* Already handled by general .footer-section a rule */
     margin-bottom: 10px;
+}
+
+/* --- NEW CSS Rule for Copyright --- */
+.footer-copyright {
+  width: 100%;             /* Span full width */
+  text-align: center;      /* Center the text */
+  margin-top: 30px;        /* Space above the copyright line */
+  padding: 20px 0 10px 0;  /* Padding top/bottom */
+  border-top: 1px solid #444; /* Separator line (dark grey) */
+  font-size: 0.9em;        /* Smaller font size */
+  color: #bbb;             /* Muted light grey color */
+  flex-basis: 100%;       /* Ensure it takes full row when flex items wrap */
+}
+/* --- End of New Rule --- */
+
+/* Optional: Responsive adjustments if needed */
+@media (max-width: 576px) {
+  footer {
+    padding: 20px 15px; /* Less padding on small screens */
+    /* Sections will stack naturally due to flex-wrap and min-width */
+  }
+  .footer-section {
+     text-align: center; /* Center text in sections when stacked */
+  }
+   .footer-section p, .footer-section a {
+      justify-content: center; /* Center align items like address/phone when stacked */
+  }
+  .footer-section i {
+      margin-left: auto; /* Helps center icon+text group */
+      margin-right: auto; /* Helps center icon+text group */
+      display: inline-block; /* Adjust display if needed */
+      width: auto;
+  }
+   .social-links a {
+       justify-content: center; /* Center social links */
+   }
 }
 
 
