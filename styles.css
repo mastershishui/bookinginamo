@@ -1361,11 +1361,12 @@ footer {
    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional: subtle shadow */
 }
 
+/* UPDATED .about-text rules */
 .about-text {
-    flex: 2; /* Allow text to take more space (e.g., 66%) */
+    flex: 1; /* CHANGED: Allow text to take proportionally less space */
     min-width: 300px; /* Ensure text block doesn't get too narrow */
     text-align: left; /* Default text alignment */
-    padding-right: 20px; /* Add some space between text and photo */
+    /* REMOVED: padding-right: 20px; */
 }
 
 .about-text h2 {
@@ -1390,9 +1391,10 @@ footer {
     font-size: 1em; /* Ensure consistent paragraph font size */
 }
 
+/* UPDATED .about-photo rules */
 .about-photo {
-    flex: 1; /* Allow photo to take less space (e.g., 33%) */
-    min-width: 250px; /* Minimum width for the photo container */
+    flex: 1.5; /* CHANGED: Allow photo to take proportionally more space */
+    min-width: 300px; /* UPDATED: Increased min-width slightly */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1412,7 +1414,7 @@ footer {
         padding: 20px 10px; /* Adjust padding for smaller screens */
     }
     .about-text {
-        padding-right: 0; /* Remove right padding when stacked */
+        padding-right: 0; /* Ensure right padding is removed when stacked */
         margin-bottom: 20px; /* Add space below text when stacked */
     }
     .about-text h2 {
@@ -1420,6 +1422,10 @@ footer {
     }
      .about-text h3 {
         font-size: 1.3em; /* Adjust heading size */
+    }
+    /* ADDED: Reset photo min-width on small screens if needed */
+    .about-photo {
+        min-width: unset; /* Remove min-width constraint when stacked */
     }
 }
 
