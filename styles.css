@@ -218,89 +218,48 @@ main.dashboard-container {
      outline: none;
 }
 
-/* ------- Footer Styles ------- */
-footer {
-    background-color: #222;
-    color: #fff;
-    padding: 30px 40px;
-    display: flex;
-    justify-content: space-around; /* MODIFIED: Back to space-around */
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 30px;
-    flex-shrink: 0;
-}
-
-.footer-section {
-    flex: 1 1 250px;
-    min-width: 220px;
-    text-align: left; /* Default left alignment */
-}
-
-.footer-section h3 {
-    font-size: 1.2em;
-    margin-bottom: 15px;
-    color: #fce4ec; /* Light pink for headings */
-    text-align: left; /* Ensure headings start left */
-}
-
-.footer-section p,
-.footer-section a {
-    color: #ddd; /* Light grey for text/links */
-    text-decoration: none;
-    margin-bottom: 8px;
-    font-size: 0.95em;
-    line-height: 1.5; /* Controls space between lines of text */
-    display: flex;
-    align-items: flex-start; /* MODIFIED: Use flex-start for all */
-}
-.footer-section a {
-    transition: color 0.2s ease;
-    align-items: center; /* Links can usually stay vertically centered */
-}
-
-.footer-section a:hover,
-.footer-section a:focus {
-    color: #fff; /* Brighter white on hover */
-    outline: none;
-}
-
-.footer-section i {
-    margin-right: 10px;
-    width: 1.2em;
-    text-align: center;
-    flex-shrink: 0;
-    color: #fce4ec;
-    margin-top: 0.15em; /* General small adjustment for icon alignment */
-}
-
-.social-links a {
-    margin-bottom: 10px;
-    align-items: center; /* Center icons/text for social links */
-}
-.social-links a i {
-    margin-top: 0; /* Reset margin-top for centered social icons */
-}
-
-
-/* REMOVED specific rules for .footer-contact p and .footer-contact p i */
-/* REMOVED rule for .footer-contact .email-heading */
-
-
-/* --- CSS Rule for Copyright Bar --- */
+/* --- Copyright Bar --- */
 .footer-copyright {
-  width: 100%;
-  text-align: center;
-  margin-top: 30px;
-  padding: 20px 0 10px 0;
-  border-top: 1px solid #444;
-  font-size: 0.9em;
-  color: #bbb;
-  flex-basis: 100%;
+    width: 100%; /* Span full width */
+    text-align: center; /* Center text */
+    margin-top: 30px; /* Space above the copyright */
+    padding: 20px 0 10px 0; /* Padding top/bottom */
+    border-top: 1px solid #444; /* Separator line */
+    font-size: 0.9em;
+    color: #bbb; /* Lighter grey for copyright */
+    flex-basis: 100%; /* Ensure it takes full width in flex layout */
 }
-/* --- End of Copyright Rule --- */
 
+/* --- Responsive Adjustments (Optional Example) --- */
+@media (max-width: 768px) {
+    footer {
+        padding: 30px 20px 15px 20px; /* Reduce padding on smaller screens */
+        justify-content: flex-start; /* Align items to the start */
+        text-align: center; /* Center text in sections */
+    }
 
+    .footer-section {
+        flex-basis: 100%; /* Make each section take full width */
+        text-align: center; /* Center text within sections */
+        margin-bottom: 20px; /* Add space between stacked sections */
+    }
+
+     .footer-section h3 {
+        text-align: center; /* Center headings */
+    }
+
+    .footer-section p,
+    .footer-section a {
+        justify-content: center; /* Center icon/text blocks */
+        align-items: center;
+    }
+     .footer-section i {
+        margin-top: 0; /* Adjust icon alignment for centering */
+    }
+    .footer-copyright {
+        margin-top: 10px; /* Reduce margin */
+    }
+}
 /* --- Responsive adjustments --- */
 @media (max-width: 576px) {
   footer {
