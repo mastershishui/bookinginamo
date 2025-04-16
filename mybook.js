@@ -1,141 +1,183 @@
-document.addEventListener('DOMContentLoaded', () => {
+// mybook.js - UPDATED to use Firebase Auth and Firestore
+
+// --- Imports ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import {
+    getFirestore, collection, query, where, orderBy, onSnapshot
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+// --- Firebase Config (should match other files) ---
+const firebaseConfig = {
+    apiKey: "AIzaSyAp19_1RwloTbJLZ_K723-m8C2zka8Oh10", // --- USE YOUR ACTUAL KEY ---
+    authDomain: "gjsbooking-faba9.firebaseapp.com",
+    projectId: "gjsbooking-faba9",
+    storageBucket: "gjsbooking-faba9.appspot.com",
+    messagingSenderId: "708149149410",
+    appId: "1:708149149410:web:dde6a5b99b4900dd8c28bb",
+    measurementId: "G-5QB9413PJH" // Optional
+};
+
+// --- Initialize Firebase (use default instance) ---
+let app, auth, db;
+let bookingsListener = null; // To unsubscribe from Firestore listener
+try {
+    // Use try-catch for initialization
+     try {
+        app = initializeApp(firebaseConfig);
+        console.log("Mybook.js: Firebase default instance initialized.");
+    } catch (e) {
+        if (e.code === 'duplicate-app') {
+             console.log("Mybook.js: Firebase default instance already exists, getting it.");
+             app = initializeApp(firebaseConfig);
+        } else { throw e; }
+    }
+    auth = getAuth(app);
+    db = getFirestore(app);
+    console.log("Mybook.js: Firebase initialized.");
+} catch (e) {
+    console.error("Mybook.js: Error initializing Firebase:", e);
+    // Display error to user if Firebase fails
     const bookingsListDiv = document.getElementById('bookings-list');
-    const noBookingsMessage = document.getElementById('no-bookings-message');
-    const loadingMessage = document.getElementById('loading-bookings-message');
-    const LOCAL_STORAGE_KEY = 'gjsUserBookings'; // Same key used in booking.js
-
-    // Function to format date string (optional but recommended)
-    function formatBookingDate(isoDateString) {
-        if (!isoDateString) return 'N/A';
-        try {
-            const date = new Date(isoDateString);
-            // Example format: "Apr 15, 2025, 10:00 AM" - adjust format as needed
-            const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true };
-            return date.toLocaleDateString('en-US', options);
-        } catch (e) {
-            console.error("Error formatting date:", e);
-            return isoDateString; // Return original string if formatting fails
-        }
+    if (bookingsListDiv) {
+         bookingsListDiv.innerHTML = '<p style="color:red;">Error loading Firebase. Cannot fetch bookings.</p>';
     }
+}
 
-    function displayBookings(bookings) {
-        bookingsListDiv.innerHTML = ''; // Clear current list
+// --- DOM Elements ---
+const bookingsListDiv = document.getElementById('bookings-list');
+const noBookingsMessage = document.getElementById('no-bookings-message');
+const loadingMessage = document.getElementById('loading-bookings-message');
 
-        if (!bookings || bookings.length === 0) {
-            if (noBookingsMessage) {
-                noBookingsMessage.style.display = 'block';
-            }
-            if (loadingMessage) {
-                loadingMessage.style.display = 'none';
-            }
-            // Append the noBookingsMessage again if it was cleared by innerHTML = ''
-            if (noBookingsMessage) {
-                bookingsListDiv.appendChild(noBookingsMessage);
-            }
-        } else {
-            if (noBookingsMessage) noBookingsMessage.style.display = 'none';
-            if (loadingMessage) loadingMessage.style.display = 'none';
-
-            // Sort bookings by date (most recent first) - optional
-            bookings.sort((a, b) => new Date(b.bookingDate) - new Date(a.bookingDate));
-
-            bookings.forEach(booking => {
-                const card = document.createElement('div');
-                card.classList.add('booking-card');
-
-                // Use booking.bookingId or another unique identifier if available
-                card.dataset.bookingId = booking.bookingId || booking.serviceId + '_' + booking.bookingDate;
-
-                card.innerHTML = `
-                    <div class="booking-card-header">
-                        <h4>${booking.serviceName || 'Service Name Missing'}</h4>
-                        <span class="booking-status status-${(booking.status || 'pending').toLowerCase().replace(/\s+/g, '-')}">
-                            ${booking.status || 'Pending'}
-                        </span>
-                    </div>
-                    <div class="booking-card-body">
-                        <p><strong>Booked On:</strong> ${formatBookingDate(booking.bookingDate)}</p>
-                        <p><strong>Price Approx:</strong> ${booking.servicePriceDisplay || 'N/A'}</p>
-                        <p><strong>Payment Method:</strong> ${booking.paymentMethod || 'N/A'}</p>
-                        ${booking.notes && booking.notes !== 'No notes' ? `<p><strong>Notes:</strong> ${booking.notes}</p>` : ''}
-                    </div>
-                    `;
-                bookingsListDiv.appendChild(card);
-            });
-
-            // setupCancelButtons(); // Call function to handle cancel button clicks if uncommented
-        }
+// --- Helper: Format Date (from Firestore Timestamp) ---
+function formatFirestoreTimestamp(timestamp) {
+    if (!timestamp || typeof timestamp.toDate !== 'function') return 'N/A';
+    try {
+        const date = timestamp.toDate(); // Convert Firestore Timestamp to JS Date
+        const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true };
+        return date.toLocaleDateString('en-US', options);
+    } catch (e) {
+        console.error("Error formatting timestamp:", e);
+        return 'Invalid Date';
     }
+}
 
-    function loadAndDisplayBookings() {
-        // In a real app with user accounts, you would fetch from Firestore/Database here,
-        // filtered by the currently logged-in user's ID.
-
-        // Using localStorage for demonstration:
-        const bookingsJson = localStorage.getItem(LOCAL_STORAGE_KEY);
-        let bookings = [];
-        if (bookingsJson) {
-            try {
-                bookings = JSON.parse(bookingsJson);
-            } catch (e) {
-                console.error("Error parsing bookings from localStorage:", e);
-                // Optionally display an error message to the user
-                bookingsListDiv.innerHTML = '<p style="color: red;">Error loading your bookings.</p>';
-                if (loadingMessage) loadingMessage.style.display = 'none';
-                return; // Stop execution if parsing fails
-            }
-        }
-        displayBookings(bookings);
+// --- Display Bookings Function (Renders fetched data) ---
+function displayBookings(bookingDocs) {
+    if (!bookingsListDiv || !loadingMessage || !noBookingsMessage) {
+        console.error("Required display elements not found.");
+        return;
     }
+    loadingMessage.style.display = 'none'; // Hide loading message
+    bookingsListDiv.innerHTML = ''; // Clear previous content (like loading message)
 
-    // --- Authentication Check ---
-    // We rely on firebase-auth.js to redirect if the user is not logged in,
-    // as mybook.html should be listed in the 'protectedPages' array there.
-    // So, if the script runs, we assume the user is authenticated.
+    if (!bookingDocs || bookingDocs.length === 0) {
+        noBookingsMessage.style.display = 'block'; // Show 'no bookings' message
+        bookingsListDiv.appendChild(noBookingsMessage); // Re-append if cleared
+    } else {
+        noBookingsMessage.style.display = 'none'; // Hide 'no bookings' message
 
-    // --- Initial Load ---
-    loadAndDisplayBookings();
+        bookingDocs.forEach(docSnap => {
+            const booking = docSnap.data();
+            const bookingId = docSnap.id; // Get Firestore document ID
 
+            const card = document.createElement('div');
+            card.classList.add('booking-card'); // Use the same class as before or a new one
+            card.dataset.bookingId = bookingId; // Store Firestore ID
 
-    // --- Optional: Cancel Button Logic ---
-    /*
-    function setupCancelButtons() {
-        const cancelButtons = document.querySelectorAll('.cancel-booking-btn');
-        cancelButtons.forEach(button => {
-            button.addEventListener('click', handleCancelBooking);
+            // Determine display date - prefer bookingRequestDate from Firestore
+            const displayDate = formatFirestoreTimestamp(booking.bookingRequestDate);
+            const displayTime = booking.bookingTime || ''; // Use bookingTime if available
+
+            card.innerHTML = `
+                <div class="booking-card-header">
+                    <h4>${booking.serviceName || 'Service Name Missing'}</h4>
+                    <span class="booking-status status-${(booking.status || 'pending').toLowerCase().replace(/\s+/g, '-')}">
+                        ${booking.status || 'Pending'}
+                    </span>
+                </div>
+                <div class="booking-card-body">
+                     <p><strong>Service Date/Time:</strong> ${displayDate} (${displayTime})</p>
+                    <p><strong>Status Updated:</strong> ${booking.lastAdminUpdateTimestamp ? formatBookingDate(booking.lastAdminUpdateTimestamp) : 'N/A'}</p> <p><strong>Payment Method:</strong> ${booking.paymentMethod || 'N/A'}</p>
+                    ${booking.notes ? `<p><strong>Notes:</strong> ${booking.notes}</p>` : ''}
+                    <p><small>Booking ID: ${bookingId}</small></p> </div>
+                `;
+            bookingsListDiv.appendChild(card);
         });
     }
+}
 
-    function handleCancelBooking(event) {
-        const bookingIdToCancel = event.target.dataset.id;
-        if (!bookingIdToCancel) return;
-
-        if (confirm("Are you sure you want to cancel this booking?")) {
-            console.log("Attempting to cancel booking:", bookingIdToCancel);
-
-            // 1. Get current bookings from localStorage
-             const bookingsJson = localStorage.getItem(LOCAL_STORAGE_KEY);
-             let bookings = bookingsJson ? JSON.parse(bookingsJson) : [];
-
-             // 2. Filter out the booking to cancel
-             const updatedBookings = bookings.filter(booking => (booking.bookingId || booking.serviceId + '_' + booking.bookingDate) !== bookingIdToCancel);
-
-             // 3. Save the updated array back to localStorage
-             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedBookings));
-
-             // 4. Refresh the displayed list
-             displayBookings(updatedBookings);
-
-             // 5. Update the counter in the nav (call the global function)
-             if (typeof window.updateBookingCounterGlobal === 'function') {
-                 window.updateBookingCounterGlobal();
-             }
-
-            // In a real app: Update status in Firestore instead of filtering/deleting
-            // e.g., updateDoc(doc(db, 'users', userId, 'bookings', bookingIdToCancel), { status: 'Cancelled' });
-            // Then reload bookings from Firestore.
-        }
+// --- Fetch Bookings from Firestore ---
+function fetchUserBookings(userId) {
+    if (!db) {
+        console.error("Firestore database instance not available.");
+        return;
     }
-    */
+    if (bookingsListener) { // Unsubscribe from previous listener if fetching for a new user
+        console.log("Detaching previous bookings listener.");
+        bookingsListener();
+        bookingsListener = null;
+    }
 
-}); // End DOMContentLoaded
+    console.log(`Workspaceing bookings for user ID: ${userId}`);
+    try {
+        const bookingsRef = collection(db, "bookings");
+        // Query for bookings matching the userId, order by request date
+        const q = query(bookingsRef,
+                        where("userId", "==", userId),
+                        orderBy("bookingRequestDate", "desc")
+                       );
+
+        // Use onSnapshot for real-time updates
+        bookingsListener = onSnapshot(q, (querySnapshot) => {
+            console.log(`Received ${querySnapshot.size} booking documents for user.`);
+            const bookingDocs = querySnapshot.docs; // Get the array of document snapshots
+            displayBookings(bookingDocs); // Pass the array to the display function
+
+        }, (error) => {
+            console.error("Error fetching user bookings:", error);
+            if (bookingsListDiv) {
+                 bookingsListDiv.innerHTML = '<p style="color:red;">Error loading your bookings. Please try again later.</p>';
+                 if(loadingMessage) loadingMessage.style.display = 'none';
+                 if(noBookingsMessage) noBookingsMessage.style.display = 'none';
+            }
+            // Optionally unsubscribe on error?
+            // if (bookingsListener) bookingsListener();
+            // bookingsListener = null;
+        });
+
+    } catch (error) {
+        console.error("Error setting up booking query:", error);
+         if (bookingsListDiv) {
+             bookingsListDiv.innerHTML = '<p style="color:red;">Could not set up query to load bookings.</p>';
+              if(loadingMessage) loadingMessage.style.display = 'none';
+              if(noBookingsMessage) noBookingsMessage.style.display = 'none';
+         }
+    }
+}
+
+// --- Authentication State ---
+console.log("Setting up onAuthStateChanged for mybook.js");
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // User is signed in
+        console.log("MyBook Page: User is signed in:", user.uid);
+        if (loadingMessage) loadingMessage.style.display = 'block'; // Show loading message
+        if (noBookingsMessage) noBookingsMessage.style.display = 'none'; // Hide no bookings message
+        fetchUserBookings(user.uid); // Fetch bookings for this user
+    } else {
+        // User is signed out
+        console.log("MyBook Page: User is signed out.");
+        if (bookingsListener) { // Unsubscribe if user logs out
+             bookingsListener();
+             bookingsListener = null;
+        }
+         if (bookingsListDiv) {
+            bookingsListDiv.innerHTML = '<p>Please log in to see your bookings.</p>'; // Show login message
+             if(loadingMessage) loadingMessage.style.display = 'none';
+             if(noBookingsMessage) noBookingsMessage.style.display = 'none';
+         }
+         // Note: Redirection away from page should be handled by protectRoute in firebase-auth.js if needed
+    }
+});
+console.log("onAuthStateChanged listener set up for mybook.js");
