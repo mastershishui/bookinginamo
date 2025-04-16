@@ -224,10 +224,10 @@ footer {
     color: #fff;
     padding: 30px 40px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between; /* MODIFIED: Pushes items to edges */
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 30px; /* MODIFIED: Increased gap for more space between sections */
+    gap: 30px;
     flex-shrink: 0;
 }
 
@@ -235,12 +235,14 @@ footer {
     flex: 1 1 250px;
     /* margin: 10px; */ /* Using gap instead of margin */
     min-width: 220px;
+    text-align: left; /* Default left alignment */
 }
 
 .footer-section h3 {
     font-size: 1.2em;
     margin-bottom: 15px;
     color: #fce4ec; /* Light pink for headings */
+    text-align: left; /* Ensure headings start left */
 }
 
 .footer-section p,
@@ -277,7 +279,7 @@ footer {
     margin-bottom: 10px;
 }
 
-/* --- ADDED Rules for Contact Section Spacing & Alignment --- */
+/* --- Rules for Contact Section Spacing & Alignment --- */
 .footer-contact .email-heading {
   margin-top: 25px; /* Adds space above the Email heading */
 }
@@ -290,9 +292,67 @@ footer {
     /* Tiny adjustment for icon vertical alignment with flex-start */
     margin-top: 0.15em;
 }
-/* --- End of Added Contact Section Rules --- */
+/* --- End of Contact Section Rules --- */
 
 
+/* --- CSS Rule for Copyright Bar --- */
+.footer-copyright {
+  width: 100%;             /* Span full width */
+  text-align: center;      /* Center the text */
+  margin-top: 30px;        /* Space above the copyright line */
+  padding: 20px 0 10px 0;  /* Padding top/bottom */
+  border-top: 1px solid #444; /* Separator line (dark grey) */
+  font-size: 0.9em;        /* Smaller font size */
+  color: #bbb;             /* Muted light grey color */
+  flex-basis: 100%;       /* Ensure it takes full row when flex items wrap */
+}
+/* --- End of Copyright Rule --- */
+
+
+/* --- Responsive adjustments --- */
+@media (max-width: 576px) {
+  footer {
+    padding: 20px 15px; /* Less padding on small screens */
+    justify-content: center; /* Center items when stacked */
+  }
+  .footer-section {
+     /* text-align: center; */ /* REMOVED general centering */
+     flex-basis: 90%; /* Adjusted basis when stacked */
+     margin-bottom: 15px; /* Space between stacked sections */
+     max-width: 400px; /* Optional: prevent sections becoming too wide */
+  }
+
+   /* Keep Social links centered when stacked if desired */
+   .footer-socials {
+       text-align: center;
+   }
+   .footer-socials h3 {
+       text-align: center;
+   }
+   .footer-socials .social-links a {
+       justify-content: center;
+   }
+
+   /* --- Ensure Contact section remains left-aligned when stacked --- */
+   .footer-contact {
+       text-align: left;
+   }
+   .footer-contact h3 {
+       text-align: left;
+   }
+   .footer-contact p, .footer-contact a {
+       justify-content: flex-start; /* Align contact items left */
+   }
+   /* --- End Contact override --- */
+
+   .footer-copyright {
+       margin-top: 15px; /* Adjust margin when stacked */
+       padding-top: 15px;
+       flex-basis: 90%; /* Match width */
+       max-width: 400px;
+   }
+}
+/* --- End of Responsive rules --- */
 /* --- ADDED CSS Rule for Copyright Bar --- */
 .footer-copyright {
   width: 100%;             /* Span full width */
