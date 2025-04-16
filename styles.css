@@ -1347,83 +1347,80 @@ footer {
 }
 /* ============================ */
 /* Styles for About Us Page     */
-/* (UPDATED LAYOUT)           */
 /* ============================ */
 
 .about-container {
     display: flex;
     flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    /* --- Increased gap for more separation --- */
-    gap: 50px;
+    gap: 30px; /* Space between text and photo */
     padding: 30px 15px; /* Padding around the content */
     max-width: 1100px; /* Limit overall width */
     margin: 20px auto; /* Center the container */
-    background-color: #fff; /* Optional: background */
+    background-color: #fff; /* Optional: background for the section */
     border-radius: 8px; /* Optional: rounded corners */
-    align-items: flex-start; /* Align items to the top */
+   /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional: subtle shadow */
 }
 
 .about-text {
-     /* --- Adjusted flex: Give text slightly less space than photo --- */
-    flex: 1; /* Was flex: 2 */
-    min-width: 300px;
-    text-align: left;
-     /* padding-right: 0; /* Removed specific padding, gap handles spacing */
+    flex: 2; /* Allow text to take more space (e.g., 66%) */
+    min-width: 300px; /* Ensure text block doesn't get too narrow */
+    text-align: left; /* Default text alignment */
+    padding-right: 20px; /* Add some space between text and photo */
 }
 
 .about-text h2 {
-    color: #e91e63;
-    margin-top: 0; /* Remove default top margin if needed */
+    color: #e91e63; /* Use a theme color (example pink) */
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #fce4ec;
-    font-size: 1.8em;
+    border-bottom: 2px solid #fce4ec; /* Light underline with theme color */
+    font-size: 1.8em; /* Example size */
 }
 
 .about-text h3 {
-     color: #333;
+     color: #333; /* Darker heading for sub-sections */
      margin-top: 25px;
      margin-bottom: 10px;
-     font-size: 1.4em;
+     font-size: 1.4em; /* Example size */
  }
 
 .about-text p {
-    line-height: 1.7;
+    line-height: 1.7; /* Improve readability */
     margin-bottom: 15px;
-    color: #555;
-    font-size: 1em;
+    color: #555; /* Slightly lighter text color */
+    font-size: 1em; /* Ensure consistent paragraph font size */
 }
 
 .about-photo {
-    /* --- Adjusted flex: Give photo more space --- */
-    flex: 1.5; /* Was flex: 1. Adjust this number (e.g., 1.5 or 2) to control photo size */
-    min-width: 300px; /* Allow photo area to be larger */
+    flex: 1; /* Allow photo to take less space (e.g., 33%) */
+    min-width: 250px; /* Minimum width for the photo container */
     display: flex;
     justify-content: center;
-    align-items: center; /* Center vertically if text is shorter */
+    align-items: center;
 }
 
 .about-photo img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    max-width: 100%; /* Make image responsive */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: rounded corners for the image */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Optional: shadow for image */
 }
 
-/* Responsive adjustments (stacking remains the same) */
+/* Responsive adjustments for About Us */
 @media (max-width: 768px) {
     .about-container {
-        flex-direction: column;
-        padding: 20px 10px;
-        gap: 20px; /* Adjust gap for stacked view */
+        flex-direction: column; /* Stack text and photo vertically */
+        padding: 20px 10px; /* Adjust padding for smaller screens */
     }
     .about-text {
-        padding-right: 0;
-        margin-bottom: 20px;
+        padding-right: 0; /* Remove right padding when stacked */
+        margin-bottom: 20px; /* Add space below text when stacked */
     }
-     /* Keep heading sizes adjusted for mobile */
-    .about-text h2 { font-size: 1.6em; }
-    .about-text h3 { font-size: 1.3em; }
+    .about-text h2 {
+        font-size: 1.6em; /* Adjust heading size */
+    }
+     .about-text h3 {
+        font-size: 1.3em; /* Adjust heading size */
+    }
 }
 
 /* --- End of About Us Page Styles --- */
