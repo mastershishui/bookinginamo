@@ -232,7 +232,7 @@ footer {
     color: #fff; /* Default light text color */
     padding: 40px 50px 20px 50px; /* Padding: Top Sides Bottom */
     display: flex;
-    justify-content: space-around; /* Distribute space around sections */
+    justify-content: space-between; /* CHANGE MADE HERE */
     align-items: flex-start; /* Align tops of sections */
     flex-wrap: wrap; /* Allow sections to wrap on smaller screens */
     gap: 30px; /* Space between sections */
