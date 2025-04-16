@@ -32,17 +32,24 @@
         <div id="bookings-list">
             <table id="bookings-table">
                 <thead>
-                    <tr>
-                        <th>Booking ID</th>
-                        <th>Customer Name</th>
-                        <th>Contact</th>
-                        <th>Email</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Service</th>
-                        <th>Status</th>
-                        </tr>
-                </thead>
+    <tr>
+        <th>Booking ID</th>
+        <th>Customer Name</th>
+        <th>Contact</th>
+        <th>Email</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th>Actions</th> 
+    </tr>
+</thead>
+<tbody id="bookings-table-body">
+    <tr class="loading-message">
+         
+        <td colspan="9">Loading bookings...</td>
+    </tr>
+</tbody>
                 <tbody id="bookings-table-body">
                     <tr class="loading-message">
                         <td colspan="8">Loading bookings...</td> </tr>
