@@ -224,7 +224,7 @@ footer {
     color: #fff;
     padding: 30px 40px;
     display: flex;
-    justify-content: space-between; /* MODIFIED: Pushes items to edges */
+    justify-content: space-around; /* MODIFIED: Back to space-around */
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 30px;
@@ -233,7 +233,6 @@ footer {
 
 .footer-section {
     flex: 1 1 250px;
-    /* margin: 10px; */ /* Using gap instead of margin */
     min-width: 220px;
     text-align: left; /* Default left alignment */
 }
@@ -251,13 +250,13 @@ footer {
     text-decoration: none;
     margin-bottom: 8px;
     font-size: 0.95em;
-    line-height: 1.5;
-    display: flex; /* Ensures icon and text align nicely */
-    align-items: center; /* Default vertical alignment */
+    line-height: 1.5; /* Controls space between lines of text */
+    display: flex;
+    align-items: flex-start; /* MODIFIED: Use flex-start for all */
 }
 .footer-section a {
-    /* display: inline-flex; */ /* Keep as flex */
     transition: color 0.2s ease;
+    align-items: center; /* Links can usually stay vertically centered */
 }
 
 .footer-section a:hover,
@@ -270,30 +269,70 @@ footer {
     margin-right: 10px;
     width: 1.2em;
     text-align: center;
-    flex-shrink: 0; /* Prevents icon from shrinking */
-    color: #fce4ec; /* Match heading color for icons */
+    flex-shrink: 0;
+    color: #fce4ec;
+    margin-top: 0.15em; /* General small adjustment for icon alignment */
 }
 
 .social-links a {
-    /* display: flex; */ /* Handled by general rule */
     margin-bottom: 10px;
+    align-items: center; /* Center icons/text for social links */
+}
+.social-links a i {
+    margin-top: 0; /* Reset margin-top for centered social icons */
 }
 
-/* --- Rules for Contact Section Spacing & Alignment --- */
-.footer-contact .email-heading {
-  margin-top: 25px; /* Adds space above the Email heading */
-}
 
-.footer-contact p {
-    /* Specific alignment for multi-line text like address */
-    align-items: flex-start; /* Align icon to the top of multi-line text */
-}
-.footer-contact p i {
-    /* Tiny adjustment for icon vertical alignment with flex-start */
-    margin-top: 0.15em;
-}
-/* --- End of Contact Section Rules --- */
+/* REMOVED specific rules for .footer-contact p and .footer-contact p i */
+/* REMOVED rule for .footer-contact .email-heading */
 
+
+/* --- CSS Rule for Copyright Bar --- */
+.footer-copyright {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px 0 10px 0;
+  border-top: 1px solid #444;
+  font-size: 0.9em;
+  color: #bbb;
+  flex-basis: 100%;
+}
+/* --- End of Copyright Rule --- */
+
+
+/* --- Responsive adjustments --- */
+@media (max-width: 576px) {
+  footer {
+    padding: 20px 15px;
+    justify-content: center;
+  }
+  .footer-section {
+     text-align: left; /* Default to left align when stacked */
+     flex-basis: 90%;
+     margin-bottom: 20px; /* More space when stacked */
+     max-width: 400px;
+  }
+  .footer-section h3 {
+     text-align: left; /* Keep headings left */
+  }
+   .footer-section p, .footer-section a {
+      justify-content: flex-start; /* Keep content left */
+  }
+
+  /* Optionally center social links when stacked */
+  /* .footer-socials { text-align: center; } */
+  /* .footer-socials h3 { text-align: center; } */
+  /* .footer-socials .social-links a { justify-content: center; } */
+
+   .footer-copyright {
+       margin-top: 15px;
+       padding-top: 15px;
+       flex-basis: 90%;
+       max-width: 400px;
+   }
+}
+/* --- End of Responsive rules --- */
 
 /* --- CSS Rule for Copyright Bar --- */
 .footer-copyright {
