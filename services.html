@@ -93,7 +93,7 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                     <div class="service-card promo-card" data-service-id="promo-pkg4" data-service-name="Package 4" data-price="950">
+                    <div class="service-card promo-card" data-service-id="promo-pkg4" data-service-name="Package 4" data-price="950">
                         <div class="service-details">
                             <h4 class="service-name">Package 4</h4>
                             <p class="service-description">Signature Facial with Lash Perming.</p>
@@ -101,7 +101,7 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                     <div class="service-card promo-card" data-service-id="promo-pkg5" data-service-name="Package 5" data-price="2000">
+                    <div class="service-card promo-card" data-service-id="promo-pkg5" data-service-name="Package 5" data-price="2000">
                         <div class="service-details">
                             <h4 class="service-name">Package 5</h4>
                             <p class="service-description">Acne Facial with Pico Laser.</p>
@@ -109,7 +109,7 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                     <div class="service-card promo-card" data-service-id="promo-pkg6" data-service-name="Package 6" data-price="399">
+                    <div class="service-card promo-card" data-service-id="promo-pkg6" data-service-name="Package 6" data-price="399">
                         <div class="service-details">
                             <h4 class="service-name">Package 6</h4>
                             <p class="service-description">UA Waxing with Brow Tidy.</p>
@@ -688,7 +688,7 @@
 
     <div id="bookingModal" class="modal" style="display: none;">
         <div class="modal-content booking-modal-content">
-            <span class="close-button booking-close-button">&times;</span>
+            <span class="close-button booking-close-button">×</span>
             <h3>Book Your Service</h3>
             <form id="bookingForm">
                 <div id="service-details-display">
@@ -698,7 +698,6 @@
 
                 <input type="hidden" id="modal-service-id" name="serviceId">
                 <input type="hidden" id="modal-price-value" name="priceValue"> {/* Added hidden input for price value */}
-
 
                 <div class="form-group">
                     <label for="booking-notes">Notes (Optional):</label>
@@ -722,6 +721,90 @@
         </div>
     </div>
 
+    <div id="registerModal" class="modal">
+        <div class="modal-content register-modal-content">
+            <span class="close-button register-close-button">×</span>
+            <div class="modal-form-header">
+                <img src="gjslogo.jpg" alt="GJ'S Logo" class="modal-form-logo">
+                <h2 class="modal-form-title">Registration Form</h2>
+            </div>
+            <form id="registrationForm" class="modal-form-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-lastname">Lastname:</label>
+                        <input type="text" id="reg-lastname" name="lastname" placeholder="Lastname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-firstname">Firstname:</label>
+                        <input type="text" id="reg-firstname" name="firstname" placeholder="Firstname" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-email">Email:</label>
+                        <input type="email" id="reg-email" name="email" placeholder="example@gmail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-contact">Contact No.:</label>
+                        <input type="tel" id="reg-contact" name="contact" placeholder="+63 123 123 123" required>
+                    </div>
+                </div>
+                <div class="form-group gender-group">
+                    <label>Gender:</label>
+                    <div class="radio-options">
+                        <input type="radio" id="male" name="gender" value="male" required>
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Female</label>
+                        <input type="radio" id="prefer-not" name="gender" value="prefer_not_say">
+                        <label for="prefer-not">Prefer not to say</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-username">Username:</label>
+                    <input type="text" id="reg-username" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password:</label>
+                    <input type="password" id="reg-password" name="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm-password">Confirm Password:</label>
+                    <input type="password" id="reg-confirm-password" name="confirm_password" placeholder="Password" required>
+                </div>
+                <button type="submit">Register Now!</button>
+                <p class="login-link">
+                    Have already an account? <a href="#" id="switchToLogin">Login Here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content login-modal-content">
+            <span class="close-button login-close-button">×</span>
+            <div class="modal-header login-modal-header">
+                 <img src="gjslogo.jpg" alt="GJ'S Logo" class="modal-form-logo">
+                 <h2 class="modal-form-title">Login Form</h2>
+            </div>
+            <div class="modal-form-body">
+                 <form id="loginForm">
+                     <div class="form-group">
+                         <label for="login-email-user">Email/Username:</label>
+                         <input type="text" id="login-email-user" name="email_username" required>
+                     </div>
+                     <div class="form-group">
+                         <label for="login-password">Password:</label>
+                         <input type="password" id="login-password" name="password" required>
+                     </div>
+                     <button type="submit">Login</button>
+                     <p class="register-link">
+                         Don't have an Account? <a href="#" id="switchToRegister">Register here</a>
+                     </p>
+                 </form>
+            </div>
+        </div>
+    </div>
     <script type="module" src="firebase-auth.js"></script>
     <script type="module" src="booking.js"></script>
 </body>
