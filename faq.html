@@ -10,6 +10,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBxcGbtIQFIgaMtns+p/RHOvBBQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Basic CSS for the FAQ functionality */
+        .faq-answer {
+            display: none; /* Initially hide the answers */
+            padding: 10px 20px;
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block; /* Show answer when the item is active */
+        }
+
+        .faq-question {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 15px 20px;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
 
 <body>
@@ -207,6 +241,21 @@
         </div>
     </div>
 
+   <script>
+       document.addEventListener('DOMContentLoaded', function() {
+           const faqItems = document.querySelectorAll('.faq-item');
+
+           faqItems.forEach(item => {
+               const questionButton = item.querySelector('.faq-question');
+               const answerDiv = item.querySelector('.faq-answer');
+               const icon = item.querySelector('.faq-question i');
+
+               questionButton.addEventListener('click', () => {
+                   item.classList.toggle('active');
+               });
+           });
+       });
+   </script>
    <script type="module" src="firebase-auth.js"></script>
 </body>
 </html>
