@@ -1,4 +1,4 @@
-// booking.js - UPDATED to use custom notification modal
+// booking.js - UPDATED to open login modal on auth notification OK click
 
 // --- Imports ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
@@ -27,7 +27,7 @@ try {
     } catch (e) {
         if (e.code === 'duplicate-app') {
             console.log("Booking.js: Firebase default instance already exists, getting it.");
-            app = initializeApp(firebaseConfig); // Get existing instance if needed (often just getApp() is used here)
+            app = initializeApp(firebaseConfig); // Get existing instance
         } else {
             throw e;
         }
@@ -43,9 +43,9 @@ try {
 
 // --- Wait for the DOM ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Get elements needed within booking.js
+    // Get elements needed
     const bookingModal = document.getElementById('bookingModal');
-    const loginModal = document.getElementById('loginModal'); // Still needed if linked elsewhere
+    const loginModal = document.getElementById('loginModal'); // Needed
     const bookingCloseButton = bookingModal ? bookingModal.querySelector('.booking-close-button') : null;
     const bookingForm = document.getElementById('bookingForm');
     const serviceButtons = document.querySelectorAll('.book-button');
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalServiceId = document.getElementById('modal-service-id');
     const bookingNotes = document.getElementById('booking-notes');
 
-    // ** NEW: Get Authentication Notification Modal elements **
+    // Get Authentication Notification Modal elements
     const authModal = document.getElementById('authNotificationModal');
     const authModalCloseBtn = authModal ? authModal.querySelector('.auth-notification-close') : null;
     const authModalOkBtn = authModal ? authModal.querySelector('.auth-notification-ok-btn') : null;
@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Modal Handling ---
     function openBookingModal(serviceCard) {
+        // (Keep existing openBookingModal function as is)
         if (!bookingModal || !modalServiceId || !modalServiceName || !modalServicePrice || !bookingNotes) {
             console.error("Booking modal or its inner elements not found!");
             return;
@@ -70,17 +71,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const serviceName = serviceCard.dataset.serviceName;
         let price = serviceCard.dataset.price;
         let displayPrice;
-
-        // Format price (existing logic)
         if (!price || price === 'VARIES' || price === 'PACKAGE') {
-            const priceElement = serviceCard.querySelector('.service-price');
-            displayPrice = priceElement ? priceElement.textContent : 'Price unavailable';
+             const priceElement = serviceCard.querySelector('.service-price');
+             displayPrice = priceElement ? priceElement.textContent : 'Price unavailable';
         } else {
-             try {
-                 displayPrice = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(price);
-             } catch (e) { displayPrice = `₱${price}`; }
+              try {
+                  displayPrice = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(price);
+              } catch (e) { displayPrice = `₱${price}`; }
         }
-
         console.log("Opening booking modal for:", serviceName, displayPrice, serviceId);
         modalServiceId.value = serviceId;
         modalServiceName.textContent = serviceName;
@@ -93,101 +91,98 @@ document.addEventListener('DOMContentLoaded', () => {
         if (bookingModal) bookingModal.style.display = 'none';
     }
 
-    // ** NEW: Function to close the Authentication Notification Modal **
+    // Function to close the Authentication Notification Modal
     function closeAuthNotification() {
         if (authModal) {
             authModal.style.display = 'none';
         }
     }
 
-    // ** NEW: Add event listeners to close the Auth Notification modal **
+    // --- Event Listeners for Modals ---
+
+    // Add event listener for Auth Notification 'X' button
     if (authModalCloseBtn) {
         authModalCloseBtn.addEventListener('click', closeAuthNotification);
     }
+
+    // ** MODIFIED: Event listener for Auth Notification OK Button **
     if (authModalOkBtn) {
-        authModalOkBtn.addEventListener('click', closeAuthNotification);
+        authModalOkBtn.addEventListener('click', () => {
+            closeAuthNotification(); // 1. Close the notification modal
+            if (loginModal) {
+                loginModal.style.display = 'block'; // 2. Open the login modal
+            } else {
+                // Fallback if login modal isn't found
+                console.error("Login modal element not found when trying to open from auth notification.");
+                alert("Please use the main 'Log In / Sign Up' link."); // Give user guidance
+            }
+        });
     }
+    // ** END OF MODIFICATION **
+
+    // Add event listener for Auth Notification overlay click
     if (authModal) {
         authModal.addEventListener('click', (event) => {
-            // Close if clicking on the semi-transparent background overlay
             if (event.target === authModal) {
                 closeAuthNotification();
             }
         });
     }
 
+    // Add event listener for Booking Modal Close button
+    if (bookingCloseButton) {
+        bookingCloseButton.addEventListener('click', closeBookingModal);
+    }
+
+    // Add event listener for clicking outside Booking modal
+    window.addEventListener('click', (event) => {
+        if (bookingModal && event.target === bookingModal) {
+            closeBookingModal();
+        }
+        // Note: Auth modal closing is handled separately above
+    });
 
     // --- Event Listeners for Book Now buttons ---
     serviceButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             const serviceCard = event.target.closest('.service-card');
-            if (!serviceCard) {
-                 console.error("Could not find parent service-card for button:", event.target);
-                 return;
-            }
+            if (!serviceCard) return;
 
             // Check Authentication
             if (auth && auth.currentUser) {
-                // User is logged in - Open the actual booking modal
+                // User logged in: Open the booking modal
                 console.log("User logged in, opening booking modal.");
                 openBookingModal(serviceCard);
             } else {
-                // User is NOT logged in - Show the custom notification modal
+                // User not logged in: Show custom auth notification modal
                 console.log("User not logged in, showing auth notification.");
-
-                // alert("Please log in or register to book a service."); // <-- REMOVED DEFAULT ALERT
-
-                // ** NEW: Show custom auth notification modal **
                 if (authModal) {
                     authModal.style.display = 'block';
                 } else {
-                    // Fallback if the custom modal isn't found (shouldn't happen if HTML is correct)
-                    console.error("Authentication notification modal not found!");
-                    alert("Please log in or register to book a service."); // Fallback alert
+                    // Fallback if custom modal missing
+                    console.error("Auth notification modal not found!");
+                    alert("Please log in or register to book a service.");
+                    // Optionally show login modal directly as fallback
+                    // if (loginModal) loginModal.style.display = 'block';
                 }
-
-                // REMOVED automatic opening of login modal - notification tells user what to do.
-                // if (loginModal) {
-                //     closeBookingModal();
-                //     loginModal.style.display = 'block';
-                // } else {
-                //     console.warn("Login modal element not found.");
-                // }
             }
         });
-    });
-
-    // Close booking modal listener (remains the same)
-    if (bookingCloseButton) {
-        bookingCloseButton.addEventListener('click', closeBookingModal);
-    }
-    window.addEventListener('click', (event) => {
-        // Close booking modal if clicking outside its content
-        if (bookingModal && event.target === bookingModal) {
-            closeBookingModal();
-        }
-        // Note: Auth modal closing is handled by its specific listeners added above
     });
 
 
     // --- Booking Form Submission (Save to Firestore) ---
     if (bookingForm) {
-        bookingForm.addEventListener('submit', async (event) => { // Make async
+        bookingForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const submitButton = bookingForm.querySelector('button[type="submit"]');
             submitButton.disabled = true;
             submitButton.textContent = 'Booking...';
 
-            // 1. Check Authentication again
+            // Re-check Authentication
             if (!auth || !auth.currentUser) {
-                alert("You seem to be logged out. Please log in again to book.");
+                alert("Authentication error. Please log in again."); // Keep alert here for critical failure
                 closeBookingModal();
-                 // ** NEW: Also show custom auth notification if check fails here **
-                 if (authModal) {
-                     authModal.style.display = 'block';
-                 }
-                 // Keep login modal display if needed for this specific failure point
-                 // if (loginModal) loginModal.style.display = 'block';
+                 if (authModal) authModal.style.display = 'block'; // Show notification on failure
                 submitButton.disabled = false;
                 submitButton.textContent = 'Confirm Booking';
                 return;
@@ -195,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const userId = auth.currentUser.uid;
             const userEmail = auth.currentUser.email;
 
-            // 2. Get User Details from Firestore
+            // Get User Details from Firestore
             let customerName = userEmail;
             let customerContact = 'N/A';
             try {
@@ -205,15 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     const userData = userDocSnap.data();
                     customerName = `${userData.firstname || ''} ${userData.lastname || ''}`.trim() || userEmail;
                     customerContact = userData.contact || 'N/A';
-                    console.log("Fetched user details:", customerName, customerContact);
-                } else {
-                    console.warn("User document not found in Firestore, using default info.");
                 }
             } catch (error) {
                 console.error("Error fetching user details:", error);
             }
 
-            // 3. Get Form Data
+            // Get Form Data
             const formData = new FormData(bookingForm);
             const selectedPayment = formData.get('payment');
             const notes = formData.get('notes');
@@ -221,33 +213,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const serviceName = modalServiceName ? modalServiceName.textContent : 'Unknown Service';
             const servicePrice = modalServicePrice ? modalServicePrice.textContent : 'N/A';
 
-            // 4. Prepare Booking Data
+            // Prepare Booking Data
             const newBookingData = {
-                userId: userId,
-                userEmail: userEmail,
-                customerName: customerName,
-                customerContact: customerContact,
-                serviceId: serviceId,
-                serviceName: serviceName,
-                servicePriceDisplay: servicePrice,
-                notes: notes || "",
-                paymentMethod: selectedPayment,
-                bookingRequestDate: serverTimestamp(),
-                bookingTime: "Pending Assignment",
-                status: "Pending Confirmation"
+                userId, userEmail, customerName, customerContact, serviceId, serviceName,
+                servicePriceDisplay: servicePrice, notes: notes || "", paymentMethod: selectedPayment,
+                bookingRequestDate: serverTimestamp(), bookingTime: "Pending Assignment", status: "Pending Confirmation"
             };
 
-            console.log("Attempting to save booking to Firestore:", newBookingData);
-
-            // 5. Save to Firestore
+            // Save to Firestore
             try {
                 const bookingsCollectionRef = collection(db, "bookings");
                 const docRef = await addDoc(bookingsCollectionRef, newBookingData);
                 console.log("Booking saved successfully to Firestore with ID:", docRef.id);
-
-                alert(`"${serviceName}" booking request submitted successfully!\nWe will confirm your schedule soon.`); // Keep standard alert for success
+                alert(`"${serviceName}" booking request submitted successfully!\nWe will confirm your schedule soon.`);
                 closeBookingModal();
-
             } catch (error) {
                 console.error("Error saving booking to Firestore:", error);
                 alert(`Failed to submit booking. Please try again.\nError: ${error.message}`);
