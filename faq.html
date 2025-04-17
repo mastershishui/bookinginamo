@@ -10,69 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBxcGbtIQFIgaMtns+p/RHOvBBQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        /* Basic CSS for the FAQ functionality */
-        .faq-answer {
-            display: none; /* Initially hide the answers */
-            padding: 10px 20px;
-            border-left: 1px solid #ddd;
-            border-right: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-            color: #333; /* Ensure the text color is visible */
-            background-color: #f9f9f9; /* Add a light background for better readability */
-        }
-
-        .faq-item.active .faq-answer {
-            display: block; /* Show answer when the item is active */
-        }
-
-        .faq-question {
-            background: none;
-            border: 1px solid #ddd;
-            padding: 15px 20px;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /* Let's add a background color here as well, you can adjust this in your styles.css */
-            background-color: #f0f0f0;
-        }
-
-        .faq-question i {
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
-
-        /* You can add more styling here or in your styles.css to match your theme */
-        header {
-            background-color: #your-theme-color; /* Replace with your actual theme color */
-            color: white; /* Ensure header text is visible */
-            padding: 10px 0;
-            text-align: center; /* Adjust as needed */
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center; /* Adjust as needed */
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-        }
-
-        /* Add more theme-related styles as needed */
-    </style>
-</head>
+    </head>
 
 <body>
     <header>
@@ -83,32 +21,32 @@
         <div class="header-text">
              <h1>Frequently Asked Questions</h1>
         </div>
-       <nav>
-      <ul>
-          <li><a href="index.html">Home</a></li>
-          <li class="active"><a href="about.html">ABOUT US</a></li>
-          <li><a href="reviews.html">Reviews</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="services.html">Services</a></li>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">ABOUT US</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li class="active"><a href="faq.html">FAQ</a></li>
+                <li><a href="services.html">Services</a></li>
 
-          <li id="nav-mybook-link-li" style="display: none;">
-              <a href="mybook.html">My Book<span id="mybook-counter" style="display: none;">0</span></a>
-          </li>
+                <li id="nav-mybook-link-li" style="display: none;">
+                    <a href="mybook.html">My Book<span id="mybook-counter" style="display: none;">0</span></a>
+                </li>
 
-          <li id="nav-login-signup-li" style="display: block;">
-              <a href="#" id="loginSignupLink" class="nav-link-icon">
-                  <i class="fas fa-user-circle"></i> Log In / Sign Up
-              </a>
-          </li>
+                <li id="nav-login-signup-li" style="display: block;">
+                    <a href="#" id="loginSignupLink" class="nav-link-icon">
+                        <i class="fas fa-user-circle"></i> Log In / Sign Up
+                    </a>
+                </li>
 
-          <li id="nav-profile-link-li" style="display: none;">
-              <a href="profile.html">My Profile</a>
-          </li>
-          <li id="nav-logout-link-li" style="display: none;">
-              <a href="#" id="logout-link">Logout</a>
-          </li>
-      </ul>
-  </nav>
+                <li id="nav-profile-link-li" style="display: none;">
+                    <a href="profile.html">My Profile</a>
+                </li>
+                <li id="nav-logout-link-li" style="display: none;">
+                    <a href="#" id="logout-link">Logout</a>
+                </li>
+            </ul>
+        </nav>
     </header>
 
     <main>
@@ -166,22 +104,25 @@
                 </div> </div> </main>
 
     <footer>
-        <div class="footer-section">
-            <h3>More about Company</h3>
-            <p>GJ's Beauty Lounge is dedicated to enhancing beauty and confidence through professional services, including nails, brows, lashes, waxing, and gluta spa treatments. With a commitment to quality and customer satisfaction, we create a relaxing space where clients can enjoy top-tier beauty care.</p>
-        </div>
-        <div class="footer-section">
+        <div class="footer-section footer-socials">
             <h3>Keep Connected</h3>
             <div class="social-links">
                 <a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
                 <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                </div>
+                <a href="#" target="_blank"><i class="fab fa-tiktok"></i> Tiktok</a>
+            </div>
         </div>
-        <div class="footer-section">
-            <h3>Contact Information</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Lower Ground Floor, Nova Plaza Mall, Quirino Highway, Novaliches Proper, Quezon City</p>
-            <p><i class="fas fa-phone"></i> 0962-847-2488</p>
+
+        <div class="footer-section footer-contact">
+            <h3>Email</h3>
             <p><i class="fas fa-envelope"></i> <a href="mailto:gjsbeautylounge@gmail.com">gjsbeautylounge@gmail.com</a></p>
+
+            <h3 style="margin-top: 25px;">Address</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Lower Ground Floor, Nova Plaza Mall, Quirino Highway, Novaliches Proper, Quezon City</p>
+        </div>
+
+        <div class="footer-copyright">
+            Copyright © 2025 GJ's Beauty Lounge | Powered by GJ's Beauty Lounge
         </div>
     </footer>
 
@@ -270,20 +211,28 @@
         </div>
     </div>
 
-   <script>
-       document.addEventListener('DOMContentLoaded', function() {
-           const faqItems = document.querySelectorAll('.faq-item');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
 
-           faqItems.forEach(item => {
-               const questionButton = item.querySelector('.faq-question');
-               const answerDiv = item.querySelector('.faq-answer');
-               const icon = item.querySelector('.faq-question i');
+            faqItems.forEach(item => {
+                const questionButton = item.querySelector('.faq-question');
+                // const answerDiv = item.querySelector('.faq-answer'); // Not directly needed if toggling class
+                // const icon = item.querySelector('.faq-question i'); // Not directly needed if toggling class
 
-               questionButton.addEventListener('click', () => {
-                   item.classList.toggle('active');
-               });
-           });
-       });
+                questionButton.addEventListener('click', () => {
+                    // Close other open items if you want only one open at a time
+                    // faqItems.forEach(otherItem => {
+                    //     if (otherItem !== item && otherItem.classList.contains('active')) {
+                    //         otherItem.classList.remove('active');
+                    //     }
+                    // });
+
+                    // Toggle the active class on the clicked item
+                    item.classList.toggle('active');
+                });
+            });
+        });
    </script>
    <script type="module" src="firebase-auth.js"></script>
 </body>
