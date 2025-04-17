@@ -80,7 +80,26 @@
      <div id="loginModal" class="modal">...</div>
      <div id="authNotificationModal" class="modal" style="display: none;">...</div>
 
+<div id="chat-widget-container">
+        <button id="chat-open-button" class="chat-button">
+            <i class="fas fa-comment-dots"></i> <span>Chat with us</span>
+        </button>
 
+        <div id="chat-window" style="display: none;">
+            <div id="chat-header">
+                <h3>Support Chat</h3>
+                <button id="chat-close-button">&times;</button>
+            </div>
+            <div id="chat-messages">
+                <p>Connecting...</p>
+            </div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type your message...">
+                <button id="chat-send-button">Send</button>
+            </div>
+        </div>
+    </div>
     <script type="module" src="firebase-auth.js"></script>
-    </body>
+</body>
 </html>
+    
