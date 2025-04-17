@@ -7,7 +7,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     onAuthStateChanged, // Manages auth state changes
-    signOut           // For logging out
+    signOut // For logging out
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import {
     getFirestore,
@@ -21,7 +21,7 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase
 // --- Firebase Config ---
 const firebaseConfig = {
     // IMPORTANT: Make sure this apiKey is correct and complete!
-    apiKey: "AIzaSyAp19_1RwloTbJLZ_K723-m8C2zka8Oh10", // Using the API key you provided
+    apiKey: "YOUR_API_KEY", // !!! Replace with your actual API Key !!!
     authDomain: "gjsbooking-faba9.firebaseapp.com",
     projectId: "gjsbooking-faba9",
     storageBucket: "gjsbooking-faba9.appspot.com",
@@ -37,19 +37,19 @@ const db = getFirestore(app);
 // const analytics = getAnalytics(app); // Optional
 
 // --- Global variables for UI elements ---
-// MODIFIED: Updated variable list for new nav structure
-let loginLink = null;
-let registerLink = null;
+// ***** MODIFIED: Updated variable list for new nav structure *****
+let loginSignupLink = null; // Combined Login/Sign Up Link <a> tag <-- NEW
+let loginSignupLi = null;   // Combined Login/Sign Up Link <li> tag <-- NEW
 let loginModal = null;
 let registerModal = null;
 let loginMessage = null;
 let registerMessage = null;
-let loginLinkLi = null;          // <li> containing Login link
-let registerLinkLi = null;       // <li> containing Register link
-let myBookLinkLi = null;         // <li> containing My Book link (renamed for consistency)
-let profileLinkLi = null;        // <li> containing My Profile link <-- NEW
-let logoutLinkLi = null;         // <li> containing Logout link <-- NEW
-let logoutLink = null;           // <a> tag for Logout <-- Still needed for event listener
+// let loginLinkLi = null; // <-- REMOVED
+// let registerLinkLi = null; // <-- REMOVED
+let myBookLinkLi = null; // <li> containing My Book link
+let profileLinkLi = null; // <li> containing My Profile link
+let logoutLinkLi = null; // <li> containing Logout link
+let logoutLink = null; // <a> tag for Logout <-- Still needed for event listener
 let dashboardWelcomeMessage = null;
 
 // --- Helper Function to Close Modals ---
@@ -64,62 +64,48 @@ function closeAllModals() {
 }
 
 // --- Helper Function to Update Navigation UI ---
-// MODIFIED: Updated to handle the new nav structure
+// ***** MODIFIED: Updated to handle the new nav structure *****
 function updateNavUI(user) {
     // Ensure elements are selected (they should be selected in DOMContentLoaded)
     // These checks are fallback, ideally they are assigned in DOMContentLoaded
-    if (!loginLinkLi) loginLinkLi = document.getElementById('nav-login-link-li');
-    if (!registerLinkLi) registerLinkLi = document.getElementById('nav-register-link-li');
-    if (!myBookLinkLi) myBookLinkLi = document.getElementById('nav-mybook-link-li'); // Corrected variable name
-    if (!profileLinkLi) profileLinkLi = document.getElementById('nav-profile-link-li'); // NEW
-    if (!logoutLinkLi) logoutLinkLi = document.getElementById('nav-logout-link-li'); // NEW
+    if (!loginSignupLi) loginSignupLi = document.getElementById('nav-login-signup-li'); // NEW
+    if (!myBookLinkLi) myBookLinkLi = document.getElementById('nav-mybook-link-li');
+    if (!profileLinkLi) profileLinkLi = document.getElementById('nav-profile-link-li');
+    if (!logoutLinkLi) logoutLinkLi = document.getElementById('nav-logout-link-li');
     if (!logoutLink) logoutLink = document.getElementById('logout-link'); // Still need the actual link for click event
 
     if (user) {
         // --- User is Logged In ---
-        if (loginLinkLi) loginLinkLi.style.display = 'none';     // Hide Login
-        if (registerLinkLi) registerLinkLi.style.display = 'none';  // Hide Register
-        if (myBookLinkLi) myBookLinkLi.style.display = 'block';    // Show My Book (use 'list-item' or 'flex' if 'block' looks wrong)
-        if (profileLinkLi) profileLinkLi.style.display = 'block';    // Show My Profile (use 'list-item' or 'flex' etc.) <-- NEW
-        if (logoutLinkLi) logoutLinkLi.style.display = 'block';     // Show Logout (use 'list-item' or 'flex' etc.) <-- NEW
+        if (loginSignupLi) loginSignupLi.style.display = 'none'; // Hide Combined Login/Sign Up <-- NEW
+        if (myBookLinkLi) myBookLinkLi.style.display = 'block'; // Show My Book (use 'list-item' or 'flex' if 'block' looks wrong)
+        if (profileLinkLi) profileLinkLi.style.display = 'block'; // Show My Profile
+        if (logoutLinkLi) logoutLinkLi.style.display = 'block'; // Show Logout
 
         // Setup logout link functionality ONLY if the link exists and listener not yet attached
-        // This targets the <a id="logout-link"> inside the new nav-logout-link-li
         if (logoutLink && !logoutLink.dataset.listenerAttached) {
             logoutLink.addEventListener('click', handleLogout);
             logoutLink.dataset.listenerAttached = 'true'; // Mark as attached
         }
 
-        // REMOVED: User icon dropdown logic is no longer needed
-
     } else {
         // --- User is Logged Out ---
-        if (loginLinkLi) loginLinkLi.style.display = 'block';     // Show Login (use 'list-item' or 'flex' etc.)
-        if (registerLinkLi) registerLinkLi.style.display = 'block';  // Show Register (use 'list-item' or 'flex' etc.)
-        if (myBookLinkLi) myBookLinkLi.style.display = 'none';      // Hide My Book
-        if (profileLinkLi) profileLinkLi.style.display = 'none';     // Hide My Profile <-- NEW
-        if (logoutLinkLi) logoutLinkLi.style.display = 'none';     // Hide Logout <-- NEW
-
-        // No need to explicitly remove logout listener here,
-        // it's on an element that gets hidden. If logoutLink is re-found later,
-        // the listenerAttached flag prevents re-adding.
+        if (loginSignupLi) loginSignupLi.style.display = 'block'; // Show Combined Login/Sign Up <-- NEW
+        if (myBookLinkLi) myBookLinkLi.style.display = 'none'; // Hide My Book
+        if (profileLinkLi) profileLinkLi.style.display = 'none'; // Hide My Profile
+        if (logoutLinkLi) logoutLinkLi.style.display = 'none'; // Hide Logout
     }
 }
 
 // --- Helper Function to Protect Routes ---
 function protectRoute(user) {
-    const protectedPages = ['/dashboard.html', '/profile.html', '/mybook.html']; // Add sensitive pages
-    // Check if the current path *ends* with one of the protected page names, handling optional trailing slash
+    const protectedPages = ['/dashboard.html', '/profile.html', '/mybook.html', '/admin-dashboard.html']; // Add sensitive pages
     const currentPagePath = window.location.pathname;
     const isProtected = protectedPages.some(page => {
-        // Normalize both current path and protected page path for comparison
+        // Handle root paths and potential trailing slashes correctly
         const normalizedCurrent = currentPagePath.endsWith('/') ? currentPagePath : currentPagePath + '/';
         const normalizedProtected = page.endsWith('/') ? page : page + '/';
-        // Check if the normalized current path *ends* with the normalized protected path
-        // This is safer than includes() if you have similar paths like /admin/dashboard.html
         return normalizedCurrent.endsWith(normalizedProtected);
     });
-
 
     if (!user && isProtected) {
         console.log("User not logged in. Redirecting from protected route:", window.location.pathname);
@@ -175,121 +161,160 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM fully loaded and parsed");
 
     // --- Select ALL Elements Needed Across Functions ---
-    // MODIFIED: Select new nav elements, remove old one
-    loginLink = document.getElementById('loginLink');
-    registerLink = document.getElementById('registerLink');
+    // ***** MODIFIED: Select new nav elements, remove old ones *****
+    loginSignupLink = document.getElementById('loginSignupLink'); // <-- NEW
+    loginSignupLi = document.getElementById('nav-login-signup-li'); // <-- NEW
+    // loginLink = document.getElementById('loginLink'); // <-- REMOVED
+    // registerLink = document.getElementById('registerLink'); // <-- REMOVED
     loginModal = document.getElementById('loginModal');
     registerModal = document.getElementById('registerModal');
-    loginLinkLi = document.getElementById('nav-login-link-li');
-    registerLinkLi = document.getElementById('nav-register-link-li');
-    myBookLinkLi = document.getElementById('nav-mybook-link-li'); // Corrected variable name assignment
-    profileLinkLi = document.getElementById('nav-profile-link-li'); // <-- NEW
-    logoutLinkLi = document.getElementById('nav-logout-link-li'); // <-- NEW
+    // loginLinkLi = document.getElementById('nav-login-link-li'); // <-- REMOVED
+    // registerLinkLi = document.getElementById('nav-register-link-li'); // <-- REMOVED
+    myBookLinkLi = document.getElementById('nav-mybook-link-li');
+    profileLinkLi = document.getElementById('nav-profile-link-li');
+    logoutLinkLi = document.getElementById('nav-logout-link-li');
     logoutLink = document.getElementById('logout-link'); // Keep selecting the actual link
-    // userAccountLi = document.getElementById('nav-user-account-li'); // <-- REMOVED
     dashboardWelcomeMessage = document.getElementById('dashboard-welcome-message'); // Will be null if not on dashboard
 
     // --- Setup Modal Listeners ---
-    // This section remains the same, handles login/register modals
+    // ***** MODIFIED: Use loginSignupLink to open login modal *****
     const loginCloseButton = loginModal ? loginModal.querySelector('.login-close-button') : null;
     const registerCloseButton = registerModal ? registerModal.querySelector('.register-close-button') : null;
     const switchToRegister = document.getElementById('switchToRegister');
     const switchToLogin = document.getElementById('switchToLogin');
 
-    if (loginLink && registerLink && loginModal && registerModal && loginCloseButton && registerCloseButton && switchToRegister && switchToLogin) {
-        console.log("Modal elements found. Attaching modal listeners...");
-        loginLink.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); loginModal.style.display = 'block'; });
-        registerLink.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); registerModal.style.display = 'block'; });
+    // Check if essential modal elements and the NEW combined link exist
+    if (loginSignupLink && loginModal && registerModal && loginCloseButton && registerCloseButton && switchToRegister && switchToLogin) {
+        console.log("Modal elements and Login/Sign Up link found. Attaching modal listeners...");
+
+        // NEW: Combined link opens the LOGIN modal
+        loginSignupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeAllModals();
+            loginModal.style.display = 'block';
+        });
+
+        // REMOVED old listeners for separate links
+        // loginLink.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); loginModal.style.display = 'block'; });
+        // registerLink.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); registerModal.style.display = 'block'; });
+
+        // Keep existing listeners for closing and switching modals
         loginCloseButton.addEventListener('click', closeAllModals);
         registerCloseButton.addEventListener('click', closeAllModals);
         window.addEventListener('click', (event) => { if (event.target === loginModal || event.target === registerModal) { closeAllModals(); } });
         switchToRegister.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); registerModal.style.display = 'block'; });
         switchToLogin.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); loginModal.style.display = 'block'; });
     } else {
-        console.warn("Modal Warning: Not all elements needed for modal interactions were found. Check IDs.");
+        console.warn("Modal Warning: Not all elements needed for modal interactions (including loginSignupLink) were found. Check IDs.");
+        // Log which specific elements might be missing for easier debugging
+        if (!loginSignupLink) console.warn("Missing: loginSignupLink");
+        if (!loginModal) console.warn("Missing: loginModal");
+        if (!registerModal) console.warn("Missing: registerModal");
+        // Add checks for other elements if needed
     }
 
+
     // --- Firebase Registration Logic ---
-    // This section remains the same, handles registration form
+    // No changes needed in the registration form setup or submission logic itself
     const registrationForm = document.getElementById('registrationForm');
-    // const emailInput = document.getElementById('reg-email'); // No longer needed here if only used in submit
-    // ... other registration inputs ...
     const registerButton = registrationForm ? registrationForm.querySelector('button[type="submit"]') : null;
     registerMessage = document.createElement('p'); // Assign to global
 
     if (registrationForm && registerButton) {
-        // ... (rest of registration form setup remains the same) ...
         registerMessage.classList.add('registration-message');
         registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
-        registerButton.parentNode.insertBefore(registerMessage, registerButton.nextSibling);
+        // Ensure message element exists before inserting
+        if (!registrationForm.querySelector('.registration-message')) {
+             registerButton.parentNode.insertBefore(registerMessage, registerButton.nextSibling);
+        }
+
         registrationForm.addEventListener('submit', (event) => {
-             event.preventDefault();
-             const email = document.getElementById('reg-email')?.value;
-             const password = document.getElementById('reg-password')?.value;
-             const confirmPassword = document.getElementById('reg-confirm-password')?.value;
-             const username = document.getElementById('reg-username')?.value;
-             const firstname = document.getElementById('reg-firstname')?.value;
-             const lastname = document.getElementById('reg-lastname')?.value;
-             const contact = document.getElementById('reg-contact')?.value;
-             const genderInputs = document.getElementsByName('gender');
-             const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
+            event.preventDefault();
+            const email = document.getElementById('reg-email')?.value;
+            const password = document.getElementById('reg-password')?.value;
+            const confirmPassword = document.getElementById('reg-confirm-password')?.value;
+            const username = document.getElementById('reg-username')?.value;
+            const firstname = document.getElementById('reg-firstname')?.value;
+            const lastname = document.getElementById('reg-lastname')?.value;
+            const contact = document.getElementById('reg-contact')?.value;
+            const genderInputs = document.getElementsByName('gender');
+            const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
+            const currentRegisterMessage = registrationForm.querySelector('.registration-message'); // Get message element specific to this form
 
-             // Basic validation (add more as needed)
-             if (!email || !password || !confirmPassword || !username || !firstname || !lastname || !contact || !selectedGender) {
-                 registerMessage.textContent = "Please fill in all fields.";
-                 registerMessage.style.color = "red";
-                 return;
-             }
-              if (password.length < 8) {
-                 registerMessage.textContent = "Password must be at least 8 characters long.";
-                 registerMessage.style.color = "red";
-                 return;
-             }
-             if (password !== confirmPassword) {
-                 registerMessage.textContent = "Passwords do not match.";
-                 registerMessage.style.color = "red";
-                 return;
-             }
+            // Basic validation (add more as needed)
+            if (!email || !password || !confirmPassword || !username || !firstname || !lastname || !contact || !selectedGender) {
+                if (currentRegisterMessage) {
+                    currentRegisterMessage.textContent = "Please fill in all fields.";
+                    currentRegisterMessage.style.color = "red";
+                }
+                return;
+            }
+            if (password.length < 8) {
+                 if (currentRegisterMessage) {
+                    currentRegisterMessage.textContent = "Password must be at least 8 characters long.";
+                    currentRegisterMessage.style.color = "red";
+                 }
+                return;
+            }
+            if (password !== confirmPassword) {
+                 if (currentRegisterMessage) {
+                    currentRegisterMessage.textContent = "Passwords do not match.";
+                    currentRegisterMessage.style.color = "red";
+                 }
+                return;
+            }
 
-             registerButton.disabled = true;
-             registerMessage.textContent = "Registering...";
-             registerMessage.style.color = "blue";
+            registerButton.disabled = true;
+            if (currentRegisterMessage) {
+                currentRegisterMessage.textContent = "Registering...";
+                currentRegisterMessage.style.color = "blue";
+            }
 
-             registerUser(email, password, username, firstname, lastname, contact, selectedGender);
-         });
+            registerUser(email, password, username, firstname, lastname, contact, selectedGender);
+        });
     }
 
     // --- Firebase Login Logic ---
-    // This section remains the same, handles login form setup
+    // No changes needed in the login form setup or submission logic itself
     const loginForm = document.getElementById('loginForm');
-    const loginEmailInput = document.getElementById('login-email') || document.getElementById('login-email-user');
+    // Ensure we correctly select the input, handling potential ID variations
+    const loginEmailInput = document.getElementById('login-email-user') || document.getElementById('login-email');
     const loginPasswordInput = document.getElementById('login-password');
     const loginButton = loginForm ? loginForm.querySelector('button[type="submit"]') : null;
     loginMessage = document.createElement('p'); // Assign to global
 
     if (loginForm && loginButton && loginEmailInput && loginPasswordInput) {
-        // ... (rest of login form setup remains the same) ...
         loginMessage.classList.add('login-message');
         loginMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
-        loginButton.parentNode.insertBefore(loginMessage, loginButton.nextSibling);
+         // Ensure message element exists before inserting
+        if (!loginForm.querySelector('.login-message')) {
+            loginButton.parentNode.insertBefore(loginMessage, loginButton.nextSibling);
+        }
+
         loginForm.addEventListener('submit', (event) => {
-             event.preventDefault();
-             const email = loginEmailInput.value;
-             const password = loginPasswordInput.value;
+            event.preventDefault();
+            const email = loginEmailInput.value;
+            const password = loginPasswordInput.value;
+            const currentLoginMessage = loginForm.querySelector('.login-message'); // Get message element specific to this form
 
-             if (!email || !password) {
-                 loginMessage.textContent = "Please enter email and password.";
-                 loginMessage.style.color = "red";
-                 return;
-             }
 
-             // Disable button and set message here, before calling loginUser
-             loginButton.disabled = true;
-             loginMessage.textContent = "Logging in...";
-             loginMessage.style.color = "blue";
+            if (!email || !password) {
+                if (currentLoginMessage) {
+                    currentLoginMessage.textContent = "Please enter email/username and password.";
+                    currentLoginMessage.style.color = "red";
+                }
+                return;
+            }
 
-             loginUser(email, password); // Call the updated loginUser function
-         });
+            // Disable button and set message here, before calling loginUser
+            loginButton.disabled = true;
+            if (currentLoginMessage) {
+                currentLoginMessage.textContent = "Logging in...";
+                currentLoginMessage.style.color = "blue";
+            }
+
+            loginUser(email, password); // Call the updated loginUser function
+        });
     }
 
     // --- Setup Auth State Observer ---
@@ -297,17 +322,22 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Setting up Firebase Auth state observer...");
     onAuthStateChanged(auth, (user) => {
         console.log("Auth state changed! User:", user ? user.uid : 'None');
-        updateNavUI(user);     // Call the updated function to show/hide correct links
-        protectRoute(user);    // Redirect if on protected page while logged out
+        updateNavUI(user); // Call the updated function to show/hide correct links
+        protectRoute(user); // Redirect if on protected page while logged out
 
         // Update dashboard welcome message if applicable
-        // Use includes() for flexibility (e.g., handles dashboard.html?param=1)
         if (window.location.pathname.includes('dashboard.html') && user) {
             updateDashboardWelcome(user);
         }
+         // Update admin dashboard welcome message if applicable
+        if (window.location.pathname.includes('admin-dashboard.html') && user) {
+            // You might want a specific welcome message function for admin
+            // updateAdminDashboardWelcome(user); or reuse updateDashboardWelcome
+             updateDashboardWelcome(user); // Example: reuse if structure is similar
+        }
         // Add similar checks for profile page if needed
         // if (window.location.pathname.includes('profile.html') && user) {
-        //     // e.g., loadProfileData(user);
+        // // e.g., loadProfileData(user);
         // }
     });
 
@@ -315,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // --- Registration Function ---
-// This function remains the same
+// No changes needed here
 async function registerUser(email, password, username, firstname, lastname, contact, gender) {
     const currentRegisterMessage = document.querySelector('#registerModal .registration-message');
     const registerButton = document.querySelector('#registrationForm button[type="submit"]');
@@ -326,15 +356,15 @@ async function registerUser(email, password, username, firstname, lastname, cont
         const userDocRef = doc(db, "users", user.uid);
         // --- IMPORTANT: Ensure isAdmin is set to false for new registrations ---
         await setDoc(userDocRef, {
-             email,
-             username,
-             firstname,
-             lastname,
-             contact,
-             gender,
-             createdAt: new Date().toISOString(), // Store as ISO string for consistency
-             isAdmin: false // Explicitly set non-admin status
-         });
+            email,
+            username,
+            firstname,
+            lastname,
+            contact,
+            gender,
+            createdAt: new Date().toISOString(), // Store as ISO string for consistency
+            isAdmin: false // Explicitly set non-admin status
+        });
         console.log("Firestore save success.");
         if (currentRegisterMessage) {
             currentRegisterMessage.textContent = "Registration successful!";
@@ -344,10 +374,9 @@ async function registerUser(email, password, username, firstname, lastname, cont
     } catch (error) {
         console.error("Registration error:", error);
         let errorMessage = "Registration failed.";
-        // ... (error handling remains the same) ...
         if (error.code === 'auth/email-already-in-use') errorMessage = "Email already in use.";
-        else if (error.code === 'auth/invalid-email') errorMessage = "Invalid email.";
-        else if (error.code === 'auth/weak-password') errorMessage = "Password needs 8+ characters."; // Adjusted to 8 as per validation
+        else if (error.code === 'auth/invalid-email') errorMessage = "Invalid email format.";
+        else if (error.code === 'auth/weak-password') errorMessage = "Password needs 8+ characters.";
         if (currentRegisterMessage) {
             currentRegisterMessage.textContent = errorMessage;
             currentRegisterMessage.style.color = "red";
@@ -359,12 +388,12 @@ async function registerUser(email, password, username, firstname, lastname, cont
 
 
 // --- Login Function ---
-// ***** THIS IS THE UPDATED FUNCTION *****
+// No changes needed here, already handles admin/user redirects
 async function loginUser(email, password) {
     const currentLoginMessage = document.querySelector('#loginModal .login-message');
     const loginButton = document.querySelector('#loginForm button[type="submit"]');
 
-    // Button disabling and initial message are now handled in the submit listener
+    // Button disabling and initial message are handled in the submit listener
 
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -372,75 +401,62 @@ async function loginUser(email, password) {
         console.log("Login Auth success. UID:", user.uid);
 
         // --- START: Admin Check and Redirect Logic ---
-        const userDocRef = doc(db, "users", user.uid); // Reference to the user's document
+        const userDocRef = doc(db, "users", user.uid);
         try {
             const docSnap = await getDoc(userDocRef);
 
             if (docSnap.exists() && docSnap.data().isAdmin === true) {
-                // --- User IS an Admin ---
                 console.log("Admin user detected. Redirecting to admin dashboard.");
                 if (currentLoginMessage) {
                     currentLoginMessage.textContent = "Admin login successful! Redirecting...";
                     currentLoginMessage.style.color = "green";
                 }
-                // Redirect AFTER a short delay to allow user to see message
                 setTimeout(() => {
                     closeAllModals();
-                    window.location.href = 'admin-dashboard.html'; // <<< Redirect Admin here
-                }, 1000); // 1 second delay
+                    window.location.href = 'admin-dashboard.html'; // Redirect Admin
+                }, 1000);
 
             } else {
-                // --- User is NOT an Admin (or isAdmin field missing/false) ---
                 console.log("Regular user detected. Redirecting to dashboard.");
-                if (currentLoginMessage) {
+                 if (currentLoginMessage) {
                     currentLoginMessage.textContent = "Login successful! Redirecting...";
                     currentLoginMessage.style.color = "green";
                 }
-                // Redirect AFTER a short delay
                 setTimeout(() => {
                     closeAllModals();
-                    // <<< Redirect Regular Customer here (CHANGE 'dashboard.html' if needed)
-                    window.location.href = 'dashboard.html'; // Or index.html? Choose the correct customer page
-                }, 1000); // 1 second delay
+                    // <<< CHANGE 'dashboard.html' if regular users go elsewhere after login
+                    window.location.href = 'dashboard.html'; // Redirect Regular Customer
+                }, 1000);
             }
         } catch (error) {
-            // --- Error fetching Firestore document ---
             console.error("Error fetching user data for admin check:", error);
             if (currentLoginMessage) {
                 currentLoginMessage.textContent = "Login successful, but couldn't verify role. Redirecting to default page.";
-                currentLoginMessage.style.color = "orange"; // Use a warning color
+                currentLoginMessage.style.color = "orange";
             }
-             // Re-enable button ONLY if fetching role failed AFTER successful login
-            if (loginButton) loginButton.disabled = false;
-            // Fallback redirect in case of Firestore error
+            if (loginButton) loginButton.disabled = false; // Re-enable button ONLY if role check fails after login
             setTimeout(() => {
                 closeAllModals();
-                window.location.href = 'index.html'; // Fallback to home
+                window.location.href = 'index.html'; // Fallback redirect
             }, 1500);
         }
         // --- END: Admin Check and Redirect Logic ---
 
     } catch (error) {
-        // --- Error during signInWithEmailAndPassword ---
         console.error("Login Auth error:", error);
         let errorMessage = "Login failed.";
         if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-            errorMessage = "Invalid email or password.";
+            errorMessage = "Invalid email/username or password.";
         } else if (error.code === 'auth/invalid-email') {
             errorMessage = "Invalid email format.";
         }
-        // Only update message and re-enable button if login failed
         if (currentLoginMessage) {
             currentLoginMessage.textContent = errorMessage;
             currentLoginMessage.style.color = "red";
         }
-         // Re-enable button on login failure
-        if (loginButton) loginButton.disabled = false;
+        if (loginButton) loginButton.disabled = false; // Re-enable button on login failure
     }
-    // NOTE: The 'finally' block was removed as button re-enabling is handled
-    // within the success (role check error) and failure catch blocks specifically.
 }
 
 // --- Optional: Add Exports if needed by other modules ---
-// If another JS file needs to import auth or db *from this file*, uncomment below:
 // export { auth, db, app };
