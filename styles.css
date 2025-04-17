@@ -936,6 +936,7 @@ footer {
     margin-bottom: 15px;
     font-weight: 600;
     font-size: 1.8em;
+    font-family: 'Montserrat', sans-serif; /* Added font */
 }
 
 .services-container p {
@@ -947,6 +948,7 @@ footer {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    font-family: 'Montserrat', sans-serif; /* Added font */
 }
 
 .service-category {
@@ -960,6 +962,7 @@ footer {
     margin-bottom: 25px;
     padding-bottom: 10px;
     border-bottom: 2px solid #fce4ec;
+    font-family: 'Montserrat', sans-serif; /* Added font */
 }
 
 .service-list {
@@ -1004,6 +1007,7 @@ footer {
     font-weight: 600;
     color: #333;
     margin: 0 0 10px 0;
+    font-family: 'Montserrat', sans-serif; /* Added font */
 }
 
 .service-description {
@@ -1012,6 +1016,7 @@ footer {
     color: #555;
     flex-grow: 1;
     margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif; /* Added font */
 }
 
 .service-price {
@@ -1021,57 +1026,136 @@ footer {
     margin: 0;
     margin-top: auto;
     text-align: right;
+    font-family: 'Montserrat', sans-serif; /* Added font */
 }
 
-
-/* ------- Optional Styles for Special Offers Section ------- */
-
-.special-offers .category-title {
-    color: #ff7043; /* Example: Different color for promo title */
-    border-bottom-color: #ffccbc; /* Lighter version of promo color */
+/* Booking Modal Styles (modified to match website theme) */
+.booking-modal-content {
+    background-color: #fff; /* White background */
+    margin: 5% auto; /* Adjust margin for better centering */
+    padding: 30px; /* Increased padding */
+    border: 1px solid #fce4ec; /* Use your light pink border */
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px; /* Match card border-radius */
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* Match card box-shadow */
+    font-family: 'Montserrat', sans-serif; /* Use your website's font */
 }
 
-.special-offers .category-title i.fa-tags {
-    margin-right: 10px; /* Space after icon */
-}
-
-.promo-card {
-    background-color: #fff9c4; /* Example: Light yellow background for promo */
-    border-color: #fff176; /* Example: Yellow border */
-    box-shadow: 0 4px 12px rgba(255, 179, 0, 0.2); /* Example: Subtle yellow shadow */
-}
-
-.promo-card:hover {
-     box-shadow: 0 8px 18px rgba(255, 179, 0, 0.3);
-     /* Keep transform from base .service-card:hover */
-}
-
-.promo-card .service-details {
-    padding-top: 15px; /* Adjust padding if needed */
-}
-
-.promo-card .service-name {
-    color: #ef6c00; /* Example: Orange for promo name */
-}
-
-.promo-validity {
-    font-size: 0.8em;
-    font-style: italic;
-    color: #777;
-    margin: 10px 0 5px 0;
-}
-
-.promo-card .service-price {
-    color: #d84315; /* Example: Stronger color for promo price */
+.booking-modal-content .close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
     font-weight: bold;
+    cursor: pointer;
+    color: #888;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
 }
 
-.promo-card .service-price del { /* Style for original price */
-    color: #999;
-    font-weight: normal;
-    margin-right: 8px;
-    font-size: 0.9em;
+.booking-modal-content .close-button:hover {
+    opacity: 1;
 }
+
+.booking-modal-content h3 {
+    margin-top: 0;
+    color: #d81b60; /* Use your primary pink color */
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+}
+
+.booking-modal-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+}
+
+.booking-modal-content input[type="text"],
+.booking-modal-content textarea,
+.booking-modal-content select,
+.booking-modal-content .payment-options label {
+    width: calc(100% - 22px);
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+    box-sizing: border-box;
+}
+
+.booking-modal-content textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.booking-modal-content .payment-options {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.booking-modal-content .payment-options label {
+    display: block;
+    width: auto;
+    margin-right: 0;
+    margin-bottom: 10px;
+    border: none;
+    padding: 0;
+    font-weight: normal;
+    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+}
+
+.booking-modal-content .payment-options label:last-child {
+    margin-bottom: 0;
+}
+
+.booking-modal-content .payment-options input[type="radio"] {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.booking-modal-content button[type="submit"] {
+    background-color: #4CAF50; /* Keep the green for the submit button */
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+    font-weight: 500;
+}
+
+.booking-modal-content button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#service-details-display {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px dashed #ddd;
+    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+}
+
+#service-details-display p {
+    margin: 8px 0;
+    color: #333;
+    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+}
+
 /* ------- END Optional Promo Styles ------- */
 
 
