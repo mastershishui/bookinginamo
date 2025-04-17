@@ -1687,6 +1687,8 @@ footer {
         order: -1; /* Optional: Move photo above text on mobile */
     }
 }
+
+/* Styles added for Map Section (conceptually part of About Us page content) */
 .map-container h2 {
     color: #e91e63;
     font-size: 1.8em;
@@ -1700,6 +1702,8 @@ footer {
     line-height: 1.7;
     margin-bottom: 15px;
 }
+/* End of added Map Section styles */
+
 
 /* --- End of About Us Page Styles --- */
 
