@@ -909,16 +909,16 @@ footer {
     padding: 20px;
 }
 
-.services-container h2 {
+.services-container h2 { /* Top level H2 */
     text-align: center;
     color: #333;
     margin-bottom: 15px;
     font-weight: 600;
     font-size: 1.8em;
-    font-family: 'Montserrat', sans-serif; /* Added font */
+    font-family: 'Montserrat', sans-serif;
 }
 
-.services-container p {
+.services-container > p { /* Top level P */
     text-align: center;
     color: #555;
     margin-bottom: 50px;
@@ -927,7 +927,7 @@ footer {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Montserrat', sans-serif; /* Added font */
+    font-family: 'Montserrat', sans-serif;
 }
 
 .service-category {
@@ -937,12 +937,21 @@ footer {
 .category-title {
     font-size: 1.6em;
     font-weight: 700;
-    color: #d81b60;
+    color: #d81b60; /* Theme Color */
     margin-bottom: 25px;
     padding-bottom: 10px;
     border-bottom: 2px solid #fce4ec;
-    font-family: 'Montserrat', sans-serif; /* Added font */
+    font-family: 'Montserrat', sans-serif;
 }
+ /* Style promo sub-title (like Buy 1 Get 1) */
+ .sub-promo-title {
+     margin-top: 30px;
+     font-size: 1.4em;
+     color: #c2185b; /* Darker Pink */
+     border-bottom: 1px dashed #f8bbd0;
+     margin-bottom: 25px;
+    padding-bottom: 10px;
+ }
 
 .service-list {
     display: grid;
@@ -960,6 +969,11 @@ footer {
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+ /* Style promo cards differently if desired */
+ .promo-card {
+     border-color: #ffc107; /* Example: Gold border for promos */
+     background-color: #fffaf2; /* Light yellow background */
+ }
 
 .service-card:hover {
     transform: translateY(-5px);
@@ -973,40 +987,91 @@ footer {
     display: block;
     border-bottom: 1px solid #fce4ec;
 }
+ .promo-card .service-image { /* Adjust border for promo */
+     border-bottom-color: #ffe082;
+ }
 
 .service-details {
     padding: 20px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    text-align: center; /* Center align all text within details */
 }
 
-.service-name {
+/* --- UPDATED CARD CONTENT STYLES --- */
+
+/* Service Card Name */
+.service-details .service-name {
     font-size: 1.15em;
     font-weight: 600;
-    color: #333;
+    color: #d81b60; /* Theme Color (Pink) */
     margin: 0 0 10px 0;
-    font-family: 'Montserrat', sans-serif; /* Added font */
+    font-family: 'Montserrat', sans-serif;
 }
 
-.service-description {
+/* Service Card Description */
+.service-details .service-description {
     font-size: 0.9em;
     line-height: 1.6;
-    color: #555;
+    color: #555; /* Standard Grey */
     flex-grow: 1;
     margin-bottom: 15px;
-    font-family: 'Montserrat', sans-serif; /* Added font */
+    font-family: 'Montserrat', sans-serif;
+}
+ /* Promo validity text */
+ .promo-validity {
+     font-size: 0.8em;
+     font-style: italic;
+     color: #777;
+     margin-top: -10px; /* Pull up slightly */
+     margin-bottom: 10px;
+ }
+
+/* Service Card Price */
+.service-details .service-price {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #d81b60; /* Theme color (Pink) */
+    margin: 15px 0 10px 0;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+ /* Style for strikethrough price */
+ .service-price del {
+     color: #999;
+     font-weight: normal;
+     margin-right: 5px;
+     font-size: 0.9em;
+ }
+
+/* Book Now Button */
+.book-button {
+    background-color: #e91e63; /* Theme pink background */
+    color: white;             /* White text */
+    border: none;
+    padding: 10px 18px;      /* Larger padding */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 0;
+    font-size: 0.95em;       /* Larger font */
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.service-price {
-    font-size: 0.95em;
-    font-weight: 700;
-    color: #d81b60;
-    margin: 0;
-    margin-top: auto;
-    text-align: right;
-    font-family: 'Montserrat', sans-serif; /* Added font */
+.book-button:hover {
+    background-color: #c2185b; /* Darker pink */
 }
+
+/* --- END OF UPDATED CARD CONTENT STYLES --- */
+
+/* ------- END Services Page Styles ------- */
 
 /* Booking Modal Styles (modified to match website theme) */
 .booking-modal-content {
