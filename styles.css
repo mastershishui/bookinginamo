@@ -834,37 +834,37 @@ footer {
 
 .faq-container h2 {
     text-align: center;
-    color: #333;
+    color: #333; /* Dark Grey */
     margin-bottom: 15px;
     font-weight: 600;
     font-size: 1.8em;
 }
 
-.faq-container p {
+.faq-container p { /* General paragraph in the container */
     text-align: center;
-    color: #555;
+    color: #555; /* Medium Grey */
     margin-bottom: 40px;
     font-size: 1em;
     line-height: 1.6;
 }
 
 .faq-list {
-    border: 1px solid #fce4ec;
+    border: 1px solid #fce4ec; /* Light Pink Border */
     border-radius: 8px;
-    overflow: hidden;
-    background-color: #fff;
+    overflow: hidden; /* Important for rounded corners with background */
+    background-color: #fff; /* White background for the list container */
 }
 
 .faq-item {
-    border-bottom: 1px solid #fce4ec;
+    border-bottom: 1px solid #fce4ec; /* Light Pink Border */
 }
 .faq-item:last-child {
     border-bottom: none;
 }
 
 .faq-question {
-    background-color: #fdf6f8;
-    color: #333;
+    background-color: #fdf6f8; /* Very Light Pink Background */
+    color: #333; /* Dark Grey Text */
     cursor: pointer;
     padding: 18px 25px;
     width: 100%;
@@ -881,48 +881,57 @@ footer {
 }
 
 .faq-question:hover {
-    background-color: #fce4ec;
+    background-color: #fce4ec; /* Light Pink Background on hover */
 }
 
-.faq-question span {
+.faq-question span { /* The text part of the question */
     flex-grow: 1;
     margin-right: 15px;
 }
 
-.faq-question i.fa-chevron-down {
+.faq-question i.fa-chevron-down { /* The chevron icon */
     font-size: 0.9em;
-    color: #d81b60;
-    transition: transform 0.3s ease;
+    color: #d81b60; /* Primary Pink */
+    transition: transform 0.3s ease; /* Animate rotation */
     flex-shrink: 0;
 }
 
-.faq-question.active {
-    background-color: #fce4ec;
+/* Styles when the FAQ item is active (expanded) */
+.faq-item.active .faq-question {
+    background-color: #fce4ec; /* Light Pink Background when active */
 }
 
-.faq-question.active i.fa-chevron-down {
-    transform: rotate(180deg);
+.faq-item.active .faq-question i.fa-chevron-down {
+    transform: rotate(180deg); /* Rotate icon when active */
 }
 
+/* --- MODIFIED/IMPROVED Answer Styling & Animation --- */
 .faq-answer {
-    padding: 0 25px;
-    background-color: #fff;
-    max-height: 0;
+    background-color: #fff; /* White background for the answer area */
+    padding: 0 25px; /* Left/Right padding only when closed */
+    max-height: 0; /* Start closed */
     overflow: hidden;
-    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+    /* Smooth transition for height and padding */
+    transition: max-height 0.4s ease-out, padding-top 0.4s ease-out, padding-bottom 0.4s ease-out;
 }
 
-.faq-answer p {
-    margin: 0;
-    padding: 0 0 15px 0; /* Added padding-bottom */
+.faq-item.active .faq-answer {
+    max-height: 500px; /* Set a max-height large enough for your longest answer */
+    padding-top: 15px; /* Add top padding when opening */
+    padding-bottom: 15px; /* Add bottom padding when opening */
+}
+
+.faq-answer p { /* Styling for the paragraph inside the answer */
+    margin: 0; /* Remove default paragraph margin */
+    padding: 0; /* Padding is handled by the parent .faq-answer now */
     font-size: 0.95em;
     line-height: 1.7;
-    color: #444;
+    color: #444; /* Slightly darker grey for answer text */
     text-align: left;
 }
+/* --- END MODIFIED Answer Styling & Animation --- */
 
 /* ------- END FAQ Page Styles ------- */
-
 /* ------- Services Page Styles ------- */
 .services-container {
     max-width: 1200px;
