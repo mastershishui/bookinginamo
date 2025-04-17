@@ -1111,134 +1111,193 @@ footer {
 
 /* ------- END Services Page Styles ------- */
 
-/* Booking Modal Styles (modified to match website theme) */
+/* ================================================== */
+/* Booking Modal Styles (Themed + Quantity Support) */
+/* ================================================== */
+
 .booking-modal-content {
-    background-color: #fff; /* White background */
-    margin: 5% auto; /* Adjust margin for better centering */
-    padding: 30px; /* Increased padding */
-    border: 1px solid #fce4ec; /* Use your light pink border */
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 0; /* Remove overall padding, handle in sections */
+    border: 1px solid #f8bbd0; /* Lighter pink border */
     width: 90%;
     max-width: 600px;
-    border-radius: 8px; /* Match card border-radius */
+    border-radius: 8px;
     position: relative;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* Match card box-shadow */
-    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden; /* Prevent content spill */
 }
 
-.booking-modal-content .close-button {
+/* Style the Modal Header */
+.booking-modal-header {
+    background-color: #fce4ec; /* Light pink header background */
+    padding: 15px 25px;
+    border-bottom: 1px solid #f8bbd0; /* Lighter pink border */
+    position: relative; /* Needed for absolute positioning of close button */
+}
+
+/* Style the Modal Title (h3) */
+.booking-modal-content h3 {
+    margin: 0;
+    color: #d81b60; /* Primary pink color */
+    text-align: center;
+    font-size: 1.6em;
+    font-weight: 600;
+}
+
+/* Style the Modal Body (for form content) */
+.booking-modal-body {
+    padding: 20px 25px 30px 25px; /* Padding for the form area */
+}
+
+/* Close Button Styling */
+.booking-modal-content .close-button.booking-close-button { /* Be specific */
     position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 24px;
+    top: 8px;  /* Adjusted position within header */
+    right: 15px;
+    font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-    color: #888;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
+    color: #ad1457; /* Darker pink */
+    opacity: 0.8;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    line-height: 1;
+    padding: 5px; /* Make click area slightly bigger */
+    background: none; /* Ensure no background */
+    border: none; /* Ensure no border */
 }
-
-.booking-modal-content .close-button:hover {
+.booking-modal-content .close-button.booking-close-button:hover {
     opacity: 1;
+    color: #880e4f; /* Even darker pink on hover */
 }
 
-.booking-modal-content h3 {
-    margin-top: 0;
-    color: #d81b60; /* Use your primary pink color */
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 1.8em;
-    font-weight: 600;
-    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+
+/* Style Service Details Box */
+#service-details-display {
+    background-color: #fdf6f8; /* Very Light Pink */
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #fce4ec; /* Light pink border */
+}
+#service-details-display p {
+    margin: 5px 0;
+    color: #444;
+    font-size: 0.95em;
+}
+#service-details-display p strong {
+    color: #d81b60; /* Pink label */
+    font-weight: 600; /* Make label slightly bolder */
+}
+
+
+/* Style Form Elements */
+.booking-modal-content .form-group {
+    margin-bottom: 18px; /* Consistent spacing */
 }
 
 .booking-modal-content label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 500;
     color: #555;
-    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+    font-size: 0.9em;
 }
 
 .booking-modal-content input[type="text"],
+.booking-modal-content input[type="number"], /* Style number input */
 .booking-modal-content textarea,
-.booking-modal-content select,
-.booking-modal-content .payment-options label {
-    width: calc(100% - 22px);
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1em;
-    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+.booking-modal-content select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 0;
+    border: 1px solid #f0c1d3; /* Light pinkish border */
+    border-radius: 4px;
+    font-size: 0.95em;
+    font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+.booking-modal-content input[type="text"]:focus,
+.booking-modal-content input[type="number"]:focus,
+.booking-modal-content textarea:focus,
+.booking-modal-content select:focus {
+     border-color: #f06292; /* Brighter pink on focus */
+     outline: none;
+     box-shadow: 0 0 0 3px rgba(240, 98, 146, 0.2);
+}
+
 
 .booking-modal-content textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 80px;
 }
 
+/* Style Payment Options */
 .booking-modal-content .payment-options {
     margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #eee;
+    padding: 15px;
+    border: 1px solid #fce4ec;
     border-radius: 4px;
+    background-color: #fdf6f8;
 }
-
-.booking-modal-content .payment-options label {
-    display: block;
-    width: auto;
-    margin-right: 0;
+.booking-modal-content .payment-options > label { /* Main label */
     margin-bottom: 10px;
-    border: none;
-    padding: 0;
-    font-weight: normal;
-    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+    font-size: 0.9em;
+    font-weight: 600; /* Make main label bold */
 }
-
-.booking-modal-content .payment-options label:last-child {
+.booking-modal-content .payment-options div { /* Radio container */
+    margin-bottom: 8px;
+}
+.booking-modal-content .payment-options div:last-child {
     margin-bottom: 0;
 }
-
-.booking-modal-content .payment-options input[type="radio"] {
-    margin-right: 8px;
+.booking-modal-content .payment-options label { /* Radio text label */
+    display: inline-block;
+    width: auto;
+    margin-left: 5px;
+    margin-bottom: 0;
+    border: none;
+    padding: 0;
+    font-weight: normal; /* Normal weight */
+    font-size: 0.95em;
+    color: #444;
     vertical-align: middle;
+    cursor: pointer; /* Make label clickable */
+}
+.booking-modal-content .payment-options input[type="radio"] {
+    margin-right: 5px;
+    vertical-align: middle;
+    accent-color: #d81b60; /* Pink radio button */
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
+/* Style Submit Button */
 .booking-modal-content button[type="submit"] {
-    background-color: #4CAF50; /* Keep the green for the submit button */
+    background-color: #e91e63; /* Theme pink background */
     color: white;
-    padding: 15px 20px;
+    padding: 12px 20px;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
     width: 100%;
-    font-size: 1.1em;
-    transition: background-color 0.3s ease;
-    font-family: 'Montserrat', sans-serif; /* Use your website's font */
+    font-size: 1.05em;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
 }
-
 .booking-modal-content button[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #c2185b; /* Darker pink */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
-
-#service-details-display {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    border: 1px dashed #ddd;
-    font-family: 'Montserrat', sans-serif; /* Use your website's font */
-}
-
-#service-details-display p {
-    margin: 8px 0;
-    color: #333;
-    font-family: 'Montserrat', sans-serif; /* Use your website's font */
-}
-
-/* ------- END Optional Promo Styles ------- */
+/* ================================================== */
+/* End Booking Modal Styles                         */
+/* ================================================== */
 
 /* Authentication Notification Modal Styles */ 
 /* ======================================== */
