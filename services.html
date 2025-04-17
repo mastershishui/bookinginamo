@@ -5,405 +5,747 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Services - GJ'S Beauty Lounge</title>
-    <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-       referrerpolicy="no-referrer" />
-    <style>
-        .service-card {
-            position: relative; /* Needed for absolute positioning of button if desired */
-            /* Add other styles */
-        }
-        .book-button {
-            background-color: #e91e63; /* Example pink */
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 0.9em;
-            transition: background-color 0.3s ease;
-        }
-        .book-button:hover {
-            background-color: #c2185b;
-        }
-        .service-price {
-            font-weight: bold;
-            color: #333;
-            margin-top: 5px;
-        }
-        /* Booking Modal Styles (add to styles.css) */
-        .booking-modal-content {
-            background-color: #fefefe;
-            margin: 10% auto; /* Adjusted margin */
-            padding: 25px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px; /* Limit max width */
-            border-radius: 8px;
-            position: relative; /* For close button positioning */
-        }
-        .booking-modal-content .close-button {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #aaa;
-        }
-        .booking-modal-content h3 {
-            margin-top: 0;
-            color: #e91e63;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .booking-modal-content label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #555;
-        }
-        .booking-modal-content input[type="text"],
-        .booking-modal-content textarea,
-        .booking-modal-content select, /* Style select if you use it */
-        .booking-modal-content .payment-options label { /* Style radio labels */
-             width: calc(100% - 22px); /* Adjust width considering padding/border */
-             padding: 10px;
-             margin-bottom: 15px;
-             border: 1px solid #ccc;
-             border-radius: 4px;
-             font-size: 1em;
-        }
-         .booking-modal-content textarea {
-            resize: vertical; /* Allow vertical resize */
-            min-height: 80px;
-         }
-         .booking-modal-content .payment-options {
-            margin-bottom: 15px;
-         }
-         .booking-modal-content .payment-options label {
-             display: inline-block; /* Make radio buttons inline */
-             width: auto; /* Override full width */
-             margin-right: 15px;
-             margin-bottom: 5px; /* Add some bottom margin */
-             border: none; /* Remove border from radio labels */
-             padding: 0;
-         }
-        .booking-modal-content .payment-options input[type="radio"] {
-            margin-right: 5px;
-             vertical-align: middle; /* Align radio button with text */
-        }
-
-        .booking-modal-content button[type="submit"] {
-            background-color: #4CAF50; /* Green */
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease;
-        }
-        .booking-modal-content button[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        #service-details-display {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            border: 1px dashed #ddd;
-        }
-        #service-details-display p {
-            margin: 5px 0;
-        }
-
-        /* Navigation Counter */
-        #mybook-counter {
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 1px 5px;
-            font-size: 0.7em; /* Make it small */
-            vertical-align: top; /* Adjust vertical alignment */
-            margin-left: 3px;
-            display: inline-block; /* Make it inline */
-            line-height: 1; /* Adjust line height */
-            min-width: 16px; /* Ensure circle shape even for single digit */
-            text-align: center;
-            font-weight: bold;
-        }
-    </style>
-</head>
+          referrerpolicy="no-referrer" />
+    </head>
 
 <body>
     <header>
         <div class="logo">
-             <a href="index.html">
-                 <img src="gjslogo.jpg" alt="GJ'S Beauty Lounge Logo">
-             </a>
-         </div>
-         <div class="header-text">
-             <h1>Our Beauty Services</h1>
-         </div>
-       <nav>
-      <ul>
-          <li><a href="index.html">Home</a></li>
-          <li class="active"><a href="about.html">ABOUT US</a></li>
-          <li><a href="reviews.html">Reviews</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="services.html">Services</a></li>
+            <a href="index.html">
+                <img src="gjslogo.jpg" alt="GJ'S Beauty Lounge Logo">
+            </a>
+        </div>
+        <div class="header-text">
+            <h1>Our Beauty Services</h1>
+        </div>
+        <nav>
+           <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">ABOUT US</a></li>
+              <li><a href="reviews.html">Reviews</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li class="active"><a href="services.html">Services</a></li> {/* Set Services as active */}
 
-          <li id="nav-mybook-link-li" style="display: none;">
-              <a href="mybook.html">My Book<span id="mybook-counter" style="display: none;">0</span></a>
-          </li>
+              <li id="nav-mybook-link-li" style="display: none;">
+                   <a href="mybook.html">My Book<span id="mybook-counter" style="display: none;">0</span></a>
+              </li>
 
-          <li id="nav-login-signup-li" style="display: block;">
-              <a href="#" id="loginSignupLink" class="nav-link-icon">
-                  <i class="fas fa-user-circle"></i> Log In / Sign Up
-              </a>
-          </li>
+              <li id="nav-login-signup-li" style="display: block;">
+                   <a href="#" id="loginSignupLink" class="nav-link-icon">
+                       <i class="fas fa-user-circle"></i> Log In / Sign Up
+                   </a>
+              </li>
 
-          <li id="nav-profile-link-li" style="display: none;">
-              <a href="profile.html">My Profile</a>
-          </li>
-          <li id="nav-logout-link-li" style="display: none;">
-              <a href="#" id="logout-link">Logout</a>
-          </li>
-      </ul>
-  </nav>
+              <li id="nav-profile-link-li" style="display: none;">
+                   <a href="profile.html">My Profile</a>
+              </li>
+              <li id="nav-logout-link-li" style="display: none;">
+                   <a href="#" id="logout-link">Logout</a>
+              </li>
+           </ul>
+        </nav>
     </header>
 
     <main>
         <div class="services-container">
             <h2>Explore Our Offerings</h2>
-            <p>Discover the range of professional beauty treatments we provide to help you look and feel your best.</p>
+            <p>Discover the range of professional beauty treatments we provide to help you look and feel your best. Check out our services and special promos below!</p>
 
             <section class="service-category special-offers">
-                 <h3 class="category-title promo-title"> <i class="fas fa-tags"></i> Special Offers & Promos</h3>
-                 <div class="service-list">
-                     <div class="service-card promo-card" data-service-id="promo-glam" data-service-name="Weekday Glam Package" data-price="999">
-                         <img src="https://via.placeholder.com/350x200/ffeb3b/333?text=Weekday+Promo!" alt="Weekday Promo" class="service-image">
-                         <div class="service-details">
-                             <h4 class="service-name">Weekday Glam Package</h4>
-                             <p class="service-description">Get a Classic Mani-Pedi and a Signature Cleansing Facial at a special discounted price. Available Monday-Thursday, 9AM-3PM.</p>
-                             <p class="promo-validity">Limited time offer!</p>
-                             <p class="service-price"><del>₱1200</del> Now ₱999!</p>
-                             <button class="book-button">Book Now</button> </div>
-                     </div>
-                     <div class="service-card promo-card" data-service-id="promo-lash" data-service-name="First Time Lash Client Discount (15% Off)" data-price="VARIES"> <img src="https://via.placeholder.com/350x200/ffc107/333?text=Lash+Offer!" alt="Lash Offer" class="service-image">
-                         <div class="service-details">
-                             <h4 class="service-name">First Time Lash Client Discount</h4>
-                             <p class="service-description">New to our lash extensions? Get 15% off your first set of Classic or Volume Lash Extensions.</p>
-                             <p class="promo-validity">Mention this offer upon booking.</p>
-                             <p class="service-price">15% OFF First Set</p>
-                             <button class="book-button">Book Now</button> </div>
-                     </div>
-                      <div class="service-card promo-card" data-service-id="promo-gluta" data-service-name="Gluta Spa Package (5+1 Free)" data-price="PACKAGE"> <img src="https://via.placeholder.com/350x200/ff9800/333?text=Gluta+Package" alt="Gluta Package" class="service-image">
-                         <div class="service-details">
-                             <h4 class="service-name">Gluta Spa Package (5+1)</h4>
-                             <p class="service-description">Avail 5 Gluta Drip Sessions and get your 6th session absolutely FREE!</p>
-                              <p class="promo-validity">Ask staff for details.</p>
-                              <p class="service-price">Buy 5, Get 1 Free</p>
-                             <button class="book-button">Book Now</button> </div>
-                     </div>
-                 </div>
-             </section>
-
-            <section class="service-category">
-                <h3 class="category-title">Nail Care</h3>
+                <h3 class="category-title promo-title"><i class="fas fa-tags"></i> Special Promos</h3>
                 <div class="service-list">
-                    <div class="service-card" data-service-id="nail-classic-mani" data-service-name="Classic Manicure" data-price="350"> <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Classic+Manicure" alt="Classic Manicure" class="service-image">
+                    <div class="service-card promo-card" data-service-id="promo-pkg1" data-service-name="Package 1" data-price="1000">
+                        <img src="https://via.placeholder.com/350x200/ffeb3b/333?text=Package+1" alt="Package 1" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Classic Manicure</h4>
-                            <p class="service-description">Essential nail grooming including shaping, cuticle care, buffing, massage, and regular polish application.</p>
-                            <p class="service-price">Starts at ₱350</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Package 1</h4>
+                            <p class="service-description">Gel Manicure, Classic Pedicure and Classic Eyelash Extensions.</p>
+                            <p class="service-price">₱1,000</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                     <div class="service-card" data-service-id="nail-classic-pedi" data-service-name="Classic Pedicure" data-price="400"> <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Classic+Pedicure" alt="Classic Pedicure" class="service-image">
+                    <div class="service-card promo-card" data-service-id="promo-pkg2" data-service-name="Package 2" data-price="1300">
+                        <img src="https://via.placeholder.com/350x200/ffeb3b/333?text=Package+2" alt="Package 2" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Classic Pedicure</h4>
-                            <p class="service-description">Revitalize your feet with a soak, scrub, nail care, massage, and regular polish application.</p>
-                            <p class="service-price">Starts at ₱400</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Package 2</h4>
+                            <p class="service-description">Gel Manicure, Gel Pedicure and Classic Eyelash Extensions.</p>
+                            <p class="service-price">₱1,300</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                    <div class="service-card" data-service-id="nail-gel-mani" data-service-name="Gel Manicure / Pedicure" data-price="600"> <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Gel+Manicure" alt="Gel Manicure/Pedicure" class="service-image">
+                    <div class="service-card promo-card" data-service-id="promo-pkg3" data-service-name="Package 3" data-price="799">
+                        <img src="https://via.placeholder.com/350x200/ffeb3b/333?text=Package+3" alt="Package 3" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Gel Manicure / Pedicure</h4>
-                            <p class="service-description">Enjoy long-lasting, chip-resistant, high-gloss color with our professional gel polish services.</p>
-                            <p class="service-price">Starts at ₱600</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Package 3</h4>
+                            <p class="service-description">Signature Facial with Classic Manicure and Pedicure.</p>
+                            <p class="service-price">₱799</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                    <div class="service-card" data-service-id="nail-extensions" data-service-name="Nail Extensions" data-price="1500"> <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Nail+Extensions" alt="Nail Extensions" class="service-image">
+                     <div class="service-card promo-card" data-service-id="promo-pkg4" data-service-name="Package 4" data-price="950">
+                        <img src="https://via.placeholder.com/350x200/ffeb3b/333?text=Package+4" alt="Package 4" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Nail Extensions</h4>
-                            <p class="service-description">Add length and strength to your nails with options like Acrylic or Gel extensions.</p>
-                             <p class="service-price">Starts at ₱1500</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Package 4</h4>
+                            <p class="service-description">Signature Facial with Lash Perming.</p>
+                            <p class="service-price">₱950</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                     <div class="service-card" data-service-id="nail-footspa" data-service-name="Foot Spa" data-price="500"> <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Foot+Spa" alt="Foot Spa" class="service-image">
+                     <div class="service-card promo-card" data-service-id="promo-pkg5" data-service-name="Package 5" data-price="2000">
+                        <img src="https://via.placeholder.com/350x200/ffeb3b/333?text=Package+5" alt="Package 5" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Foot Spa</h4>
-                            <p class="service-description">Indulge in a relaxing treatment designed to soothe tired feet, soften skin, and improve circulation.</p>
-                            <p class="service-price">Starts at ₱500</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Package 5</h4>
+                            <p class="service-description">Acne Facial with Pico Laser.</p> {/* Assuming Pico Laser */}
+                            <p class="service-price">₱2,000</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card promo-card" data-service-id="promo-pkg6" data-service-name="Package 6" data-price="399">
+                        <img src="https://via.placeholder.com/350x200/ffeb3b/333?text=Package+6" alt="Package 6" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Package 6</h4>
+                            <p class="service-description">UA Waxing with Brow Tidy.</p>
+                            <p class="service-price">₱399</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                 </div>
+                 <h4 class="category-title sub-promo-title" style="margin-top: 30px; font-size: 1.4em; color: #c2185b;">Buy 1 Get 1 Promos</h4>
+                  <div class="service-list">
+                     <div class="service-card promo-card" data-service-id="promo-b1g1-sig" data-service-name="Buy 1 Get 1 Signature Facial" data-price="800">
+                        <img src="https://via.placeholder.com/350x200/ffc107/333?text=B1G1+Signature" alt="B1G1 Signature Facial" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Buy 1 Get 1: Signature Facial</h4>
+                            <p class="service-description">Avail our Signature Facial Buy 1 Get 1 Promo!</p>
+                            <p class="service-price">₱800</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card promo-card" data-service-id="promo-b1g1-diamond" data-service-name="Buy 1 Get 1 Diamond Peel Facial" data-price="1000">
+                        <img src="https://via.placeholder.com/350x200/ffc107/333?text=B1G1+Diamond" alt="B1G1 Diamond Peel" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Buy 1 Get 1: Diamond Peel Facial</h4>
+                             <p class="service-description">Avail our Diamond Peel Facial Buy 1 Get 1 Promo!</p>
+                            <p class="service-price">₱1,000</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card promo-card" data-service-id="promo-b1g1-white" data-service-name="Buy 1 Get 1 Whitening Facial" data-price="1200">
+                        <img src="https://via.placeholder.com/350x200/ffc107/333?text=B1G1+Whitening" alt="B1G1 Whitening Facial" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Buy 1 Get 1: Whitening Facial</h4>
+                            <p class="service-description">Avail our Whitening Facial Buy 1 Get 1 Promo!</p>
+                            <p class="service-price">₱1,200</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card promo-card" data-service-id="promo-b1g1-gold" data-service-name="Buy 1 Get 1 24K Gold Facial" data-price="1200">
+                        <img src="https://via.placeholder.com/350x200/ffc107/333?text=B1G1+Gold" alt="B1G1 24K Gold Facial" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Buy 1 Get 1: 24K Gold Facial</h4>
+                            <p class="service-description">Avail our 24K Gold Facial Buy 1 Get 1 Promo!</p>
+                            <p class="service-price">₱1,200</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
                 </div>
             </section>
 
             <section class="service-category">
-                 <h3 class="category-title">Facials</h3>
-                 <div class="service-list">
-                      <div class="service-card" data-service-id="facial-cleansing" data-service-name="Signature Cleansing Facial" data-price="600"> <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=Cleansing+Facial" alt="Cleansing Facial" class="service-image">
-                         <div class="service-details">
-                             <h4 class="service-name">Signature Cleansing Facial</h4>
-                             <p class="service-description">A deep cleansing treatment tailored to your skin type to remove impurities, exfoliate, and refresh.</p>
-                             <p class="service-price">Starts at ₱600</p> <button class="book-button">Book Now</button>
-                         </div>
-                     </div>
-                      <div class="service-card" data-service-id="facial-hydrating" data-service-name="Hydrating Facial" data-price="700"> <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=Hydrating+Facial" alt="Hydrating Facial" class="service-image">
-                         <div class="service-details">
-                             <h4 class="service-name">Hydrating Facial</h4>
-                             <p class="service-description">Intensely moisturizing and nourishing treatment perfect for dry or dehydrated skin.</p>
-                              <p class="service-price">Starts at ₱700</p> <button class="book-button">Book Now</button>
-                         </div>
-                     </div>
-                     <div class="service-card" data-service-id="facial-antiaging" data-service-name="Anti-Aging Facial" data-price="850"> <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=Anti-Aging+Facial" alt="Anti-Aging Facial" class="service-image">
-                         <div class="service-details">
-                             <h4 class="service-name">Anti-Aging Facial</h4>
-                             <p class="service-description">Targets fine lines and wrinkles, promoting collagen production for a youthful glow.</p>
-                             <p class="service-price">Starts at ₱850</p> <button class="book-button">Book Now</button>
-                         </div>
-                     </div>
-                      <div class="service-card" data-service-id="facial-diamond" data-service-name="Diamond Peel" data-price="750"> <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=Diamond+Peel" alt="Diamond Peel" class="service-image">
-                         <div class="service-details">
-                             <h4 class="service-name">Diamond Peel</h4>
-                             <p class="service-description">A microdermabrasion technique to exfoliate dead skin cells, revealing smoother, brighter skin.</p>
-                             <p class="service-price">Starts at ₱750</p> <button class="book-button">Book Now</button>
-                         </div>
-                     </div>
-                 </div>
-             </section>
-
-             <section class="service-category">
-                 <h3 class="category-title">Brows</h3>
-                 <div class="service-list">
-                      <div class="service-card" data-service-id="brow-shaping" data-service-name="Eyebrow Shaping (Wax/Thread)" data-price="200"> <img src="https://via.placeholder.com/350x200/f48fb1/333?text=Eyebrow+Shaping" alt="Eyebrow Waxing/Threading" class="service-image">
-                         <div class="service-details">
-                             <h4 class="service-name">Eyebrow Shaping (Wax/Thread)</h4>
-                             <p class="service-description">Expert shaping using waxing or threading techniques to achieve your desired brow form.</p>
-                              <p class="service-price">Starts at ₱200</p> <button class="book-button">Book Now</button>
-                         </div>
-                     </div>
-                     <div class="service-card" data-service-id="brow-tinting" data-service-name="Eyebrow Tinting" data-price="250"> <img src="https://via.placeholder.com/350x200/f48fb1/333?text=Eyebrow+Tinting" alt="Eyebrow Tinting" class="service-image">
-                         <div class="service-details">
-                             <h4 class="service-name">Eyebrow Tinting</h4>
-                             <p class="service-description">Enhance brow color and definition with a custom tint for a fuller appearance.</p>
-                              <p class="service-price">Starts at ₱250</p> <button class="book-button">Book Now</button>
-                         </div>
-                     </div>
-                     <div class="service-card" data-service-id="brow-lamination" data-service-name="Brow Lamination" data-price="1000"> <img src="https://via.placeholder.com/350x200/f48fb1/333?text=Brow+Lamination" alt="Brow Lamination" class="service-image">
-                         <div class="service-details">
-                             <h4 class="service-name">Brow Lamination</h4>
-                             <p class="service-description">Achieve fuller, perfectly positioned brows with this straightening and setting treatment.</p>
-                              <p class="service-price">Starts at ₱1000</p> <button class="book-button">Book Now</button>
-                         </div>
-                     </div>
-                 </div>
-             </section>
-
-             <section class="service-category">
-                <h3 class="category-title">Lashes</h3>
+                <h3 class="category-title">Facial Treatments</h3>
                 <div class="service-list">
-                     <div class="service-card" data-service-id="lash-classic" data-service-name="Classic Lash Extensions" data-price="1200"> <img src="https://via.placeholder.com/350x200/f06292/333?text=Classic+Lashes" alt="Classic Lash Extensions" class="service-image">
+                    <div class="service-card" data-service-id="facial-signature" data-service-name="Signature Facial" data-price="499">
+                        <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=Signature+Facial" alt="Signature Facial" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Classic Lash Extensions</h4>
-                            <p class="service-description">One extension applied to each natural lash for a subtle, mascara-like enhancement.</p>
-                             <p class="service-price">Starts at ₱1200</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Signature Facial</h4>
+                            <p class="service-description">Our classic facial treatment tailored to your skin's basic needs.</p>
+                            <p class="service-price">₱499</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                    <div class="service-card" data-service-id="lash-volume" data-service-name="Volume Lash Extensions" data-price="1800"> <img src="https://via.placeholder.com/350x200/f06292/333?text=Volume+Lashes" alt="Volume Lash Extensions" class="service-image">
+                     <div class="service-card" data-service-id="facial-acne-pdt" data-service-name="Acne Care Facial with PDT" data-price="799">
+                        <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=Acne+Care+PDT" alt="Acne Care Facial with PDT" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Volume Lash Extensions</h4>
-                            <p class="service-description">Multiple lightweight extensions applied to each natural lash for a fuller, more dramatic look.</p>
-                             <p class="service-price">Starts at ₱1800</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Acne Care Facial with PDT</h4>
+                            <p class="service-description">Targets acne-prone skin using Photodynamic Therapy to reduce bacteria and inflammation.</p>
+                            <p class="service-price">₱799</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                    <div class="service-card" data-service-id="lash-lift" data-service-name="Lash Lift & Tint" data-price="800"> <img src="https://via.placeholder.com/350x200/f06292/333?text=Lash+Lift" alt="Lash Lift & Tint" class="service-image">
+                     <div class="service-card" data-service-id="facial-diamond-peel" data-service-name="Diamond Peel Facial" data-price="599">
+                        <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=Diamond+Peel" alt="Diamond Peel Facial" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Lash Lift & Tint</h4>
-                            <p class="service-description">Curl and darken your natural lashes from the root, creating a longer, fuller appearance.</p>
-                            <p class="service-price">Starts at ₱800</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Diamond Peel Facial</h4>
+                            <p class="service-description">Microdermabrasion to gently exfoliate, revealing smoother and brighter skin.</p>
+                            <p class="service-price">₱599</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                      <div class="service-card" data-service-id="facial-24k-gold" data-service-name="24K Gold Facial" data-price="699">
+                        <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=24K+Gold+Facial" alt="24K Gold Facial" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">24K Gold Facial</h4>
+                            <p class="service-description">Luxurious treatment using gold elements, known for anti-aging and brightening benefits.</p>
+                            <p class="service-price">₱699</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="facial-hydra" data-service-name="Hydra Facial" data-price="3200">
+                        <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=Hydra+Facial" alt="Hydra Facial" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Hydra Facial</h4>
+                            <p class="service-description">Advanced hydradermabrasion for deep cleansing, exfoliation, extraction, hydration, and antioxidant protection.</p>
+                            <p class="service-price">₱3,200</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="facial-hydra-sig" data-service-name="Hydra Facial with Signature Facial" data-price="2000">
+                        <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=Hydra+Signature" alt="Hydra Facial with Signature Facial" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Hydra Facial with Signature Facial</h4>
+                            <p class="service-description">Combine the benefits of Hydra Facial technology with our classic Signature Facial steps.</p>
+                            <p class="service-price">₱2,000</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
                 </div>
             </section>
 
              <section class="service-category">
-                <h3 class="category-title">Waxing</h3>
+                <h3 class="category-title">Facial Add Ons</h3>
                 <div class="service-list">
-                    <div class="service-card" data-service-id="wax-underarm" data-service-name="Underarm Waxing" data-price="250"> <img src="https://via.placeholder.com/350x200/ec407a/333?text=Underarm+Wax" alt="Underarm Waxing" class="service-image">
+                     <div class="service-card" data-service-id="addon-pimple-inj" data-service-name="Pimple Injection" data-price="100">
+                        <img src="https://via.placeholder.com/350x200/e1bee7/333?text=Pimple+Injection" alt="Pimple Injection" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Underarm Waxing</h4>
-                            <p class="service-description">Quick and effective removal of underarm hair for long-lasting smoothness.</p>
-                            <p class="service-price">Starts at ₱250</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Pimple Injection</h4>
+                            <p class="service-description">Targeted injection to quickly reduce inflammation of large pimples.</p>
+                            <p class="service-price">₱100 / pimple</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                    <div class="service-card" data-service-id="wax-leg" data-service-name="Leg Waxing (Half/Full)" data-price="500"> <img src="https://via.placeholder.com/350x200/ec407a/333?text=Leg+Waxing" alt="Leg Waxing" class="service-image">
+                     <div class="service-card" data-service-id="addon-white-mask" data-service-name="Whitening Mask" data-price="100">
+                        <img src="https://via.placeholder.com/350x200/e1bee7/333?text=Whitening+Mask" alt="Whitening Mask" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Leg Waxing (Half/Full)</h4>
-                            <p class="service-description">Smooth, hair-free legs with our professional waxing services for lower or full legs.</p>
-                            <p class="service-price">Starts at ₱500</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Whitening Mask</h4>
+                            <p class="service-description">Add-on mask to help brighten skin tone and reduce dark spots.</p>
+                            <p class="service-price">₱100</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                    <div class="service-card" data-service-id="wax-arm" data-service-name="Arm Waxing (Half/Full)" data-price="400"> <img src="https://via.placeholder.com/350x200/ec407a/333?text=Arm+Waxing" alt="Arm Waxing" class="service-image">
+                     <div class="service-card" data-service-id="addon-collagen-mask" data-service-name="Collagen Mask" data-price="150">
+                        <img src="https://via.placeholder.com/350x200/e1bee7/333?text=Collagen+Mask" alt="Collagen Mask" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Arm Waxing (Half/Full)</h4>
-                            <p class="service-description">Achieve silky smooth arms with our half or full arm waxing options.</p>
-                            <p class="service-price">Starts at ₱400</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Collagen Mask</h4>
+                            <p class="service-description">Boost skin elasticity and hydration with a collagen-infused mask.</p>
+                            <p class="service-price">₱150</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                    <div class="service-card" data-service-id="wax-bikini" data-service-name="Bikini / Brazilian Waxing" data-price="700"> <img src="https://via.placeholder.com/350x200/ec407a/333?text=Bikini+Wax" alt="Bikini / Brazilian Waxing" class="service-image">
+                      <div class="service-card" data-service-id="addon-gold-mask" data-service-name="24K Gold Mask" data-price="200">
+                        <img src="https://via.placeholder.com/350x200/e1bee7/333?text=24K+Gold+Mask" alt="24K Gold Mask" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Bikini / Brazilian Waxing</h4>
-                            <p class="service-description">Professional and discreet hair removal for the bikini area, offering various styles.</p>
-                             <p class="service-price">Starts at ₱700</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">24K Gold Mask</h4>
+                            <p class="service-description">Luxurious add-on mask for anti-aging and radiant skin benefits.</p>
+                            <p class="service-price">₱200</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="addon-white-serum" data-service-name="Whitening Mask Serum" data-price="150">
+                        <img src="https://via.placeholder.com/350x200/e1bee7/333?text=Whitening+Serum" alt="Whitening Mask Serum" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Whitening Mask Serum</h4>
+                            <p class="service-description">Concentrated serum applied with mask to enhance brightening effects.</p>
+                            <p class="service-price">₱150</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
                 </div>
             </section>
 
              <section class="service-category">
-                <h3 class="category-title">Gluta Spa</h3>
+                <h3 class="category-title">Warts Removal</h3>
                 <div class="service-list">
-                    <div class="service-card" data-service-id="gluta-drip" data-service-name="Gluta Drip Session" data-price="1500"> <img src="https://via.placeholder.com/350x200/d81b60/fff?text=Gluta+Drip" alt="Gluta Drip" class="service-image">
+                     <div class="service-card" data-service-id="warts-face" data-service-name="Warts Removal - Face" data-price="799">
+                        <img src="https://via.placeholder.com/350x200/ce93d8/333?text=Warts+Face" alt="Warts Removal - Face" class="service-image">
                         <div class="service-details">
-                            <h4 class="service-name">Gluta Drip Session</h4>
-                            <p class="service-description">Intravenous glutathione treatment aimed at skin brightening, detoxification, and overall wellness.</p>
-                               <p class="service-price">Starts at ₱1500</p> <button class="book-button">Book Now</button>
+                            <h4 class="service-name">Warts Removal - Face</h4>
+                            <p class="service-description">Safe and effective removal of warts located on the facial area.</p>
+                            <p class="service-price">₱799</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                    <div class="service-card" data-service-id="gluta-push" data-service-name="Gluta Push" data-price="800"> <img src="https://via.placeholder.com/350x200/d81b60/fff?text=Gluta+Push" alt="Gluta Push" class="service-image">
+                      <div class="service-card" data-service-id="warts-neck" data-service-name="Warts Removal - Neck" data-price="799">
+                        <img src="https://via.placeholder.com/350x200/ce93d8/333?text=Warts+Neck" alt="Warts Removal - Neck" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Warts Removal - Neck</h4>
+                             <p class="service-description">Safe and effective removal of warts located on the neck area.</p>
+                            <p class="service-price">₱799</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                      <div class="service-card" data-service-id="warts-face-neck" data-service-name="Warts Removal - Face and Neck" data-price="1299">
+                        <img src="https://via.placeholder.com/350x200/ce93d8/333?text=Warts+Face+Neck" alt="Warts Removal - Face and Neck" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Warts Removal - Face and Neck</h4>
+                            <p class="service-description">Combined removal service for warts on both the face and neck areas.</p>
+                            <p class="service-price">₱1,299</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="warts-back" data-service-name="Warts Removal - Back Body" data-price="1999">
+                        <img src="https://via.placeholder.com/350x200/ce93d8/333?text=Warts+Back" alt="Warts Removal - Back Body" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Warts Removal - Back Body</h4>
+                             <p class="service-description">Removal of warts located on the back area of the body.</p>
+                            <p class="service-price">₱1,999</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                      <div class="service-card" data-service-id="warts-front" data-service-name="Warts Removal - Front Body" data-price="1999">
+                        <img src="https://via.placeholder.com/350x200/ce93d8/333?text=Warts+Front" alt="Warts Removal - Front Body" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Warts Removal - Front Body</h4>
+                             <p class="service-description">Removal of warts located on the front area of the body (chest/abdomen).</p>
+                            <p class="service-price">₱1,999</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="service-category">
+                 <h3 class="category-title">Eyelash Care</h3>
+                 <div class="service-list">
+                     <div class="service-card" data-service-id="lash-classic" data-service-name="Classic Eyelash Extensions" data-price="450">
+                        <img src="https://via.placeholder.com/350x200/f06292/333?text=Classic+Lashes" alt="Classic Lash Extensions" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Classic Eyelash Extensions</h4>
+                            <p class="service-description">One extension applied per natural lash for a natural, enhanced look.</p>
+                            <p class="service-price">₱450</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="lash-cat-eye" data-service-name="Cat Eye Lash Extensions" data-price="500">
+                        <img src="https://via.placeholder.com/350x200/f06292/333?text=Cat+Eye+Lashes" alt="Cat Eye Lash Extensions" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Cat Eye Lash Extensions</h4>
+                            <p class="service-description">Extensions styled to be longer towards the outer corners for a winged effect.</p>
+                            <p class="service-price">₱500</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="lash-open-eye" data-service-name="Open Eye Lash Extensions" data-price="500">
+                        <img src="https://via.placeholder.com/350x200/f06292/333?text=Open+Eye+Lashes" alt="Open Eye Lash Extensions" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Open Eye Lash Extensions</h4>
+                            <p class="service-description">Longer extensions focused towards the center of the eye to create a rounded, open look.</p>
+                            <p class="service-price">₱500</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="lash-doll-eye" data-service-name="Doll Eye Lash Extensions" data-price="500">
+                        <img src="https://via.placeholder.com/350x200/f06292/333?text=Doll+Eye+Lashes" alt="Doll Eye Lash Extensions" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Doll Eye Lash Extensions</h4>
+                            <p class="service-description">Similar to Open Eye, creating a wide-eyed, doll-like appearance.</p>
+                            <p class="service-price">₱500</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="lash-wispy" data-service-name="Wispy Lash Extensions" data-price="700">
+                        <img src="https://via.placeholder.com/350x200/f06292/333?text=Wispy+Lashes" alt="Wispy Lash Extensions" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Wispy Lash Extensions</h4>
+                            <p class="service-description">A textured look combining varying lengths for a feathery, wispy effect.</p>
+                            <p class="service-price">₱700</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                      <div class="service-card" data-service-id="lash-lift-tint" data-service-name="Lash Lift with Tint" data-price="1100">
+                        <img src="https://via.placeholder.com/350x200/f06292/333?text=Lash+Lift+Tint" alt="Lash Lift with Tint" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Lash Lift with Tint</h4>
+                            <p class="service-description">Curl and darken your natural lashes for a lifted, mascara-like effect without extensions.</p>
+                            <p class="service-price">₱1,100</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="lash-perming" data-service-name="Lash Perming" data-price="450">
+                        <img src="https://via.placeholder.com/350x200/f06292/333?text=Lash+Perming" alt="Lash Perming" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Lash Perming</h4>
+                            <p class="service-description">Curl your natural lashes to enhance their appearance.</p>
+                            <p class="service-price">₱450</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="lash-retouch" data-service-name="Lash Retouch" data-price="200">
+                        <img src="https://via.placeholder.com/350x200/f06292/333?text=Lash+Retouch" alt="Lash Retouch" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Lash Retouch</h4>
+                            <p class="service-description">Maintenance service for existing lash extensions (price may vary).</p>
+                            <p class="service-price">₱200</p> {/* Adjust if price varies significantly */}
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                      <div class="service-card" data-service-id="brow-lamination" data-service-name="Brow Lamination" data-price="1000"> {/* Keeping price from old code */}
+                         <img src="https://via.placeholder.com/350x200/f48fb1/333?text=Brow+Lamination" alt="Brow Lamination" class="service-image">
+                         <div class="service-details">
+                            <h4 class="service-name">Brow Lamination</h4>
+                            <p class="service-description">Achieve fuller, perfectly positioned brows with this straightening and setting treatment.</p>
+                            <p class="service-price">Starts at ₱1000</p>
+                            <button class="book-button">Book Now</button>
+                         </div>
+                    </div>
+                     <div class="service-card" data-service-id="brow-threading" data-service-name="Brow Threading" data-price="150">
+                        <img src="https://via.placeholder.com/350x200/f48fb1/333?text=Brow+Threading" alt="Brow Threading" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Brow Threading</h4>
+                             <p class="service-description">Precise eyebrow shaping using the threading technique.</p>
+                            <p class="service-price">₱150</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+            <section class="service-category">
+                <h3 class="category-title">Hair Waxing Removal</h3>
+                <div class="service-list">
+                    <div class="service-card" data-service-id="wax-upper-lip" data-service-name="Upper Lip Waxing" data-price="199">
+                        <img src="https://via.placeholder.com/350x200/ec407a/333?text=Upper+Lip+Wax" alt="Upper Lip Waxing" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Upper Lip Waxing</h4>
+                            <p class="service-description">Quick removal of hair from the upper lip area.</p>
+                            <p class="service-price">₱199</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="wax-lower-lip" data-service-name="Lower Lip Waxing" data-price="199">
+                        <img src="https://via.placeholder.com/350x200/ec407a/333?text=Lower+Lip+Wax" alt="Lower Lip Waxing" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Lower Lip Waxing</h4>
+                             <p class="service-description">Quick removal of hair from the lower lip area.</p>
+                            <p class="service-price">₱199</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="wax-underarms" data-service-name="Underarms Waxing" data-price="399">
+                        <img src="https://via.placeholder.com/350x200/ec407a/333?text=Underarm+Wax" alt="Underarms Waxing" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Underarms Waxing</h4>
+                            <p class="service-description">Effective hair removal for smooth underarms.</p>
+                            <p class="service-price">₱399</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="wax-arms" data-service-name="Arms Waxing (Full)" data-price="499">
+                        <img src="https://via.placeholder.com/350x200/ec407a/333?text=Arm+Waxing" alt="Arms Waxing" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Arms Waxing (Full)</h4>
+                            <p class="service-description">Achieve silky smooth arms with our full arm waxing.</p>
+                            <p class="service-price">₱499</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="wax-half-leg" data-service-name="Half Leg Waxing" data-price="499">
+                        <img src="https://via.placeholder.com/350x200/ec407a/333?text=Half+Leg+Wax" alt="Half Leg Waxing" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Half Leg Waxing</h4>
+                            <p class="service-description">Smooth, hair-free lower legs.</p>
+                            <p class="service-price">₱499</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="wax-full-leg" data-service-name="Full Leg Waxing" data-price="799">
+                        <img src="https://via.placeholder.com/350x200/ec407a/333?text=Full+Leg+Wax" alt="Full Leg Waxing" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Full Leg Waxing</h4>
+                             <p class="service-description">Complete leg waxing for long-lasting smoothness.</p>
+                            <p class="service-price">₱799</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="wax-bikini" data-service-name="Bikini Waxing" data-price="499">
+                        <img src="https://via.placeholder.com/350x200/ec407a/333?text=Bikini+Wax" alt="Bikini Waxing" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Bikini Waxing</h4>
+                            <p class="service-description">Hair removal for the bikini line area.</p>
+                            <p class="service-price">₱499</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="wax-brazilian" data-service-name="Brazilian Waxing" data-price="999">
+                        <img src="https://via.placeholder.com/350x200/ec407a/333?text=Brazilian+Wax" alt="Brazilian Waxing" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Brazilian Waxing</h4>
+                            <p class="service-description">Complete hair removal for the bikini area.</p>
+                            <p class="service-price">₱999</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="service-category">
+                <h3 class="category-title">Diode Laser Hair Removal</h3>
+                 <p style="text-align: center; color: #555; margin-top: -15px; margin-bottom: 25px;">Reduce unwanted hair permanently. Package deals (5+1 Free Session) available!</p>
+                <div class="service-list">
+                     <div class="service-card" data-service-id="diode-underarms" data-service-name="Diode Laser - Underarms" data-price="799">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Underarms" alt="Diode Laser - Underarms" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Underarms</h4>
+                            <p class="service-description">Target underarm hair for permanent reduction.</p>
+                            <p class="service-price">₱799 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="diode-face" data-service-name="Diode Laser - Face" data-price="999">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Face" alt="Diode Laser - Face" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Face</h4>
+                            <p class="service-description">Permanent hair reduction for the facial area.</p>
+                            <p class="service-price">₱999 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="diode-lip" data-service-name="Diode Laser - Upper/Lower Lip" data-price="499">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Lip" alt="Diode Laser - Upper/Lower Lip" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Upper/Lower Lip</h4>
+                             <p class="service-description">Target unwanted hair on the upper or lower lip.</p>
+                            <p class="service-price">₱499 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="diode-bikini" data-service-name="Diode Laser - Bikini Line" data-price="899">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Bikini" alt="Diode Laser - Bikini Line" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Bikini Line</h4>
+                            <p class="service-description">Permanent hair reduction for the bikini line.</p>
+                            <p class="service-price">₱899 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="diode-brazilian" data-service-name="Diode Laser - Brazilian" data-price="1399">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Brazilian" alt="Diode Laser - Brazilian" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Brazilian</h4>
+                            <p class="service-description">Complete permanent hair reduction for the bikini area.</p>
+                            <p class="service-price">₱1,399 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="diode-half-arms" data-service-name="Diode Laser - Half Arms" data-price="1199">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Half+Arms" alt="Diode Laser - Half Arms" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Half Arms</h4>
+                             <p class="service-description">Permanent hair reduction for lower or upper arms.</p>
+                            <p class="service-price">₱1,199 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="diode-full-arms" data-service-name="Diode Laser - Full Arms" data-price="1399">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Full+Arms" alt="Diode Laser - Full Arms" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Full Arms</h4>
+                            <p class="service-description">Permanent hair reduction for the entire arms.</p>
+                            <p class="service-price">₱1,399 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="diode-neck" data-service-name="Diode Laser - Neck" data-price="699">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Neck" alt="Diode Laser - Neck" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Neck</h4>
+                            <p class="service-description">Target unwanted hair on the neck area.</p>
+                            <p class="service-price">₱699 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="diode-chest" data-service-name="Diode Laser - Chest/Abdomen" data-price="1399">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Chest" alt="Diode Laser - Chest/Abdomen" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Chest/Abdomen</h4>
+                            <p class="service-description">Permanent hair reduction for the chest or abdomen area.</p>
+                            <p class="service-price">₱1,399 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="diode-half-legs" data-service-name="Diode Laser - Half Legs" data-price="1499">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Half+Legs" alt="Diode Laser - Half Legs" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Half Legs</h4>
+                             <p class="service-description">Permanent hair reduction for the lower legs.</p>
+                            <p class="service-price">₱1,499 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="diode-full-legs" data-service-name="Diode Laser - Full Legs" data-price="1699">
+                        <img src="https://via.placeholder.com/350x200/ba68c8/fff?text=Diode+Full+Legs" alt="Diode Laser - Full Legs" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Diode Laser - Full Legs</h4>
+                             <p class="service-description">Permanent hair reduction for the entire legs.</p>
+                            <p class="service-price">₱1,699 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="service-category">
+                <h3 class="category-title">Gluta and Vitamin Drip</h3>
+                <p style="text-align: center; color: #555; margin-top: -15px; margin-bottom: 25px;">Boost your wellness and glow from within. Package deals (5+1 Free Session) available!</p>
+                <div class="service-list">
+                     <div class="service-card" data-service-id="gluta-snow-white" data-service-name="Snow White Drip" data-price="1299">
+                        <img src="https://via.placeholder.com/350x200/d81b60/fff?text=Snow+White+Drip" alt="Snow White Drip" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Snow White Drip</h4>
+                            <p class="service-description">Popular IV drip for skin brightening and antioxidant benefits.</p>
+                            <p class="service-price">₱1,299 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="gluta-cindella" data-service-name="Cindella Drip" data-price="1299">
+                        <img src="https://via.placeholder.com/350x200/d81b60/fff?text=Cindella+Drip" alt="Cindella Drip" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Cindella Drip</h4>
+                             <p class="service-description">Known for skin whitening and anti-aging effects.</p>
+                            <p class="service-price">₱1,299 / session</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="gluta-push" data-service-name="Gluta Push" data-price="1000">
+                        <img src="https://via.placeholder.com/350x200/d81b60/fff?text=Gluta+Push" alt="Gluta Push" class="service-image">
                         <div class="service-details">
                             <h4 class="service-name">Gluta Push</h4>
-                            <p class="service-description">A faster intravenous injection of glutathione, often combined with Vitamin C.</p>
-                               <p class="service-price">Starts at ₱800</p> <button class="book-button">Book Now</button>
+                             <p class="service-description">A faster IV injection of glutathione, often combined with vitamins.</p>
+                            <p class="service-price">₱1,000 / session</p>
+                            <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                </div>
+                 </div>
+                 {/* Maybe add a card explaining benefits here? */}
             </section>
 
-        </div> </main>
+             <section class="service-category">
+                <h3 class="category-title">Nails and Wellness</h3>
+                <div class="service-list">
+                    <div class="service-card" data-service-id="nail-classic-mani" data-service-name="Classic Manicure" data-price="200">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Classic+Manicure" alt="Classic Manicure" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Classic Manicure</h4>
+                            <p class="service-description">Essential nail shaping, cuticle care, buffing, and regular polish.</p>
+                            <p class="service-price">₱200</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="nail-classic-pedi" data-service-name="Classic Pedicure" data-price="250">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Classic+Pedicure" alt="Classic Pedicure" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Classic Pedicure</h4>
+                             <p class="service-description">Essential foot care including soak, scrub, nail care, and regular polish.</p>
+                            <p class="service-price">₱250</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="nail-gel-mani" data-service-name="Gel Manicure" data-price="700">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Gel+Manicure" alt="Gel Manicure" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Gel Manicure</h4>
+                            <p class="service-description">Long-lasting, chip-resistant gel polish application for hands.</p>
+                            <p class="service-price">₱700</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="nail-gel-pedi" data-service-name="Gel Pedicure" data-price="700">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Gel+Pedicure" alt="Gel Pedicure" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Gel Pedicure</h4>
+                             <p class="service-description">Long-lasting, chip-resistant gel polish application for feet.</p>
+                            <p class="service-price">₱700</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                      <div class="service-card" data-service-id="nail-gel-remove" data-service-name="Gel Removal" data-price="150">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Gel+Removal" alt="Gel Removal" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Gel Removal</h4>
+                            <p class="service-description">Safe and proper removal of existing gel polish.</p>
+                            <p class="service-price">₱150</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="nail-gel-matte" data-service-name="Gel Matte Top" data-price="50">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Matte+Top" alt="Gel Matte Top" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Gel Matte Top</h4>
+                            <p class="service-description">Add a stylish matte finish to your gel polish.</p>
+                            <p class="service-price">₱50</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="nail-art" data-service-name="Nail Art" data-price="50">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Nail+Art" alt="Nail Art" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Nail Art</h4>
+                            <p class="service-description">Creative designs and embellishments for your nails. Price varies by complexity.</p>
+                            <p class="service-price">Starts at ₱50</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="wellness-hand-spa" data-service-name="Classic Hand Spa" data-price="350">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Hand+Spa" alt="Classic Hand Spa" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Classic Hand Spa</h4>
+                            <p class="service-description">Rejuvenating treatment for hands including exfoliation and massage.</p>
+                            <p class="service-price">₱350</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="wellness-foot-spa" data-service-name="Classic Foot Spa" data-price="350">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Foot+Spa" alt="Classic Foot Spa" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Classic Foot Spa</h4>
+                             <p class="service-description">Relaxing treatment for feet including soak, scrub, and massage.</p>
+                            <p class="service-price">₱350</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="service-card" data-service-id="wellness-hand-paraffin" data-service-name="Hand Paraffin" data-price="299">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Hand+Paraffin" alt="Hand Paraffin" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Hand Paraffin</h4>
+                             <p class="service-description">Deep moisturizing paraffin wax treatment for soft hands.</p>
+                            <p class="service-price">₱299</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                     <div class="service-card" data-service-id="wellness-foot-paraffin" data-service-name="Foot Paraffin" data-price="299">
+                        <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Foot+Paraffin" alt="Foot Paraffin" class="service-image">
+                        <div class="service-details">
+                            <h4 class="service-name">Foot Paraffin</h4>
+                            <p class="service-description">Deep moisturizing paraffin wax treatment for soft feet.</p>
+                            <p class="service-price">₱299</p>
+                            <button class="book-button">Book Now</button>
+                        </div>
+                    </div>
+                 </div>
+            </section>
 
-     <footer>
-        <div class="footer-copyright">
-            Copyright © 2025 GJ's Beauty Lounge | Powered by GJ's Beauty Lounge
         </div>
+    </main>
+
+    <footer>
+        <div class="footer-copyright">
+             Copyright © 2025 GJ's Beauty Lounge | Powered by GJ's Beauty Lounge
+         </div>
     </footer>
 
-    <div id="bookingModal" class="modal" style="display: none;"> <div class="modal-content booking-modal-content">
+    <div id="bookingModal" class="modal" style="display: none;">
+        <div class="modal-content booking-modal-content">
             <span class="close-button booking-close-button">&times;</span>
             <h3>Book Your Service</h3>
             <form id="bookingForm">
@@ -413,29 +755,32 @@
                 </div>
 
                 <input type="hidden" id="modal-service-id" name="serviceId">
+                <input type="hidden" id="modal-price-value" name="priceValue"> {/* Added hidden input for price value */}
+
 
                 <div class="form-group">
-                     <label for="booking-notes">Notes (Optional):</label>
-                     <textarea id="booking-notes" name="notes" placeholder="Any special requests or details? e.g., preferred time, allergies..."></textarea>
+                    <label for="booking-notes">Notes (Optional):</label>
+                    <textarea id="booking-notes" name="notes" placeholder="Any special requests or details? e.g., preferred time, allergies..."></textarea>
                 </div>
 
                 <div class="form-group payment-options">
-                     <label>Payment Option:</label>
-                     <div>
-                         <input type="radio" id="payment-gcash" name="payment" value="GCash" required checked>
-                         <label for="payment-gcash">GCash</label>
-                     </div>
-                     <div>
-                         <input type="radio" id="payment-cash" name="payment" value="Cash">
-                         <label for="payment-cash">Cash (Pay at Lounge)</label>
-                     </div>
-                 </div>
+                    <label>Payment Option:</label>
+                    <div>
+                        <input type="radio" id="payment-gcash" name="payment" value="GCash" required checked>
+                        <label for="payment-gcash">GCash</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="payment-cash" name="payment" value="Cash">
+                        <label for="payment-cash">Cash (Pay at Lounge)</label>
+                    </div>
+                </div>
 
-                 <button type="submit">Confirm Booking</button>
+                <button type="submit">Confirm Booking</button>
             </form>
         </div>
     </div>
 
     <script type="module" src="firebase-auth.js"></script>
     <script type="module" src="booking.js"></script>
+</body>
 </html>
