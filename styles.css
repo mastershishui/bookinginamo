@@ -1369,6 +1369,111 @@ footer {
 /* ============================================ */ /* 
 /* End Authentication Notification Modal Styles */
 
+/* ======================================== */
+/* Authentication Notification Modal Styles */
+/* ... existing styles for auth notification ... */
+.auth-notification-ok-btn:hover {
+    background-color: #c2185b; /* Darker pink on hover */
+}
+/* ============================================ */
+/* End Authentication Notification Modal Styles */
+/* ============================================ */
+
+
+/* ======================================== */   /* <<< PASTE STARTING HERE >>> */
+/* Booking Confirmation Modal Styles      */
+/* ======================================== */
+
+.booking-confirmation-content {
+  max-width: 460px;
+  padding: 0;
+  background-color: #fff;
+  border: 2px solid #4CAF50; /* Success green border */
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  overflow: hidden; /* Add this */
+  /* Inherits general modal content centering etc. */
+}
+
+.booking-confirmation-close {
+    /* Inherits base styles from .close-button */
+    color: #aaa;
+    top: 8px;
+    right: 12px;
+    font-size: 28px;
+    padding: 5px; /* Easier click target */
+    line-height: 1;
+}
+.booking-confirmation-close:hover { color: #333; }
+
+.booking-confirmation-body {
+    padding: 25px 30px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.booking-confirmation-icon {
+    font-size: 3.5em;
+    color: #4CAF50; /* Success green */
+    margin-bottom: 15px;
+}
+
+.booking-confirmation-body h4 {
+    color: #1b5e20; /* Darker Green */
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.booking-confirmation-body p {
+    color: #333;
+    font-size: 1em;
+    line-height: 1.6;
+    margin: 4px 0;
+}
+.booking-confirmation-body p strong {
+    color: #2e7d32; /* Medium Green */
+    font-weight: 600;
+ }
+
+.booking-confirmation-body .confirmation-note {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 15px;
+}
+
+.booking-confirmation-ok-btn {
+    background-color: #4CAF50; /* Success green button */
+    color: white;
+    border: none;
+    padding: 10px 35px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    margin-top: 20px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+.booking-confirmation-ok-btn:hover {
+    background-color: #388e3c; /* Darker green */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ============================================ */
+/* End Booking Confirmation Modal Styles      */
+/* ============================================ */   /* <<< END PASTE HERE >>> */
+
+
+/* ================================ */
+/* User Account Dropdown Styles     */
+/* ================================ */
+/* ... rest of your CSS ... */
+
 /* ================================ */
 /* User Account Dropdown Styles     */
 /* ================================ */
