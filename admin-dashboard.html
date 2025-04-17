@@ -24,37 +24,54 @@
              </nav>
     </header>
 
-    <main> <h2>Manage Bookings</h2>
+   <main>
+        <h2>Manage Bookings</h2>
         <p>View and manage all submitted bookings below.</p>
 
+        <hr style="margin: 30px 0;"> <h2>Live Support Chats</h2>
+        <p>Select a chat from the list to view messages and respond.</p>
+
+        <div id="admin-chat-container">
+            <div id="chat-list-column">
+                <h3>Incoming Chats</h3>
+                <ul id="chat-list">
+                    <li id="loading-chats">Loading chats...</li>
+                </ul>
+            </div>
+
+            <div id="conversation-column">
+                <h3>Conversation</h3>
+                <div id="admin-chat-messages">
+                    <p>Please select a chat from the list.</p>
+                </div>
+                <div id="admin-chat-input-area">
+                    <input type="text" id="admin-chat-input" placeholder="Type your reply...">
+                    <button id="admin-chat-send-button">Send</button>
+                </div>
+            </div>
+        </div>
         <div id="bookings-list">
             <table id="bookings-table">
                 <thead>
-    <tr>
-        <th>Booking ID</th>
-        <th>Customer Name</th>
-        <th>Contact</th>
-        <th>Email</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Service</th>
-        <th>Status</th>
-        <th>Actions</th> 
-    </tr>
-</thead>
-<tbody id="bookings-table-body">
-    <tr class="loading-message">
-         
-        <td colspan="9">Loading bookings...</td>
-    </tr>
-</tbody>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Customer Name</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
                 <tbody id="bookings-table-body">
                     <tr class="loading-message">
-                        <td colspan="8">Loading bookings...</td> </tr>
+                        <td colspan="9">Loading bookings...</td> </tr>
                 </tbody>
-            </table>
+                </table>
         </div>
-    </main> 
+    </main>
  <footer>
         <div class="footer-copyright">
             Copyright © 2025 GJ's Beauty Lounge | Powered by GJ's Beauty Lounge
