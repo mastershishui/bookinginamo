@@ -1707,6 +1707,133 @@ footer {
 
 /* --- End of About Us Page Styles --- */
 
+
+/* ================================= */
+/* Contact Info Section (Forced Single Row) */ /* <<< CODE YOU GAVE STARTS HERE */
+/* ================================= */
+
+.contact-info-before-map {
+    text-align: center;
+    padding: 25px 15px;      /* Reduced side padding */
+    margin: 30px auto;
+    max-width: 1200px;       /* Increased max-width */
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center; /* Center the group */
+    align-items: center;     /* Vertically align */
+    flex-wrap: nowrap;       /* *** Force items onto one line - IMPORTANT *** */
+    gap: 30px;               /* Adjust gap between items */
+    overflow-x: auto;        /* Add horizontal scroll for safety on small screens */
+}
+
+/* Style each distinct contact block */
+.contact-info-before-map .contact-socials,
+.contact-info-before-map .contact-email,
+.contact-info-before-map .contact-phone {
+    text-align: center;
+    flex-shrink: 0; /* Prevent items from shrinking */
+}
+
+.contact-info-before-map h3 {
+    font-size: 1.2em;       /* Slightly smaller heading */
+    color: #d81b60;
+    margin-bottom: 8px;     /* Reduced space below heading */
+    white-space: nowrap;    /* Prevent heading text from wrapping */
+}
+
+.contact-info-before-map .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 12px;              /* Reduced gap between social links */
+    flex-wrap: nowrap;      /* Keep social links inline too */
+}
+
+/* Links (including email/phone) */
+.contact-info-before-map a {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.95em;      /* Slightly smaller text */
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s ease;
+    white-space: nowrap;    /* Prevent link text from wrapping */
+}
+.contact-info-before-map a:hover {
+     color: #007bff;
+}
+
+/* Specific styling for email/phone paragraphs */
+.contact-info-before-map .contact-email p,
+.contact-info-before-map .contact-phone p {
+    margin: 0;
+    font-size: 0.95em;      /* Match link size */
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;    /* Prevent content from wrapping */
+}
+
+/* Icon Styling */
+.contact-info-before-map i {
+    margin-right: 6px;      /* Reduced space */
+    color: #d81b60;
+    font-size: 1em;         /* Slightly smaller icons */
+}
+
+
+/* --- Responsive Adjustments (Keeping nowrap) --- */
+/* Adjust details for smaller screens, but items remain in one row */
+@media (max-width: 768px) {
+  .contact-info-before-map {
+      /* flex-wrap: wrap;  <-- ENSURE THIS IS NOT PRESENT */
+      gap: 20px;             /* Further reduce gap */
+      padding: 20px 10px;    /* Reduce padding */
+      justify-content: flex-start; /* Align items to the start */
+   }
+    /* Further font/icon size reductions */
+    .contact-info-before-map h3 { font-size: 1.1em; }
+    .contact-info-before-map a,
+    .contact-info-before-map p { font-size: 0.9em; }
+    .contact-info-before-map i { font-size: 0.95em; margin-right: 5px;}
+    .contact-info-before-map .social-links { gap: 8px; }
+}
+
+@media (max-width: 480px) {
+     .contact-info-before-map {
+         gap: 15px;
+         padding: 15px 5px;
+     }
+     /* Even smaller? Adjust if needed */
+     .contact-info-before-map h3 { font-size: 1em; }
+     .contact-info-before-map a,
+     .contact-info-before-map p { font-size: 0.85em; }
+     .contact-info-before-map i { font-size: 0.9em; }
+}
+
+/* ===================================== */
+/* End Contact Info Section Styles       */
+/* ===================================== */
+
+/* Styles added for Map Section (conceptually part of About Us page content) */
+.map-container h2 {
+    color: #e91e63;
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.map-container p {
+    color: #555;
+    font-size: 1em;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+/* End of added Map Section styles */
+
+
+/* --- End of About Us Page Styles --- */
+
 /* Add space between icon and text in nav links */
 .nav-link-icon i {
   margin-right: 8px; /* Adjust spacing as needed */
