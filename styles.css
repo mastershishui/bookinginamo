@@ -224,152 +224,122 @@ main.dashboard-container {
 }
 
 /* ============================ */
-/* Footer Styles                */
+/* New Contact Info Section Styles*/
+/* ============================ */
+
+.contact-info-before-map {
+    text-align: center; /* Center align the content */
+    padding: 30px 20px; /* Add some padding */
+    margin: 30px auto; /* Center block and add margin top/bottom */
+    max-width: 800px; /* Optional: constrain width */
+    background-color: #f8f8f8; /* Light background color */
+    border-radius: 8px; /* Slightly rounded corners */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-around; /* Space out children */
+    align-items: flex-start; /* Align items to the top */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 20px; /* Space between items when wrapped */
+}
+
+.contact-info-before-map h3 {
+    font-size: 1.4em; /* Slightly larger heading */
+    color: #d81b60; /* Use a brand color (adjust if needed) */
+    margin-bottom: 15px;
+}
+
+.contact-info-before-map .social-links {
+    display: flex;
+    justify-content: center; /* Center links below heading */
+    gap: 20px; /* Space between social links */
+    flex-wrap: wrap; /* Allow links to wrap */
+}
+
+.contact-info-before-map .social-links a,
+.contact-info-before-map .contact-email a {
+    color: #333; /* Darker text color for links */
+    text-decoration: none;
+    font-size: 1em;
+    display: inline-flex; /* Align icon and text nicely */
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.contact-info-before-map .social-links a:hover,
+.contact-info-before-map .contact-email a:hover {
+    color: #007bff; /* Standard link hover color */
+}
+
+.contact-info-before-map i {
+    margin-right: 8px; /* Space between icon and text */
+    color: #d81b60; /* Match icon color to heading */
+    font-size: 1.1em; /* Slightly larger icons */
+}
+
+.contact-info-before-map .contact-email p {
+    margin: 0; /* Remove default paragraph margin */
+    font-size: 1em;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Responsive adjustments for the new section */
+@media (max-width: 576px) {
+    .contact-info-before-map {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center align stacked items */
+        padding: 20px 15px;
+    }
+
+    .contact-info-before-map .contact-socials,
+    .contact-info-before-map .contact-email {
+        width: 100%; /* Make sections full width */
+        margin-bottom: 15px; /* Add space between stacked sections */
+    }
+     .contact-info-before-map .contact-email {
+        margin-bottom: 0;
+     }
+}
+
+
+/* ============================ */
+/* Simplified Footer Styles     */
 /* ============================ */
 
 footer {
     background-color: #222; /* Dark background */
-    color: #fff; /* Default light text color */
-    padding: 40px 50px 20px 50px; /* Padding: Top Sides Bottom */
-    display: flex;
-    justify-content: space-between; /* CHANGE MADE HERE */
-    align-items: flex-start; /* Align tops of sections */
-    flex-wrap: wrap; /* Allow sections to wrap on smaller screens */
-    gap: 30px; /* Space between sections */
-    flex-shrink: 0; /* Prevent footer from shrinking */
-    margin-top: auto; /* Pushes footer to bottom if using flex layout on body */
-}
-
-.footer-section {
-    flex: 1 1 250px; /* Allow sections to grow/shrink, base width 250px */
-    min-width: 220px; /* Minimum width before wrapping */
-    text-align: left; /* Align text to the left within sections */
-}
-
-.footer-section h3 {
-    font-size: 1.2em;
-    margin-top: 0; /* Reset margin-top for consistency */
-    margin-bottom: 15px;
-    color: #fce4ec; /* Light pink for headings */
-    text-align: left; /* Ensure headings are left-aligned */
-}
-
-/* Style for the second heading in the contact section */
-.footer-contact h3 + h3 { /* Selects an h3 that immediately follows another h3 within footer-contact */
-     margin-top: 25px; /* Add space specifically before the Address heading */
-}
-
-
-.footer-section p,
-.footer-section a {
-    color: #ddd; /* Light grey for text and links */
-    text-decoration: none; /* Remove underline from links */
-    margin-bottom: 8px;
-    font-size: 0.95em;
-    line-height: 1.6; /* Line height for readability */
-    display: flex; /* Use flexbox for icon alignment */
-    align-items: flex-start; /* Align items to the top */
-}
-
-.footer-section a {
-    transition: color 0.2s ease; /* Smooth color change on hover */
-    align-items: center; /* Vertically center icon/text in links */
-}
-
-.footer-section a:hover,
-.footer-section a:focus {
-    color: #fff; /* Brighter white on hover/focus */
-    outline: none; /* Remove default focus outline */
-}
-
-/* Icon Styles */
-.footer-section i {
-    margin-right: 10px; /* Space between icon and text */
-    width: 1.2em; /* Fixed width for icons */
-    text-align: center; /* Center icon within its space */
-    flex-shrink: 0; /* Prevent icon from shrinking */
-    color: #fce4ec; /* Icon color matches headings */
-    margin-top: 0.2em; /* Fine-tune vertical alignment (adjust as needed) */
-    line-height: 1; /* Prevent icon from affecting line height */
-}
-
-/* Specific alignment for icons in links (like social media) */
-.social-links a i,
-.footer-contact a i { /* Apply to email link icon too */
-    margin-top: 0; /* Reset margin-top for vertically centered links */
+    color: #fff;           /* Light text color */
+    padding: 0;           /* Remove padding, copyright handles its own */
+    flex-shrink: 0;       /* Prevent footer from shrinking */
+    margin-top: auto;     /* Pushes footer to bottom */
 }
 
 /* --- Copyright Bar --- */
 .footer-copyright {
-    width: 100%; /* Span full width */
-    text-align: center; /* Center text */
-    margin-top: 30px; /* Space above the copyright */
-    padding: 20px 0 10px 0; /* Padding top/bottom */
+    width: 100%;                /* Span full width */
+    text-align: center;         /* Center text */
+    padding: 20px 15px;         /* Padding top/bottom and sides */
     border-top: 1px solid #444; /* Separator line */
     font-size: 0.9em;
-    color: #bbb; /* Lighter grey for copyright */
-    flex-basis: 100%; /* Ensure it takes full width in flex layout */
+    color: #bbb;                /* Lighter grey for copyright */
+    background-color: #222;     /* Ensure background color if footer padding is 0 */
 }
-
 
 /* --- Footer Responsive Adjustments --- */
+/* No longer need specific responsive for footer flex items */
+/* Copyright bar handles its own responsiveness */
 
-/* Medium screens (Tablets) */
-@media (max-width: 768px) {
-    footer {
-        padding: 30px 30px 15px 30px; /* Adjust padding */
-        justify-content: space-between; /* Space between might look better */
-    }
-     /* You might not need specific overrides here if flex-wrap handles it well */
-}
-
-/* Small screens (Mobiles) */
+/* Keep small screen adjustments for copyright if needed */
 @media (max-width: 576px) {
-    footer {
-        padding: 30px 20px 15px 20px; /* Further adjust padding */
-        justify-content: center; /* Center sections when stacked */
-    }
-
-    .footer-section {
-        flex-basis: 100%; /* Make each section take full width */
-        text-align: center; /* Center text within sections */
-        margin-bottom: 25px; /* Add space between stacked sections */
-        max-width: 400px; /* Optional max width */
-    }
-     /* Ensure last section doesn't have extra bottom margin */
-     .footer-section:last-of-type {
-         margin-bottom: 0;
-     }
-
-    .footer-section h3 {
-        text-align: center; /* Center headings */
-    }
-     /* Center Address heading margin */
-    .footer-contact h3 + h3 {
-        margin-top: 20px; /* Slightly reduce top margin */
-    }
-
-    .footer-section p,
-    .footer-section a {
-        justify-content: center; /* Center icon/text blocks */
-        align-items: center;
-    }
-
-    /* Icons might not need margin adjustment if centered */
-    .footer-section i {
-        margin-top: 0;
-    }
-
     .footer-copyright {
-        margin-top: 20px; /* Adjust margin */
-        padding-top: 15px;
-        max-width: 90%; /* Allow slightly wider than sections */
+        font-size: 0.85em; /* Slightly smaller text on mobile */
+        padding: 15px 10px;
     }
 }
+
 /* ============================ */
 /* End Footer Styles            */
 /* ============================ */
-
 
 /* ------- Modal Styles (General) ------- */
 .modal {
