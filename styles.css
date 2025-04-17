@@ -1240,6 +1240,75 @@ footer {
 
 /* ------- END Optional Promo Styles ------- */
 
+/* Authentication Notification Modal Styles */ 
+/* ======================================== */
+
+/* Use existing .modal for overlay */
+
+.auth-notification-content {
+  max-width: 400px; /* Adjust width as needed */
+  padding: 0; /* Reset padding, body will handle it */
+  background-color: #fff; /* White background for content */
+  border: 2px solid #e91e63; /* Theme pink border */
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  /* Inherits centering from .modal */
+}
+
+.auth-notification-close {
+    /* Inherits base styles from .close-button */
+    color: #aaa;
+    top: 8px;
+    right: 12px;
+    font-size: 28px;
+}
+.auth-notification-close:hover {
+    color: #333;
+ }
+
+.auth-notification-body {
+    padding: 30px 35px; /* Generous padding */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Space between icon, text, button */
+}
+
+.auth-notification-icon {
+    font-size: 3em; /* Larger icon */
+    color: #f06292; /* Lighter theme pink */
+    margin-bottom: 5px;
+}
+
+#authNotificationMessage {
+    color: #333;
+    font-size: 1.1em; /* Slightly larger text */
+    line-height: 1.5;
+    margin: 0;
+    font-weight: 500;
+}
+
+.auth-notification-ok-btn {
+    background-color: #e91e63; /* Theme pink button */
+    color: white;
+    border: none;
+    padding: 10px 30px; /* Make button wider */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    margin-top: 10px; /* Space above button */
+    transition: background-color 0.2s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.auth-notification-ok-btn:hover {
+    background-color: #c2185b; /* Darker pink on hover */
+}
+
+/* ============================================ */ /* 
+/* End Authentication Notification Modal Styles */
 
 /* ================================ */
 /* User Account Dropdown Styles     */
