@@ -23,28 +23,28 @@
         </div>
         <nav>
            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">ABOUT US</a></li>
-              <li><a href="reviews.html">Reviews</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li class="active"><a href="services.html">Services</a></li> 
+             <li><a href="index.html">Home</a></li>
+             <li><a href="about.html">ABOUT US</a></li>
+             <li><a href="reviews.html">Reviews</a></li>
+             <li><a href="faq.html">FAQ</a></li>
+             <li class="active"><a href="services.html">Services</a></li>
 
-              <li id="nav-mybook-link-li" style="display: none;">
+             <li id="nav-mybook-link-li" style="display: none;">
                    <a href="mybook.html">My Book<span id="mybook-counter" style="display: none;">0</span></a>
-              </li>
+             </li>
 
-              <li id="nav-login-signup-li" style="display: block;">
+             <li id="nav-login-signup-li" style="display: block;">
                    <a href="#" id="loginSignupLink" class="nav-link-icon">
                        <i class="fas fa-user-circle"></i> Log In / Sign Up
                    </a>
-              </li>
+             </li>
 
-              <li id="nav-profile-link-li" style="display: none;">
+             <li id="nav-profile-link-li" style="display: none;">
                    <a href="profile.html">My Profile</a>
-              </li>
-              <li id="nav-logout-link-li" style="display: none;">
+             </li>
+             <li id="nav-logout-link-li" style="display: none;">
                    <a href="#" id="logout-link">Logout</a>
-              </li>
+             </li>
            </ul>
         </nav>
     </header>
@@ -54,7 +54,18 @@
             <h2>Explore Our Offerings</h2>
             <p>Discover the range of professional beauty treatments we provide to help you look and feel your best. Check out our services and special promos below!</p>
 
-            <section class="service-category special-offers">
+            <div class="category-overview">
+                <a href="#special-offers">Promos</a> |
+                <a href="#facial-treatments">Facial Treatments</a> |
+                <a href="#facial-add-ons">Facial Add Ons</a> |
+                <a href="#warts-removal">Warts Removal</a> |
+                <a href="#eyelash-care">Eyelash & Brow Care</a> |
+                <a href="#hair-waxing">Hair Waxing</a> |
+                <a href="#diode-laser">Diode Laser</a> |
+                <a href="#gluta-drip">Gluta Drip</a> |
+                <a href="#nails-wellness">Nails & Wellness</a>
+            </div>
+            <section class="service-category special-offers" id="special-offers">
                 <h3 class="category-title promo-title"><i class="fas fa-tags"></i> Special Promos</h3>
                 <div class="service-list">
                     <div class="service-card promo-card" data-service-id="promo-pkg1" data-service-name="Package 1" data-price="1000">
@@ -97,7 +108,7 @@
                         <img src="https://via.placeholder.com/350x200/ffeb3b/333?text=Package+5" alt="Package 5" class="service-image">
                         <div class="service-details">
                             <h4 class="service-name">Package 5</h4>
-                            <p class="service-description">Acne Facial with Pico Laser.</p> 
+                            <p class="service-description">Acne Facial with Pico Laser.</p>
                             <p class="service-price">₱2,000</p>
                             <button class="book-button">Book Now</button>
                         </div>
@@ -150,10 +161,10 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                </div>
+                 </div>
             </section>
 
-            <section class="service-category">
+            <section class="service-category" id="facial-treatments">
                 <h3 class="category-title">Facial Treatments</h3>
                 <div class="service-list">
                     <div class="service-card" data-service-id="facial-signature" data-service-name="Signature Facial" data-price="499">
@@ -183,7 +194,7 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                      <div class="service-card" data-service-id="facial-24k-gold" data-service-name="24K Gold Facial" data-price="699">
+                     <div class="service-card" data-service-id="facial-24k-gold" data-service-name="24K Gold Facial" data-price="699">
                         <img src="https://via.placeholder.com/350x200/f8bbd0/333?text=24K+Gold+Facial" alt="24K Gold Facial" class="service-image">
                         <div class="service-details">
                             <h4 class="service-name">24K Gold Facial</h4>
@@ -210,12 +221,12 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                </div>
+                 </div>
             </section>
 
-             <section class="service-category">
-                <h3 class="category-title">Facial Add Ons</h3>
-                <div class="service-list">
+             <section class="service-category" id="facial-add-ons">
+                 <h3 class="category-title">Facial Add Ons</h3>
+                 <div class="service-list">
                      <div class="service-card" data-service-id="addon-pimple-inj" data-service-name="Pimple Injection" data-price="100">
                         <img src="https://via.placeholder.com/350x200/e1bee7/333?text=Pimple+Injection" alt="Pimple Injection" class="service-image">
                         <div class="service-details">
@@ -243,7 +254,7 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                      <div class="service-card" data-service-id="addon-gold-mask" data-service-name="24K Gold Mask" data-price="200">
+                     <div class="service-card" data-service-id="addon-gold-mask" data-service-name="24K Gold Mask" data-price="200">
                         <img src="https://via.placeholder.com/350x200/e1bee7/333?text=24K+Gold+Mask" alt="24K Gold Mask" class="service-image">
                         <div class="service-details">
                             <h4 class="service-name">24K Gold Mask</h4>
@@ -261,12 +272,12 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                </div>
+                 </div>
             </section>
 
-             <section class="service-category">
-                <h3 class="category-title">Warts Removal</h3>
-                <div class="service-list">
+             <section class="service-category" id="warts-removal">
+                 <h3 class="category-title">Warts Removal</h3>
+                 <div class="service-list">
                      <div class="service-card" data-service-id="warts-face" data-service-name="Warts Removal - Face" data-price="799">
                         <img src="https://via.placeholder.com/350x200/ce93d8/333?text=Warts+Face" alt="Warts Removal - Face" class="service-image">
                         <div class="service-details">
@@ -276,7 +287,7 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                      <div class="service-card" data-service-id="warts-neck" data-service-name="Warts Removal - Neck" data-price="799">
+                     <div class="service-card" data-service-id="warts-neck" data-service-name="Warts Removal - Neck" data-price="799">
                         <img src="https://via.placeholder.com/350x200/ce93d8/333?text=Warts+Neck" alt="Warts Removal - Neck" class="service-image">
                         <div class="service-details">
                             <h4 class="service-name">Warts Removal - Neck</h4>
@@ -285,7 +296,7 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                      <div class="service-card" data-service-id="warts-face-neck" data-service-name="Warts Removal - Face and Neck" data-price="1299">
+                     <div class="service-card" data-service-id="warts-face-neck" data-service-name="Warts Removal - Face and Neck" data-price="1299">
                         <img src="https://via.placeholder.com/350x200/ce93d8/333?text=Warts+Face+Neck" alt="Warts Removal - Face and Neck" class="service-image">
                         <div class="service-details">
                             <h4 class="service-name">Warts Removal - Face and Neck</h4>
@@ -303,7 +314,7 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                      <div class="service-card" data-service-id="warts-front" data-service-name="Warts Removal - Front Body" data-price="1999">
+                     <div class="service-card" data-service-id="warts-front" data-service-name="Warts Removal - Front Body" data-price="1999">
                         <img src="https://via.placeholder.com/350x200/ce93d8/333?text=Warts+Front" alt="Warts Removal - Front Body" class="service-image">
                         <div class="service-details">
                             <h4 class="service-name">Warts Removal - Front Body</h4>
@@ -312,10 +323,10 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                </div>
+                 </div>
             </section>
 
-            <section class="service-category">
+            <section class="service-category" id="eyelash-care">
                  <h3 class="category-title">Eyelash Care</h3>
                  <div class="service-list">
                      <div class="service-card" data-service-id="lash-classic" data-service-name="Classic Eyelash Extensions" data-price="450">
@@ -363,7 +374,7 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                      <div class="service-card" data-service-id="lash-lift-tint" data-service-name="Lash Lift with Tint" data-price="1100">
+                     <div class="service-card" data-service-id="lash-lift-tint" data-service-name="Lash Lift with Tint" data-price="1100">
                         <img src="https://via.placeholder.com/350x200/f06292/333?text=Lash+Lift+Tint" alt="Lash Lift with Tint" class="service-image">
                         <div class="service-details">
                             <h4 class="service-name">Lash Lift with Tint</h4>
@@ -386,20 +397,20 @@
                         <div class="service-details">
                             <h4 class="service-name">Lash Retouch</h4>
                             <p class="service-description">Maintenance service for existing lash extensions (price may vary).</p>
-                            <p class="service-price">₱200</p> 
+                            <p class="service-price">₱200</p>
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                      <div class="service-card" data-service-id="brow-lamination" data-service-name="Brow Lamination" data-price="1000"> 
-                         <img src="https://via.placeholder.com/350x200/f48fb1/333?text=Brow+Lamination" alt="Brow Lamination" class="service-image">
-                         <div class="service-details">
+                     <div class="service-card" data-service-id="brow-lamination" data-service-name="Brow Lamination" data-price="1000">
+                       <img src="https://via.placeholder.com/350x200/f48fb1/333?text=Brow+Lamination" alt="Brow Lamination" class="service-image">
+                       <div class="service-details">
                             <h4 class="service-name">Brow Lamination</h4>
                             <p class="service-description">Achieve fuller, perfectly positioned brows with this straightening and setting treatment.</p>
                             <p class="service-price">Starts at ₱1000</p>
                             <button class="book-button">Book Now</button>
-                         </div>
-                    </div>
-                     <div class="service-card" data-service-id="brow-threading" data-service-name="Brow Threading" data-price="150">
+                       </div>
+                   </div>
+                    <div class="service-card" data-service-id="brow-threading" data-service-name="Brow Threading" data-price="150">
                         <img src="https://via.placeholder.com/350x200/f48fb1/333?text=Brow+Threading" alt="Brow Threading" class="service-image">
                         <div class="service-details">
                             <h4 class="service-name">Brow Threading</h4>
@@ -411,7 +422,7 @@
                  </div>
             </section>
 
-            <section class="service-category">
+            <section class="service-category" id="hair-waxing">
                 <h3 class="category-title">Hair Waxing Removal</h3>
                 <div class="service-list">
                     <div class="service-card" data-service-id="wax-upper-lip" data-service-name="Upper Lip Waxing" data-price="199">
@@ -486,10 +497,10 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                </div>
+                 </div>
             </section>
 
-            <section class="service-category">
+            <section class="service-category" id="diode-laser">
                 <h3 class="category-title">Diode Laser Hair Removal</h3>
                  <p style="text-align: center; color: #555; margin-top: -15px; margin-bottom: 25px;">Reduce unwanted hair permanently. Package deals (5+1 Free Session) available!</p>
                 <div class="service-list">
@@ -592,10 +603,10 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                </div>
+                 </div>
             </section>
 
-            <section class="service-category">
+            <section class="service-category" id="gluta-drip">
                 <h3 class="category-title">Gluta and Vitamin Drip</h3>
                 <p style="text-align: center; color: #555; margin-top: -15px; margin-bottom: 25px;">Boost your wellness and glow from within. Package deals (5+1 Free Session) available!</p>
                 <div class="service-list">
@@ -627,12 +638,12 @@
                         </div>
                     </div>
                  </div>
-                 
+
             </section>
 
-             <section class="service-category">
-                <h3 class="category-title">Nails and Wellness</h3>
-                <div class="service-list">
+             <section class="service-category" id="nails-wellness">
+                 <h3 class="category-title">Nails and Wellness</h3>
+                 <div class="service-list">
                     <div class="service-card" data-service-id="nail-classic-mani" data-service-name="Classic Manicure" data-price="200">
                         <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Classic+Manicure" alt="Classic Manicure" class="service-image">
                         <div class="service-details">
@@ -669,7 +680,7 @@
                             <button class="book-button">Book Now</button>
                         </div>
                     </div>
-                      <div class="service-card" data-service-id="nail-gel-remove" data-service-name="Gel Removal" data-price="150">
+                     <div class="service-card" data-service-id="nail-gel-remove" data-service-name="Gel Removal" data-price="150">
                         <img src="https://via.placeholder.com/350x200/fce4ec/333?text=Gel+Removal" alt="Gel Removal" class="service-image">
                         <div class="service-details">
                             <h4 class="service-name">Gel Removal</h4>
@@ -741,7 +752,7 @@
     <footer>
         <div class="footer-copyright">
              Copyright © 2025 GJ's Beauty Lounge | Powered by GJ's Beauty Lounge
-         </div>
+           </div>
     </footer>
 
     <div id="bookingModal" class="modal" style="display: none;">
