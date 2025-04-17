@@ -2317,3 +2317,162 @@ footer {
 
 
 /* ------- End Live Chat Widget Styles ------- */
+/* ------- Live Chat Widget Styles ------- */
+
+#chat-widget-container {
+    position: fixed; /* Keeps it in place during scroll */
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+#chat-open-button {
+    background-color: #dc3545; /* Red background - like your example */
+    color: white;
+    border: none;
+    border-radius: 50px; /* Make it pill-shaped or circular */
+    padding: 12px 20px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+}
+
+#chat-open-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+#chat-open-button i {
+    font-size: 1.2em; /* Adjust icon size if needed */
+}
+
+#chat-window {
+    width: 320px; /* Adjust width as needed */
+    max-width: 90vw;
+    height: 450px; /* Adjust height as needed */
+    max-height: 70vh;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    /* display: flex; /* JS will control display (initially none) */
+    display: none; /* Start hidden */
+    flex-direction: column;
+    overflow: hidden; /* Prevents content spilling */
+    position: absolute; /* Position relative to the container */
+    bottom: 75px; /* Position above the button */
+    right: 0;
+}
+
+/* Add this if you want JS to toggle visibility using classes */
+#chat-window.visible {
+    display: flex;
+}
+
+
+#chat-header {
+    background-color: #f1f1f1; /* Light grey header */
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+#chat-header h3 {
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333;
+}
+
+#chat-close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+}
+#chat-close-button:hover {
+    color: #333;
+}
+
+#chat-messages {
+    flex-grow: 1; /* Takes up available space */
+    padding: 15px;
+    overflow-y: auto; /* Allows scrolling for messages */
+    background-color: #fff;
+    font-size: 0.95em;
+}
+
+/* Add styles for individual messages within #chat-messages */
+#chat-messages .chat-message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    max-width: 80%;
+    line-height: 1.4;
+    word-wrap: break-word; /* Ensure long words break */
+}
+#chat-messages .user-message {
+    background-color: #e1f5fe; /* Light blue for user */
+    margin-left: auto; /* Align user messages right */
+    margin-right: 0;
+    text-align: left; /* Keep text aligned left within bubble */
+}
+#chat-messages .admin-message {
+    background-color: #dcedc8; /* Light green for admin */
+    margin-right: auto; /* Align admin messages left */
+    margin-left: 0;
+    text-align: left;
+}
+/* Style sender name if you add it */
+#chat-messages .chat-message strong {
+    display: block;
+    font-size: 0.8em;
+    margin-bottom: 3px;
+    color: #555;
+}
+
+
+#chat-input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #f9f9f9;
+     flex-shrink: 0; /* Prevent input area from shrinking */
+}
+
+#chat-input {
+    flex-grow: 1;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95em;
+}
+
+#chat-send-button {
+    background-color: #007bff; /* Example blue send button */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease;
+}
+
+#chat-send-button:hover {
+    background-color: #0056b3;
+}
+
+/* ------- End Live Chat Widget Styles ------- */
