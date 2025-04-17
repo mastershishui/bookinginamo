@@ -41,7 +41,9 @@ try {
 
 // --- Wait for the DOM ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Get elements needed
+    console.log("Booking.js: DOM loaded."); // Added log
+
+    // --- Get elements needed ---
     const bookingModal = document.getElementById('bookingModal');
     const loginModal = document.getElementById('loginModal');
     const bookingCloseButton = bookingModal ? bookingModal.querySelector('.booking-close-button') : null;
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const authModalOkBtn = authModal ? authModal.querySelector('.auth-notification-ok-btn') : null;
     const bookingQuantityInput = document.getElementById('booking-quantity');
 
-    // ** NEW: Get Booking Confirmation Modal elements **
+    // ** Get Booking Confirmation Modal elements **
     const bookingConfirmationModal = document.getElementById('bookingConfirmationModal');
     const confirmServiceName = document.getElementById('confirm-service-name');
     const confirmQuantity = document.getElementById('confirm-quantity');
@@ -65,30 +67,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookingConfirmationCloseBtn = bookingConfirmationModal ? bookingConfirmationModal.querySelector('.booking-confirmation-close') : null;
     const bookingConfirmationOkBtn = bookingConfirmationModal ? bookingConfirmationModal.querySelector('.booking-confirmation-ok-btn') : null;
 
+    // --- Log Element Selections (for debugging) ---
+    console.log({
+        bookingModal, loginModal, bookingCloseButton, bookingForm, serviceButtonsLength: serviceButtons.length,
+        modalServiceName, modalServicePrice, modalServiceId, modalPriceValue, bookingNotes, authModal,
+        authModalCloseBtn, authModalOkBtn, bookingQuantityInput, bookingConfirmationModal, confirmServiceName,
+        confirmQuantity, confirmTotalPrice, bookingConfirmationCloseBtn, bookingConfirmationOkBtn
+    });
+
 
     // --- Modal Handling ---
-    // (openBookingModal remains the same)
     function openBookingModal(serviceCard) {
-         if (!bookingModal || !modalServiceId || !modalServiceName || !modalServicePrice || !bookingNotes || !bookingQuantityInput || !modalPriceValue) {
-             console.error("Booking modal or its inner elements (incl. quantity/price value) not found!"); return;
-         }
-         const serviceId = serviceCard.dataset.serviceId;
-         const serviceName = serviceCard.dataset.serviceName;
-         let price = serviceCard.dataset.price; let displayPrice;
-         if (!price || isNaN(Number(price))) {
-              const priceElement = serviceCard.querySelector('.service-price');
-              displayPrice = priceElement ? priceElement.textContent : 'Price unavailable'; price = 0;
-         } else {
-               try { displayPrice = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(price); } catch (e) { displayPrice = `₱${price}`; }
-         }
-         modalServiceId.value = serviceId;
-         modalServiceName.textContent = serviceName;
-         modalServicePrice.textContent = displayPrice;
-         modalPriceValue.value = price;
-         bookingNotes.value = '';
-         bookingQuantityInput.value = '1';
-         bookingModal.style.display = 'block';
-     }
+        if (!bookingModal || !modalServiceId || !modalServiceName || !modalServicePrice || !bookingNotes || !bookingQuantityInput || !modalPriceValue) {
+            console.error("Booking modal or its inner elements (incl. quantity/price value) not found!"); return;
+        }
+        const serviceId = serviceCard.dataset.serviceId;
+        const serviceName = serviceCard.dataset.serviceName;
+        let price = serviceCard.dataset.price; let displayPrice;
+        if (!price || isNaN(Number(price))) {
+             const priceElement = serviceCard.querySelector('.service-price');
+             displayPrice = priceElement ? priceElement.textContent : 'Price unavailable'; price = 0;
+        } else {
+              try { displayPrice = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(price); } catch (e) { displayPrice = `₱${price}`; }
+        }
+        console.log("Opening booking modal for:", serviceName, displayPrice, serviceId);
+        modalServiceId.value = serviceId;
+        modalServiceName.textContent = serviceName;
+        modalServicePrice.textContent = displayPrice;
+        modalPriceValue.value = price;
+        bookingNotes.value = '';
+        bookingQuantityInput.value = '1';
+        bookingModal.style.display = 'block';
+    }
 
     function closeBookingModal() { if (bookingModal) bookingModal.style.display = 'none'; }
     function closeAuthNotification() { if (authModal) authModal.style.display = 'none'; }
@@ -101,51 +111,99 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Event Listeners for Modals ---
-    // (Auth Notification listeners remain the same)
+    // Auth Notification Listeners
     if (authModalCloseBtn) { authModalCloseBtn.addEventListener('click', closeAuthNotification); }
     if (authModalOkBtn) { authModalOkBtn.addEventListener('click', () => { closeAuthNotification(); if (loginModal) loginModal.style.display = 'block'; }); }
     if (authModal) { authModal.addEventListener('click', (event) => { if (event.target === authModal) closeAuthNotification(); }); }
 
-    // (Booking Modal close listeners remain the same)
+    // Booking Modal Close Listeners
     if (bookingCloseButton) { bookingCloseButton.addEventListener('click', closeBookingModal); }
-    window.addEventListener('click', (event) => { if (bookingModal && event.target === bookingModal) closeBookingModal(); });
+    window.addEventListener('click', (event) => { if (bookingModal && event.target === bookingModal) closeBookingModal(); }); // Close booking modal on overlay click
 
     // ** NEW: Add event listeners for Booking Confirmation Modal **
     if (bookingConfirmationCloseBtn) {
         bookingConfirmationCloseBtn.addEventListener('click', closeBookingConfirmation);
-    }
+        console.log("Listener added for booking confirmation close button.");
+    } else { console.warn("Booking confirmation close button not found."); }
+
     if (bookingConfirmationOkBtn) {
         bookingConfirmationOkBtn.addEventListener('click', closeBookingConfirmation);
-    }
+         console.log("Listener added for booking confirmation OK button.");
+    } else { console.warn("Booking confirmation OK button not found."); }
+
     if (bookingConfirmationModal) {
         bookingConfirmationModal.addEventListener('click', (event) => {
             if (event.target === bookingConfirmationModal) { // Click on overlay
                 closeBookingConfirmation();
             }
         });
+        console.log("Listener added for booking confirmation overlay click.");
+    } else { console.warn("Booking confirmation modal element not found for overlay click listener."); }
+
+
+    // --- Event Listeners for Book Now buttons ---
+    if(serviceButtons.length > 0){
+        serviceButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                 console.log("Book Now button clicked!"); // Debug log
+                 const serviceCard = event.target.closest('.service-card');
+                 if (!serviceCard) { console.error("Could not find parent service card."); return; }
+
+                 if (auth && auth.currentUser) {
+                     console.log("User logged in, opening booking modal.");
+                     openBookingModal(serviceCard);
+                 } else {
+                     console.log("User not logged in, showing auth notification.");
+                     if (authModal) {
+                         authModal.style.display = 'block';
+                     } else {
+                         console.error("Auth notification modal not found!");
+                         alert("Please log in or register to book a service.");
+                     }
+                 }
+            });
+        });
+    } else {
+        console.warn("No '.book-button' elements found on this page.");
     }
 
-    // --- Event Listeners for Book Now buttons --- (remain the same)
-    serviceButtons.forEach(button => { /* ... */ });
 
     // --- Booking Form Submission (Save to Firestore) ---
     // ***** UPDATED TO SHOW CUSTOM CONFIRMATION MODAL *****
     if (bookingForm) {
         bookingForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-            const submitButton = bookingForm.querySelector('button[type="submit"]');
+             console.log("Booking form submitted."); // Debug log
+             const submitButton = bookingForm.querySelector('button[type="submit"]');
             submitButton.disabled = true;
             submitButton.textContent = 'Booking...';
 
-            if (!auth || !auth.currentUser) { /* ... Auth check ... */ return; }
+            if (!auth || !auth.currentUser) {
+                 console.error("Booking submit failed: User not authenticated.");
+                 alert("Authentication error. Please log in again.");
+                 closeBookingModal();
+                 if (authModal) authModal.style.display = 'block';
+                 submitButton.disabled = false;
+                 submitButton.textContent = 'Confirm Booking';
+                 return;
+             }
             const userId = auth.currentUser.uid;
             const userEmail = auth.currentUser.email;
 
-            // Get User Details (remains the same)
+            // Get User Details
             let customerName = userEmail; let customerContact = 'N/A';
-            try { /* ... Fetch user details ... */ } catch (error) { /* ... */ }
+            try {
+                const userDocRef = doc(db, "users", userId);
+                const userDocSnap = await getDoc(userDocRef);
+                if (userDocSnap.exists()) {
+                    const userData = userDocSnap.data();
+                    customerName = `${userData.firstname || ''} ${userData.lastname || ''}`.trim() || userEmail;
+                    customerContact = userData.contact || 'N/A';
+                    console.log("Fetched user details:", customerName, customerContact);
+                 } else { console.warn("User document not found in Firestore."); }
+            } catch (error) { console.error("Error fetching user details:", error); }
 
-            // Get Form Data (remains the same)
+            // Get Form Data
             const formData = new FormData(bookingForm);
             const selectedPayment = formData.get('payment');
             const notes = formData.get('notes');
@@ -157,8 +215,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const totalPrice = pricePerUnit * quantity;
             const totalPriceDisplay = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(totalPrice);
 
-            // Prepare Booking Data (remains the same)
-            const newBookingData = { /* ... booking data ... */ };
+            // Prepare Booking Data
+            const newBookingData = {
+                 userId, userEmail, customerName, customerContact, serviceId, serviceName,
+                 servicePriceDisplay, quantity, totalPrice, totalPriceDisplay, notes: notes || "",
+                 paymentMethod: selectedPayment, bookingRequestDate: serverTimestamp(),
+                 bookingTime: "Pending Assignment", status: "Pending Confirmation"
+             };
 
             console.log("Attempting to save booking to Firestore:", newBookingData);
 
@@ -172,16 +235,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeBookingModal(); // Close the form modal first
 
                 // Populate the confirmation modal (check elements exist first)
-                if (confirmServiceName) confirmServiceName.textContent = serviceName;
-                if (confirmQuantity) confirmQuantity.textContent = `Qty: ${quantity}`;
-                if (confirmTotalPrice) confirmTotalPrice.textContent = totalPriceDisplay;
+                if (confirmServiceName) confirmServiceName.textContent = serviceName; else console.warn("confirm-service-name element not found");
+                if (confirmQuantity) confirmQuantity.textContent = `Qty: ${quantity}`; else console.warn("confirm-quantity element not found");
+                if (confirmTotalPrice) confirmTotalPrice.textContent = totalPriceDisplay; else console.warn("confirm-total-price element not found");
 
                 // Show the confirmation modal
                 if (bookingConfirmationModal) {
+                    console.log("Displaying booking confirmation modal.");
                     bookingConfirmationModal.style.display = 'block';
                 } else {
                     // Fallback if modal HTML is missing
-                    console.error("Booking confirmation modal not found!");
+                    console.error("Booking confirmation modal not found! Using alert as fallback.");
                     alert(`"${serviceName}" (Qty: ${quantity}) booking request submitted successfully!\nTotal: ${totalPriceDisplay}\nWe will confirm your schedule soon.`);
                 }
                 // ** END NEW **
@@ -198,5 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else { console.warn("Booking form element not found."); }
 
-    console.log("Booking.js: Event listeners added.");
+    console.log("Booking.js: Event listeners setup complete.");
+
 }); // End DOMContentLoaded
