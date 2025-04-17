@@ -1710,3 +1710,15 @@ footer {
 }
 
 /* --- End of About Us Page Styles --- */
+
+/* Add space between icon and text in nav links */
+.nav-link-icon i {
+  margin-right: 8px; /* Adjust spacing as needed */
+  vertical-align: middle; /* Helps align icon with text */
+}
+
+/* Optional: Adjust alignment if needed */
+.nav-link-icon {
+  display: flex;
+  align-items: center;
+}
