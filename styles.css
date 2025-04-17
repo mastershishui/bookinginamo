@@ -930,6 +930,33 @@ footer {
     font-family: 'Montserrat', sans-serif;
 }
 
+/* Keep the container styling */
+.category-overview {
+  text-align: center;
+  font-size: 0.9em;
+  /* color: #D81B60;  <-- Color removed/commented out from container */
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  word-spacing: 5px; /* Adjust spacing between links/separators */
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Style the links INSIDE the category overview */
+.category-overview a {
+  color: #D81B60; /* Apply the pink color TO THE LINKS */
+  text-decoration: none; /* Remove default underline */
+  margin: 0 3px; /* Add tiny space around links if needed */
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* Optional: Style for link hover */
+.category-overview a:hover {
+  color: #ad1457; /* Darker pink on hover */
+  text-decoration: underline; /* Add underline on hover for clarity */
+}
+
 .service-category {
     margin-bottom: 50px;
 }
