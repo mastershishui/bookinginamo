@@ -1,4 +1,4 @@
-// firebase-auth.js - UPDATED for User Icon Dropdown Navigation
+// firebase-auth.js - UPDATED for User Icon Dropdown Navigation & Consistent UI Updates
 
 // --- Imports ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
@@ -30,25 +30,32 @@ const firebaseConfig = {
 };
 
 // --- Initialize Firebase ---
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-// const analytics = getAnalytics(app); // Optional
+let app, auth, db;
+try {
+    // Use initializeApp to get the default app instance
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    console.log("Firebase Auth: Initialized successfully.");
+} catch (e) {
+    console.error("Firebase Auth: Error initializing Firebase:", e);
+    // Handle initialization error (e.g., display message to user)
+}
 
 // --- Global variables for UI elements ---
 // ***** UPDATED: Variables for new nav structure *****
-let loginSignupLink = null; // Combined Login/Sign Up Link <a> tag
-let loginSignupLi = null;   // Combined Login/Sign Up Link <li> tag
+let loginSignupLink = null;
+let loginSignupLi = null;
 let loginModal = null;
 let registerModal = null;
 let loginMessage = null;
 let registerMessage = null;
-let myBookLinkLi = null;    // <li> containing My Book link
-let userAccountLi = null;   // <li> containing user icon & dropdown <-- NEW
-let logoutLink = null;      // <a> tag for Logout (now inside dropdown)
+let myBookLinkLi = null;
+let userAccountLi = null;   // <-- NEW: Container for icon/dropdown
+let logoutLink = null;      // The actual logout link inside the dropdown
 let dashboardWelcomeMessage = null;
-let userAccountIcon = null; // The clickable user icon <a> tag <-- NEW
-let userDropdown = null;    // The dropdown div itself <-- NEW
+let userAccountIcon = null; // <-- NEW: The clickable icon
+let userDropdown = null;    // <-- NEW: The dropdown div
 
 // --- Helper Function to Close Modals ---
 function closeAllModals() {
@@ -64,24 +71,29 @@ function closeAllModals() {
 // --- Helper Function to Update Navigation UI ---
 // ***** UPDATED: Handles the new nav structure *****
 function updateNavUI(user) {
-    // Ensure elements are selected (they should be selected in DOMContentLoaded)
-    // Add fallback selection just in case
+    // Ensure elements are selected (fallback, ideally assigned in DOMContentLoaded)
     if (!loginSignupLi) loginSignupLi = document.getElementById('nav-login-signup-li');
     if (!myBookLinkLi) myBookLinkLi = document.getElementById('nav-mybook-link-li');
-    if (!userAccountLi) userAccountLi = document.getElementById('nav-user-account-li'); // Get the new container
-    if (!logoutLink) logoutLink = document.getElementById('logout-link'); // Still need the actual link for click event
+    if (!userAccountLi) userAccountLi = document.getElementById('nav-user-account-li'); // Use the new LI ID
+    if (!logoutLink) logoutLink = document.getElementById('logout-link'); // Still need the link itself
+
+    // ** Select userAccountIcon here as well for safety **
+    if (!userAccountIcon) userAccountIcon = document.getElementById('userAccountIcon');
+
+    const displayStyle = 'block'; // Or 'list-item', 'flex', depending on your CSS needs
 
     if (user) {
         // --- User is Logged In ---
-        if (loginSignupLi) loginSignupLi.style.display = 'none';   // Hide Login/Sign Up
-        if (myBookLinkLi) myBookLinkLi.style.display = 'block';    // Show My Book (adjust display type if needed)
-        if (userAccountLi) userAccountLi.style.display = 'block';   // Show User Icon Dropdown Container
+        if (loginSignupLi) loginSignupLi.style.display = 'none';       // Hide Login/Sign Up
+        if (myBookLinkLi) myBookLinkLi.style.display = displayStyle; // Show My Book
+        if (userAccountLi) userAccountLi.style.display = displayStyle;  // Show User Icon Dropdown Container
 
-        // Ensure dropdown itself is closed initially on login/page load
+        // Ensure dropdown itself is closed initially on state change/load
         if (userAccountLi) userAccountLi.classList.remove('active');
-        if (userAccountIcon) userAccountIcon.setAttribute('aria-expanded', 'false');
+        if (userAccountIcon) userAccountIcon.setAttribute('aria-expanded', 'false'); // Reset accessibility
 
-        // Setup logout link functionality if needed and not already attached
+        // Setup logout link functionality ONLY if the link exists and listener not yet attached
+        // Check data attribute before adding listener to prevent duplicates
         if (logoutLink && !logoutLink.dataset.listenerAttached) {
             logoutLink.addEventListener('click', handleLogout);
             logoutLink.dataset.listenerAttached = 'true'; // Mark as attached
@@ -89,11 +101,15 @@ function updateNavUI(user) {
 
     } else {
         // --- User is Logged Out ---
-        if (loginSignupLi) loginSignupLi.style.display = 'block'; // Show Login/Sign Up
-        if (myBookLinkLi) myBookLinkLi.style.display = 'none';   // Hide My Book
-        if (userAccountLi) userAccountLi.style.display = 'none';    // Hide User Icon Dropdown Container
+        if (loginSignupLi) loginSignupLi.style.display = displayStyle; // Show Login/Sign Up
+        if (myBookLinkLi) myBookLinkLi.style.display = 'none';       // Hide My Book
+        if (userAccountLi) userAccountLi.style.display = 'none';        // Hide User Icon Dropdown Container
 
-        // Optional: Remove listener if you strictly want it only when visible
+        // Ensure dropdown is closed when logged out
+         if (userAccountLi) userAccountLi.classList.remove('active');
+         if (userAccountIcon) userAccountIcon.setAttribute('aria-expanded', 'false');
+
+        // Optional: remove listener on logout if needed, though checking existence is often enough
         // if (logoutLink && logoutLink.dataset.listenerAttached) {
         //     logoutLink.removeEventListener('click', handleLogout);
         //     delete logoutLink.dataset.listenerAttached;
@@ -104,13 +120,12 @@ function updateNavUI(user) {
 
 // --- Helper Function to Protect Routes --- (No changes needed here)
 function protectRoute(user) {
-    const protectedPages = ['/dashboard.html', '/profile.html', '/mybook.html', '/admin-dashboard.html']; // Add sensitive pages
+    const protectedPages = ['/dashboard.html', '/profile.html', '/mybook.html', '/admin-dashboard.html'];
     const currentPagePath = window.location.pathname;
-    // Simple check - might need refinement for complex paths or subdirectories
     const isProtected = protectedPages.some(page => currentPagePath.endsWith(page));
 
     if (!user && isProtected) {
-        console.log("User not logged in. Redirecting from protected route:", window.location.pathname);
+        console.log("User not logged in. Redirecting from protected route:", currentPagePath);
         window.location.href = '/index.html'; // Redirect to home
     }
 }
@@ -130,7 +145,7 @@ async function updateDashboardWelcome(user) {
                 const name = userData.firstname || userData.username || user.email;
                 dashboardWelcomeMessage.textContent = `Welcome, ${name}!`;
             } else {
-                console.warn("User document not found in Firestore for welcome message.");
+                console.warn("User document not found for welcome message.");
                 dashboardWelcomeMessage.textContent = `Welcome!`;
             }
         } catch (error) {
@@ -167,11 +182,11 @@ document.addEventListener('DOMContentLoaded', () => {
     loginModal = document.getElementById('loginModal');
     registerModal = document.getElementById('registerModal');
     myBookLinkLi = document.getElementById('nav-mybook-link-li');
-    userAccountLi = document.getElementById('nav-user-account-li'); // <-- NEW
-    logoutLink = document.getElementById('logout-link');
+    userAccountLi = document.getElementById('nav-user-account-li'); // <-- Get the LI container
+    logoutLink = document.getElementById('logout-link');          // <-- Get the logout link itself
     dashboardWelcomeMessage = document.getElementById('dashboard-welcome-message');
-    userAccountIcon = document.getElementById('userAccountIcon'); // <-- NEW
-    userDropdown = document.getElementById('userDropdown');       // <-- NEW
+    userAccountIcon = document.getElementById('userAccountIcon');   // <-- Get the icon link
+    userDropdown = document.getElementById('userDropdown');         // <-- Get the dropdown div
 
     // --- Setup Modal Listeners ---
     const loginCloseButton = loginModal ? loginModal.querySelector('.login-close-button') : null;
@@ -179,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const switchToRegister = document.getElementById('switchToRegister');
     const switchToLogin = document.getElementById('switchToLogin');
 
-    // Setup listeners for login/register modals and combined link
+    // Setup listeners for login/register modals and the combined login/signup link
     if (loginSignupLink && loginModal && registerModal && loginCloseButton && registerCloseButton && switchToRegister && switchToLogin) {
         console.log("Modal elements and Login/Sign Up link found. Attaching modal listeners...");
         loginSignupLink.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); loginModal.style.display = 'block'; });
@@ -194,24 +209,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- ** NEW: User Dropdown Toggle Logic ** ---
     if (userAccountIcon && userDropdown && userAccountLi) {
+        console.log("Attaching dropdown toggle listeners.");
         userAccountIcon.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent default link behavior '#'
-            event.stopPropagation(); // Prevent click reaching document listener immediately
-            const isActive = userAccountLi.classList.toggle('active'); // Toggle 'active' class on the LI
-            userAccountIcon.setAttribute('aria-expanded', isActive); // Toggle accessibility state
+            event.preventDefault(); // Prevent navigating to '#'
+            event.stopPropagation(); // Important: Prevent click from immediately closing dropdown via document listener
+            const isActive = userAccountLi.classList.toggle('active'); // Toggle class on the LI
+            userAccountIcon.setAttribute('aria-expanded', isActive); // Update accessibility state
+            console.log("Dropdown toggled. Active:", isActive);
         });
 
         // Close dropdown if clicking anywhere else on the page
         document.addEventListener('click', (event) => {
-            if (!userAccountLi.contains(event.target) && userAccountLi.classList.contains('active')) {
+            // Check if the dropdown is active and the click was OUTSIDE the dropdown container LI
+            if (userAccountLi.classList.contains('active') && !userAccountLi.contains(event.target)) {
+                console.log("Clicked outside dropdown, closing.");
                 userAccountLi.classList.remove('active');
-                userAccountIcon.setAttribute('aria-expanded', 'false');
+                userAccountIcon.setAttribute('aria-expanded', 'false'); // Reset accessibility state
             }
         });
 
         // Close dropdown if the Escape key is pressed
-        window.addEventListener('keydown', (event) => {
+         window.addEventListener('keydown', (event) => {
              if (event.key === 'Escape' && userAccountLi.classList.contains('active')) {
+                 console.log("Escape key pressed, closing dropdown.");
                  userAccountLi.classList.remove('active');
                  userAccountIcon.setAttribute('aria-expanded', 'false');
              }
@@ -230,14 +250,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (registrationForm && registerButton) {
         // (Keep registration form logic as is)
-        registerMessage.classList.add('registration-message');
-        registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
-        if (!registrationForm.querySelector('.registration-message')) {
-             registerButton.parentNode.insertBefore(registerMessage, registerButton.nextSibling);
-        }
+         registerMessage.classList.add('registration-message');
+         registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
+         if (!registrationForm.querySelector('.registration-message')) {
+              registerButton.parentNode.insertBefore(registerMessage, registerButton.nextSibling);
+         }
         registrationForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            // ... (get form values) ...
             const email = document.getElementById('reg-email')?.value;
             const password = document.getElementById('reg-password')?.value;
             const confirmPassword = document.getElementById('reg-confirm-password')?.value;
@@ -249,17 +268,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
             const currentRegisterMessage = registrationForm.querySelector('.registration-message');
 
-            // ... (validations) ...
+            // Validations
             if (!email || !password || !confirmPassword || !username || !firstname || !lastname || !contact || !selectedGender) {
                 if (currentRegisterMessage) { currentRegisterMessage.textContent = "Please fill in all fields."; currentRegisterMessage.style.color = "red"; } return;
             }
             if (password.length < 8) {
-                if (currentRegisterMessage) { currentRegisterMessage.textContent = "Password must be at least 8 characters long."; currentRegisterMessage.style.color = "red"; } return;
+                 if (currentRegisterMessage) { currentRegisterMessage.textContent = "Password must be at least 8 characters long."; currentRegisterMessage.style.color = "red"; } return;
             }
             if (password !== confirmPassword) {
                 if (currentRegisterMessage) { currentRegisterMessage.textContent = "Passwords do not match."; currentRegisterMessage.style.color = "red"; } return;
             }
-
 
             registerButton.disabled = true;
             if (currentRegisterMessage) { currentRegisterMessage.textContent = "Registering..."; currentRegisterMessage.style.color = "blue"; }
@@ -300,22 +318,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Setup Auth State Observer ---
-    // This will run initially and whenever the user logs in or out
+    // This runs once on load and whenever auth state changes
     console.log("Setting up Firebase Auth state observer...");
     onAuthStateChanged(auth, (user) => {
         console.log("Auth state changed! User:", user ? user.uid : 'None');
-        updateNavUI(user); // Update nav based on logged in status
-        protectRoute(user); // Protect pages if user is logged out
+        updateNavUI(user); // ** THIS IS WHERE THE NAV GETS UPDATED **
+        protectRoute(user);
 
-        // Update dashboard welcome message if on dashboard page and logged in
         if (window.location.pathname.includes('dashboard.html') && user) {
             updateDashboardWelcome(user);
         }
-         // Update admin dashboard welcome message if applicable
-         if (window.location.pathname.includes('admin-dashboard.html') && user) {
-             updateDashboardWelcome(user); // Example: reuse if structure is similar
-         }
-        // Add other page-specific updates here if needed
+        if (window.location.pathname.includes('admin-dashboard.html') && user) {
+             updateDashboardWelcome(user); // Reusing for admin for now
+        }
     });
 
 }); // End of DOMContentLoaded listener
@@ -329,10 +344,7 @@ async function registerUser(email, password, username, firstname, lastname, cont
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const userDocRef = doc(db, "users", user.uid);
-        await setDoc(userDocRef, {
-            email, username, firstname, lastname, contact, gender,
-            createdAt: new Date().toISOString(), isAdmin: false // Ensure isAdmin is false
-        });
+        await setDoc(userDocRef, { email, username, firstname, lastname, contact, gender, createdAt: new Date().toISOString(), isAdmin: false });
         if (currentRegisterMessage) { currentRegisterMessage.textContent = "Registration successful!"; currentRegisterMessage.style.color = "green"; }
         setTimeout(closeAllModals, 1500);
     } catch (error) {
@@ -359,19 +371,19 @@ async function loginUser(email, password) {
         try {
             const docSnap = await getDoc(userDocRef);
             if (docSnap.exists() && docSnap.data().isAdmin === true) {
-                console.log("Admin user detected. Redirecting to admin dashboard.");
+                console.log("Admin user detected.");
                 if (currentLoginMessage) { currentLoginMessage.textContent = "Admin login successful! Redirecting..."; currentLoginMessage.style.color = "green"; }
                 setTimeout(() => { closeAllModals(); window.location.href = 'admin-dashboard.html'; }, 1000);
             } else {
-                console.log("Regular user detected. Redirecting to dashboard.");
+                console.log("Regular user detected.");
                  if (currentLoginMessage) { currentLoginMessage.textContent = "Login successful! Redirecting..."; currentLoginMessage.style.color = "green"; }
-                setTimeout(() => { closeAllModals(); window.location.href = 'dashboard.html'; }, 1000);
+                setTimeout(() => { closeAllModals(); window.location.href = 'dashboard.html'; }, 1000); // Default redirect for regular users
             }
         } catch (error) {
-            console.error("Error fetching user data for admin check:", error);
+            console.error("Error checking user role:", error);
             if (currentLoginMessage) { currentLoginMessage.textContent = "Login successful, but couldn't verify role. Redirecting."; currentLoginMessage.style.color = "orange"; }
             if (loginButton) loginButton.disabled = false;
-            setTimeout(() => { closeAllModals(); window.location.href = 'index.html'; }, 1500);
+            setTimeout(() => { closeAllModals(); window.location.href = 'index.html'; }, 1500); // Fallback redirect
         }
     } catch (error) {
         console.error("Login Auth error:", error);
