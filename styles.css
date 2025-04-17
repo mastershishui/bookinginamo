@@ -909,9 +909,9 @@ footer {
     padding: 20px;
 }
 
-.services-container h2 { /* Top level H2 */
+.services-container h2 {
     text-align: center;
-    color: #333;
+    color: #e91e63; /* <--- CHANGED to theme pink color */
     margin-bottom: 15px;
     font-weight: 600;
     font-size: 1.8em;
