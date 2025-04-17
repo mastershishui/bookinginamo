@@ -934,47 +934,40 @@ footer {
 .category-overview {
   text-align: center;
   margin-top: 10px;
-  margin-bottom: 25px; /* Adjusted margin slightly */
+  margin-bottom: 25px;
   padding-bottom: 15px;
   border-bottom: 1px solid #eee;
-  white-space: nowrap; /* Keep on one line */
-  overflow-x: auto;  /* Allow horizontal scroll if needed */
-  /* word-spacing is removed - spacing now handled by link margins */
+
+  /* --- REMOVE or COMMENT OUT these two lines --- */
+  /* white-space: nowrap; */  /* Allows wrapping now */
+  /* overflow-x: auto;   */  /* No longer needed if wrapping */
+  /* --- End of removed lines --- */
+
   font-family: 'Montserrat', sans-serif;
-  line-height: 1.5; /* Added line-height to help with spacing if it wraps slightly */
+  line-height: 1.5; /* Helps spacing when wrapped */
 }
 
-/* Individual category link pills */
+/* Keep the styles for the links themselves */
 .category-overview a {
-  display: inline-block;     /* Important for padding/margins */
-  color: #D81B60;             /* Your pink text color */
-  background-color: #fdf6f8; /* Very light pink background from your theme */
-  border: 1px solid #fce4ec; /* Light pink border from your theme */
-  padding: 6px 15px;          /* Adjust padding (top/bottom, left/right) */
-  border-radius: 16px;         /* Rounded corners for pill shape */
-  margin: 3px 5px;          /* Space around each pill */
-  text-decoration: none;       /* Remove underline */
-  font-size: 0.85em;           /* Slightly smaller font */
-  font-weight: 500;          /* Adjust font weight if needed */
+  display: inline-block;
+  color: #D81B60;
+  background-color: #fdf6f8;
+  border: 1px solid #fce4ec;
+  padding: 6px 15px;
+  border-radius: 16px;
+  margin: 3px 5px;
+  text-decoration: none;
+  font-size: 0.85em;
+  font-weight: 500;
   transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Hover effect for the pills */
 .category-overview a:hover {
-  background-color: #fce4ec; /* Light pink background on hover */
-  color: #c2185b;             /* Darker pink text on hover */
-  text-decoration: none;       /* Ensure no underline */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Optional subtle shadow */
+  background-color: #fce4ec;
+  color: #c2185b;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
-
-/* Optional: Style for an 'active' category */
-/* You'd need JavaScript to add this class dynamically */
-/* .category-overview a.active-category { */
-/* background-color: #D81B60; */
-/* color: #fff; */
-/* border-color: #c2185b; */
-/* } */
-
 .service-category {
     margin-bottom: 50px;
 }
