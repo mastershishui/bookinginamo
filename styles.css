@@ -2477,17 +2477,47 @@ footer {
 
 /* ------- End Live Chat Widget Styles ------- */
 
-/* --- Ad Notice Modal Styles (Additions/Adjustments) --- */
+/* --- Ad Notice Modal Styles --- */
 
+/* Styles for the overlay - ESSENTIAL for centering */
+.modal-overlay {
+    display: none; /* START HIDDEN */
+    position: fixed; /* IMPORTANT: Makes it stay relative to the viewport */
+    z-index: 1000;   /* IMPORTANT: Puts it on top of other content */
+    left: 0;
+    top: 0;
+    width: 100%;     /* IMPORTANT: Cover full screen width */
+    height: 100%;    /* IMPORTANT: Cover full screen height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+
+    /* IMPORTANT: Flexbox used to center the content */
+    justify-content: center;
+    align-items: center;
+}
+
+/* This class is added by JavaScript to SHOW the modal */
+.show-modal {
+    display: flex !important; /* IMPORTANT: This makes it visible AND enables centering */
+}
+
+/* Animation keyframes - needed by ad-modal-content */
+@keyframes animatetop {
+   from {top: -300px; opacity: 0}
+   to {top: 0; opacity: 1}
+}
+
+
+/* Styles for the box itself (Your existing styles below are mostly fine) */
 .ad-modal-content {
     background-color: #fceded; /* Light pinkish background - ADJUST TO MATCH YOUR SITE */
-    margin: auto;
-    padding: 30px; /* Maybe a bit more padding */
+    margin: auto; /* Auto margin helps centering within flex container */
+    padding: 30px;
     border: 1px solid #d18a9f; /* Pinkish border - ADJUST */
     width: 80%;
     max-width: 450px; /* Adjust max width as needed */
     border-radius: 10px;
-    position: relative;
+    position: relative; /* Needed for positioning the 'X' */
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     animation-name: animatetop;
@@ -2499,18 +2529,18 @@ footer {
 /* Style for the new Title */
 .ad-title {
     color: #b36f85; /* Darker pink - ADJUST */
-    margin-top: 0; /* Remove default top margin */
+    margin-top: 0;
     margin-bottom: 15px;
-    font-weight: 600; /* Bolder */
-    font-size: 1.5em; /* Larger font size */
+    font-weight: 600;
+    font-size: 1.5em;
 }
 
 /* Style for the new Text */
 .ad-text {
-    margin-bottom: 25px; /* Space above the button */
+    margin-bottom: 25px;
     font-size: 1em;
     line-height: 1.6;
-    color: #555; /* Slightly lighter text color */
+    color: #555;
 }
 
 /* Ensure button style is defined */
@@ -2534,15 +2564,16 @@ footer {
     background-color: #b36f85; /* Darker shade on hover */
 }
 
+/* Styles for the 'X' button */
 .close-ad-button {
-  /* Make sure styles for the close button still exist */
     color: #aaa;
-    position: absolute;
+    position: absolute; /* Position relative to ad-modal-content */
     top: 10px;
     right: 20px;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    z-index: 10; /* Ensures it's clickable if overlapping */
 }
 .close-ad-button:hover,
 .close-ad-button:focus {
