@@ -2582,3 +2582,96 @@ footer {
 }
 
 /* --- End Ad Notice Modal Styles --- */
+
+/* --- Hero Slider Section --- */
+.hero-slider {
+    position: relative; /* Needed for absolute positioning of children */
+    width: 100%;
+    height: 60vh; /* Adjust height as needed (vh = viewport height) */
+    overflow: hidden; /* Hide parts of images that might overflow */
+    background-color: #eee; /* Fallback background */
+}
+
+.slides-container {
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Start hidden */
+    transition: opacity 1s ease-in-out; /* Smooth fade transition */
+    z-index: 1; /* Base layer */
+}
+
+.slide.active {
+    opacity: 1; /* Show active slide */
+    z-index: 2; /* Bring active slide to the front */
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the slide area, cropping if needed */
+    object-position: center; /* Center the image within the slide */
+}
+
+/* --- Slider Text Overlay --- */
+.slider-text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the text block */
+    z-index: 3; /* Ensure text is above images */
+    color: #fff; /* White text */
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark background for readability */
+    border-radius: 5px;
+    max-width: 80%; /* Limit width on large screens */
+}
+
+.slider-text-overlay h1 {
+    font-size: 2.5em; /* Adjust size as needed */
+    margin-bottom: 10px;
+    font-weight: 600; /* Use Montserrat bold */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Add shadow for better contrast */
+}
+
+.slider-text-overlay p {
+    font-size: 1.2em; /* Adjust size as needed */
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .hero-slider {
+        height: 50vh; /* Slightly smaller height on tablets/phones */
+    }
+    .slider-text-overlay h1 {
+        font-size: 1.8em;
+    }
+    .slider-text-overlay p {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+     .hero-slider {
+        height: 45vh; /* Even smaller on small phones */
+    }
+     .slider-text-overlay h1 {
+        font-size: 1.5em;
+    }
+    .slider-text-overlay p {
+        font-size: 0.9em;
+    }
+    .slider-text-overlay {
+        max-width: 90%;
+    }
+}
