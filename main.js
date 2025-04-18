@@ -24,6 +24,7 @@
 
     // --- Wait for the DOM to be fully loaded ---
     document.addEventListener('DOMContentLoaded', () => {
+        console.log("DOM fully loaded and parsed"); // Log DOM ready
 
         // --- Firebase Registration ---
         const registrationForm = document.getElementById('registrationForm');
@@ -41,67 +42,27 @@
         if (registrationForm && registerButton) {
             registerMessage.classList.add('registration-message');
             registerMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
-            // Insert message before the button
             registerButton.parentNode.insertBefore(registerMessage, registerButton);
-
 
             registrationForm.addEventListener('submit', (event) => {
                 event.preventDefault();
-                registerButton.disabled = true;
-                registerMessage.textContent = "Registering...";
-                registerMessage.style.color = "blue";
-                const selectedGender = [...genderInputs].find(input => input.checked)?.value || "";
-                const password = passwordInput ? passwordInput.value : '';
-                const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
-
-                if (password.length < 8) {
-                     registerMessage.textContent = "Password must be at least 8 characters long.";
-                     registerMessage.style.color = "red";
-                     registerButton.disabled = false;
-                     return;
-                }
-
-                if (password !== confirmPassword) {
-                    registerMessage.textContent = "Passwords do not match.";
-                    registerMessage.style.color = "red";
-                    registerButton.disabled = false;
-                    return;
-                }
-                 if (!emailInput?.value || !password || !usernameInput?.value || !firstnameInput?.value || !lastnameInput?.value || !contactInput?.value || !selectedGender) {
-                     registerMessage.textContent = "Please fill in all required fields.";
-                     registerMessage.style.color = "red";
-                     registerButton.disabled = false;
-                     return;
-                 }
-                registerUser(emailInput.value, password, usernameInput.value, firstnameInput.value, lastnameInput.value, contactInput.value, selectedGender);
+                // ... (rest of registration submit code) ...
+                 registerUser(emailInput.value, passwordInput.value, usernameInput.value, firstnameInput.value, lastnameInput.value, contactInput.value, /* selectedGender */ [...genderInputs].find(input => input.checked)?.value || "");
             });
         } else {
-            // Only log error if we are on a page expected to have the registration form
-            if (document.getElementById('registerModal')) { // Check if the modal exists
+             if (document.getElementById('registerModal')) {
                  console.error("Registration form or button not found inside #registerModal!");
-            }
+             }
         }
 
         async function registerUser(email, password, username, firstname, lastname, contact, gender) {
+            // ... (rest of registerUser function) ...
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                console.log("Auth success. UID:", user.uid);
-                const userDocRef = doc(db, "users", user.uid);
-                await setDoc(userDocRef, { email, username, firstname, lastname, contact, gender, createdAt: new Date(), isAdmin: false });
-                console.log("Firestore save success.");
-                registerMessage.textContent = "Registration successful!";
-                registerMessage.style.color = "green";
-                 // Optionally close modal or redirect after short delay
-                 setTimeout(closeAllModals, 1500); // Close modal after 1.5 seconds
+                // ... rest of try block ...
+                setTimeout(closeAllModals, 1500);
             } catch (error) {
-                console.error("Registration error:", error);
-                let errorMessage = "Registration failed.";
-                if (error.code === 'auth/email-already-in-use') errorMessage = "Email already in use.";
-                else if (error.code === 'auth/invalid-email') errorMessage = "Invalid email format.";
-                else if (error.code === 'auth/weak-password') errorMessage = "Password is too weak (needs 6+ characters).";
-                registerMessage.textContent = errorMessage;
-                registerMessage.style.color = "red";
+                // ... rest of catch block ...
             } finally { if (registerButton) registerButton.disabled = false; }
         }
 
@@ -116,67 +77,28 @@
         if (loginForm && loginButton) {
             loginMessage.classList.add('login-message');
             loginMessage.style.cssText = "text-align: center; margin-top: 10px; font-weight: bold; color: blue;";
-             // Insert message before the button
-             loginButton.parentNode.insertBefore(loginMessage, loginButton);
+            loginButton.parentNode.insertBefore(loginMessage, loginButton);
 
             loginForm.addEventListener('submit', (event) => {
                 event.preventDefault();
-                loginButton.disabled = true;
-                loginMessage.textContent = "Logging in...";
-                loginMessage.style.color = "blue";
+                 // ... (rest of login submit code) ...
                 loginUser(loginEmailInput.value, loginPasswordInput.value);
             });
         } else {
-             // Only log error if we are on a page expected to have the login form
-             if (document.getElementById('loginModal')) { // Check if the modal exists
+             if (document.getElementById('loginModal')) {
                  console.error("Login form or button not found inside #loginModal!");
              }
         }
 
-
         async function loginUser(email, password) {
-             if (!email || !password) {
-                  loginMessage.textContent = "Please enter email and password.";
-                  loginMessage.style.color = "red";
-                  if (loginButton) loginButton.disabled = false;
-                  return;
+             // ... (rest of loginUser function) ...
+             try {
+                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                 // ... rest of try block ...
+                 setTimeout(() => { /* ... redirect ... */ }, 1500);
+             } catch (error) {
+                 // ... rest of catch block ...
              }
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                console.log("Login success. UID:", user.uid);
-
-                // Admin Check
-                const userDocRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(userDocRef);
-                let isAdmin = false;
-                if (docSnap.exists()) { isAdmin = docSnap.data().isAdmin === true; }
-                else { console.warn("User doc not found for admin check:", user.uid); }
-
-                loginMessage.textContent = "Login successful! Redirecting...";
-                loginMessage.style.color = "green";
-                // Redirect after a short delay
-                setTimeout(() => {
-                    closeAllModals(); // Close modal before redirecting
-                    window.location.href = isAdmin ? "admin-dashboard.html" : "dashboard.html";
-                 }, 1500); // 1.5 second delay
-
-            } catch (error) {
-                console.error("Login error:", error);
-                let errorMessage = "Login failed.";
-                 if (error.code === 'auth/user-not-found' ||
-                     error.code === 'auth/wrong-password' ||
-                     error.code === 'auth/invalid-credential') {
-                    errorMessage = "Invalid email or password.";
-                 } else if (error.code === 'auth/invalid-email') {
-                    errorMessage = "Invalid email format.";
-                 } else if (error.code === 'auth/too-many-requests') {
-                     errorMessage = "Access temporarily disabled due to too many attempts. Try again later.";
-                 }
-                loginMessage.textContent = errorMessage;
-                loginMessage.style.color = "red";
-                if (loginButton) loginButton.disabled = false;
-            }
         }
 
 
@@ -187,133 +109,127 @@
         const registerCloseButton = registerModal ? registerModal.querySelector('.register-close-button') : null;
         const switchToRegister = document.getElementById('switchToRegister');
         const switchToLogin = document.getElementById('switchToLogin');
-        const loginSignupNavLinkLI = document.getElementById('nav-login-signup-li'); // The <li> element
-        const loginSignupLink = document.getElementById('loginSignupLink');       // The <a> element inside
-        const userAccountNavLinkLI = document.getElementById('nav-user-account-li'); // The <li> element
+        const loginSignupNavLinkLI = document.getElementById('nav-login-signup-li');
+        const loginSignupLink = document.getElementById('loginSignupLink');
+        const userAccountNavLinkLI = document.getElementById('nav-user-account-li');
         const userDropdown = document.getElementById('userDropdown');
         const logoutLink = document.getElementById('logout-link');
+        const userAccountIcon = document.getElementById('userAccountIcon');
 
         function closeAllModals() {
-            if (registerModal) registerModal.style.display = "none";
-            if (loginModal) loginModal.style.display = "none";
-            if (loginMessage && loginForm) loginMessage.textContent = ''; // Clear messages only if elements exist
-            if (registerMessage && registrationForm) registerMessage.textContent = ''; // Clear messages only if elements exist
-            // Reset form fields if needed (optional)
-             if (loginForm) loginForm.reset();
-             if (registrationForm) registrationForm.reset();
+            // ... (closeAllModals function code) ...
         }
 
-        // Function to update Navigation based on login state
         function updateNavUI(user) {
-            if (user) {
-                // User is logged in
-                if(loginSignupNavLinkLI) loginSignupNavLinkLI.style.display = 'none';
-                if(userAccountNavLinkLI) userAccountNavLinkLI.style.display = 'list-item'; // Or 'block', 'flex' depending on CSS for li
-                console.log("UI Update: User logged in, showing account icon");
-            } else {
-                // User is logged out
-                 if(loginSignupNavLinkLI) loginSignupNavLinkLI.style.display = 'list-item'; // Or 'block', 'flex'
-                if(userAccountNavLinkLI) userAccountNavLinkLI.style.display = 'none';
-                if(userDropdown) userDropdown.classList.remove('show-dropdown'); // Hide dropdown on logout
-                console.log("UI Update: User logged out, showing login/signup link");
-            }
+             // ... (updateNavUI function code) ...
         }
 
-         // --- Event listeners for Login/Register Modals & Nav ---
+        // --- Event listeners for Login/Register Modals & Nav ---
         if (loginSignupLink && loginModal) {
-            loginSignupLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                closeAllModals();
-                loginModal.style.display = 'block';
-            });
+             console.log("Modal elements and Login/Sign Up link found. Attaching modal listeners..."); // Combined log
+            loginSignupLink.addEventListener('click', (e) => { /* ... */ });
+            if (loginCloseButton) loginCloseButton.addEventListener('click', closeAllModals);
+            if (switchToLogin) switchToLogin.addEventListener('click', (e) => { /* ... */ });
+        } else {
+            console.log("Login/Signup link or Login Modal not found.");
+        }
+        if (registerModal) {
+             if (registerCloseButton) registerCloseButton.addEventListener('click', closeAllModals);
+             if (switchToRegister) switchToRegister.addEventListener('click', (e) => { /* ... */ });
         }
 
-        if (loginCloseButton) loginCloseButton.addEventListener('click', closeAllModals);
-        if (registerCloseButton) registerCloseButton.addEventListener('click', closeAllModals);
-        if (switchToRegister && registerModal) switchToRegister.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); registerModal.style.display = 'block'; });
-        if (switchToLogin && loginModal) switchToLogin.addEventListener('click', (e) => { e.preventDefault(); closeAllModals(); loginModal.style.display = 'block'; });
-
-        // Close modals on outside click (check if click is on the modal background)
+        // Close login/register modals on outside click
         window.addEventListener('click', (event) => {
             if (event.target === loginModal || event.target === registerModal) {
                  closeAllModals();
             }
         });
 
-         // User Account Dropdown Toggle
-         const userAccountIcon = document.getElementById('userAccountIcon');
-         if (userAccountIcon && userDropdown) {
-             userAccountIcon.addEventListener('click', (e) => {
-                 e.preventDefault();
-                 userDropdown.classList.toggle('show-dropdown'); // Need a CSS class '.show-dropdown { display: block; }'
-             });
-             // Optional: Close dropdown if clicked outside
-             window.addEventListener('click', (event) => {
-                 if (!userAccountNavLinkLI.contains(event.target)) { // If click is outside the user account LI
-                     userDropdown.classList.remove('show-dropdown');
-                 }
-             });
-         }
-
+        // User Account Dropdown Toggle
+        if (userAccountIcon && userDropdown && userAccountNavLinkLI) {
+             console.log("Attaching dropdown toggle listeners."); // Log dropdown setup
+             userAccountIcon.addEventListener('click', (e) => { /* ... */ });
+             window.addEventListener('click', (event) => { /* ... */ });
+        } else {
+             console.log("User account icon, dropdown, or LI not found.");
+        }
 
         // Logout Link Logic
         if (logoutLink) {
-            logoutLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                 userDropdown.classList.remove('show-dropdown'); // Close dropdown first
-                 signOut(auth).then(() => {
-                    console.log('User signed out successfully');
-                    // UI is updated by onAuthStateChanged listener
-                    // Optional: Redirect to home page if desired after logout
-                    // window.location.href = 'index.html';
-                }).catch((error) => {
-                    console.error('Sign Out Error', error);
-                    alert('Logout failed. Please try again.'); // Notify user
-                });
-            });
+            logoutLink.addEventListener('click', (e) => { /* ... signOut ... */ });
         }
 
-        // Check auth state when DOM is ready and set initial UI
+        // --- Auth State Observer ---
+        console.log("Setting up Firebase Auth state observer..."); // Log observer setup
         onAuthStateChanged(auth, (user) => {
+            console.log("Auth state changed! User:", user ? user.uid : 'None'); // Log auth state change
             updateNavUI(user);
-            // You could potentially fetch user-specific data here if needed after auth state is confirmed
-             if(user) {
-                 console.log("Auth state changed: User is logged in", user.uid);
-             } else {
-                 console.log("Auth state changed: User is logged out");
-             }
         });
 
 
-       // --- Ad Notice Modal Script ---
-        // (THIS SECTION IS ALREADY PRESENT AND CORRECT IN THE CODE YOU GAVE ME)
         // ================================================
+        // --- Ad Notice Modal Script ---
+        // ================================================
+        console.log("Ad modal script section REACHED."); // Log reaching this section
 
         // Get the modal elements for the Ad
         const adModal = document.getElementById('adNoticeModal');
         const closeAdButton = adModal ? adModal.querySelector('.close-ad-button') : null;
         const bookNowAdButton = adModal ? adModal.querySelector('.book-now-button') : null;
 
-        // Function to open the Ad modal
-        function openAdModal() { /* ... code ... */ }
+        // Function to open the Ad modal (ensure this is present)
+        function openAdModal() {
+            console.log("openAdModal function CALLED.");
+            if (adModal) {
+                 adModal.classList.add('show-modal');
+                 console.log("Ad modal .show-modal class ADDED.");
+            } else {
+                 // This log might be excessive if the modal isn't on every page
+                 // console.log("Ad modal element (#adNoticeModal) not found when trying to open.");
+            }
+        }
 
-        // Function to close the Ad modal
-        function closeAdModal() { /* ... code ... */ }
+        // Function to close the Ad modal (ensure this is present)
+        function closeAdModal() {
+            console.log("closeAdModal function CALLED."); // Add log
+            if (adModal) {
+                adModal.classList.remove('show-modal');
+                console.log("Ad modal .show-modal class REMOVED."); // Add log
+            }
+        }
 
         // --- Triggers for Ad Modal ---
+        console.log("Setting up listener for window load to open ad modal...");
+        // Show the modal *after* the window (including images, etc.) is fully loaded
         window.addEventListener('load', openAdModal);
 
-        // Close the modal if the close button is clicked
+        // VITAL: Close the modal if the close button is clicked
         if (closeAdButton) {
-            closeAdButton.addEventListener('click', closeAdModal); // This makes the 'X' work
+            console.log("Found .close-ad-button, attaching click listener."); // Add log
+            closeAdButton.addEventListener('click', closeAdModal); // This line makes the 'X' work
         } else if (adModal) {
+            // Only log error if the modal exists but the button inside doesn't
             console.error("Ad modal close button (.close-ad-button) not found inside #adNoticeModal!");
         }
 
-        // Optional listeners...
-        window.addEventListener('click', (event) => { /* ... code ... */ });
+        // Optional: Close the modal if the user clicks the "Book Now" button
+        if (bookNowAdButton) {
+           // bookNowAdButton.addEventListener('click', closeAdModal); // Uncomment if needed
+        } else if (adModal) {
+           // console.error("Ad modal book now button (.book-now-button) not found inside #adNoticeModal!"); // Optional log
+        }
+
+        // Optional: Close the Ad modal if the user clicks anywhere outside the modal content
+        // NOTE: This listener is separate from the one for login/register modals
+        window.addEventListener('click', (event) => {
+            // Check specifically for the ad modal overlay background
+            if (event.target === adModal) {
+                 closeAdModal();
+            }
+        });
 
         // --- End Ad Notice Modal Script ---
+
 
     }); // End of DOMContentLoaded listener
 
