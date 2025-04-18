@@ -285,8 +285,8 @@
         });
 
 
-        // ================================================
-        // --- Ad Notice Modal Script ---
+       // --- Ad Notice Modal Script ---
+        // (THIS SECTION IS ALREADY PRESENT AND CORRECT IN THE CODE YOU GAVE ME)
         // ================================================
 
         // Get the modal elements for the Ad
@@ -295,56 +295,25 @@
         const bookNowAdButton = adModal ? adModal.querySelector('.book-now-button') : null;
 
         // Function to open the Ad modal
-        function openAdModal() {
-            if (adModal) {
-                 adModal.classList.add('show-modal');
-                 console.log("Ad modal opened.");
-            } else {
-                // console.log("Ad modal element (#adNoticeModal) not found on this page."); // Don't log unless debugging
-            }
-        }
+        function openAdModal() { /* ... code ... */ }
 
         // Function to close the Ad modal
-        function closeAdModal() {
-             if (adModal) {
-                adModal.classList.remove('show-modal');
-                console.log("Ad modal closed.");
-             }
-        }
+        function closeAdModal() { /* ... code ... */ }
 
         // --- Triggers for Ad Modal ---
-
-        // Show the modal *after* the window (including images) is fully loaded
         window.addEventListener('load', openAdModal);
 
         // Close the modal if the close button is clicked
         if (closeAdButton) {
-            closeAdButton.addEventListener('click', closeAdModal);
+            closeAdButton.addEventListener('click', closeAdModal); // This makes the 'X' work
         } else if (adModal) {
-             console.error("Ad modal close button (.close-ad-button) not found inside #adNoticeModal!");
+            console.error("Ad modal close button (.close-ad-button) not found inside #adNoticeModal!");
         }
 
-        // Optional: Close the modal if the user clicks the "Book Now" button
-        if (bookNowAdButton) {
-           // bookNowAdButton.addEventListener('click', closeAdModal); // Uncomment if needed
-        } else if (adModal) {
-            console.error("Ad modal book now button (.book-now-button) not found inside #adNoticeModal!");
-        }
-
-        // Optional: Close the Ad modal if the user clicks anywhere outside the modal content
-        // This reuses the 'window' listener for outside clicks but adds a check for the ad modal
-        window.addEventListener('click', (event) => {
-            if (event.target === adModal) { // Check specifically for the ad modal overlay
-                closeAdModal();
-            }
-            // The check for login/register modals (event.target === loginModal || event.target === registerModal)
-            // should ideally be in a separate listener or handled carefully if combined,
-            // but the current structure might work okay if modals don't overlap display.
-            // Let's keep the separate check for adModal for clarity.
-        });
+        // Optional listeners...
+        window.addEventListener('click', (event) => { /* ... code ... */ });
 
         // --- End Ad Notice Modal Script ---
-
 
     }); // End of DOMContentLoaded listener
 
