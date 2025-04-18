@@ -8,40 +8,133 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-       referrerpolicy="no-referrer" />
+        referrerpolicy="no-referrer" />
+    <style>
+        /* Styles for the hamburger menu */
+        .navigation-container {
+            position: relative;
+        }
+
+        .hamburger-button {
+            display: none; /* Initially hide on larger screens */
+            position: absolute;
+            top: 20px; /* Adjust as needed */
+            right: 20px; /* Adjust as needed */
+            width: 30px;
+            height: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0;
+            z-index: 20; /* Ensure it's above the navigation */
+        }
+
+        .hamburger-button span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #000; /* Adjust color as needed */
+        }
+
+        .main-navigation {
+            display: flex;
+            align-items: center; /* Align items horizontally in the header */
+            justify-content: space-between; /* Space out logo and nav */
+            padding: 15px 20px; /* Add some padding */
+        }
+
+        .main-navigation ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-navigation ul li {
+            margin-left: 20px;
+        }
+
+        .main-navigation ul li a {
+            text-decoration: none;
+            color: #000; /* Adjust color as needed */
+        }
+
+        /* Initially hide the full navigation on smaller screens */
+        @media (max-width: 768px) {
+            .main-navigation ul {
+                display: none;
+                position: absolute;
+                top: 60px; /* Adjust based on header height */
+                right: 20px;
+                background-color: #f8f8f8; /* Adjust background color */
+                flex-direction: column;
+                align-items: flex-end;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+            }
+
+            .main-navigation ul.open {
+                display: flex;
+            }
+
+            .main-navigation ul li {
+                margin: 10px 0;
+            }
+
+            .hamburger-button {
+                display: flex; /* Show the button on smaller screens */
+            }
+
+            .main-navigation {
+                padding: 15px 20px; /* Adjust header padding for smaller screens */
+            }
+        }
+    </style>
+</head>
 
 <body>
-    <header>
+    <header class="navigation-container">
         <div class="logo">
             <a href="#"> <img src="gjslogo.jpg" alt="GJ'S Beauty Lounge Logo">
             </a>
         </div>
-        
-  <nav>
-           <ul>
-             <li><a href="index.html">Home</a></li>
-             <li><a href="about.html">ABOUT US</a></li>
-             <li><a href="reviews.html">Reviews</a></li>
-             <li><a href="faq.html">FAQ</a></li>
-             <li><a href="services.html">Services</a></li>
+        <button class="hamburger-button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="main-navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">ABOUT US</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="services.html">Services</a></li>
 
-             <li id="nav-mybook-link-li"> <a href="mybook.html">My Book<span id="mybook-counter" style="display: none;">0</span></a>
-                   </li>
+                <li id="nav-mybook-link-li"> <a href="mybook.html">My Book<span id="mybook-counter"
+                            style="display: none;">0</span></a>
+                </li>
 
-             <li id="nav-login-signup-li" style="display: none;"> <a href="#" id="loginSignupLink" class="nav-link-icon">
-                       <i class="fas fa-user-circle"></i> Log In / Sign Up
-                   </a>
-             </li>
+                <li id="nav-login-signup-li" style="display: none;"> <a href="#" id="loginSignupLink"
+                        class="nav-link-icon">
+                        <i class="fas fa-user-circle"></i> Log In / Sign Up
+                    </a>
+                </li>
 
-             <li id="nav-user-account-li" class="user-account"> <a href="#" id="userAccountIcon" class="user-icon nav-link-icon" aria-haspopup="true" aria-expanded="false">
-                     <i class="fas fa-user-circle"></i>
-                 </a>
-                 <div class="user-dropdown" id="userDropdown">
-                     <a href="profile.html">My Profile</a>
-                     <a href="#" id="logout-link">Logout</a>
-                 </div>
-             </li>
-           </ul>
+                <li id="nav-user-account-li" class="user-account"> <a href="#" id="userAccountIcon"
+                        class="user-icon nav-link-icon" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="profile.html">My Profile</a>
+                        <a href="#" id="logout-link">Logout</a>
+                    </div>
+                </li>
+            </ul>
         </nav>
     </header>
 
@@ -59,7 +152,7 @@
         </section>
     </main>
 
-   <footer>
+    <footer>
         <div class="footer-copyright">
             Copyright © 2025 GJ's Beauty Lounge | Powered by GJ's Beauty Lounge
         </div>
@@ -86,7 +179,7 @@
                     <p class="register-link">
                         Don't have an Account? <a href="#" id="switchToRegister">Register here</a>
                     </p>
-                    </form>
+                </form>
             </div>
         </div>
     </div>
@@ -147,10 +240,10 @@
                 <p class="login-link">
                     Have already an account? <a href="#" id="switchToLogin">Login Here</a>
                 </p>
-                 </form>
+            </form>
         </div>
     </div>
-<div id="chat-widget-container">
+    <div id="chat-widget-container">
         <button id="chat-open-button" class="chat-button">
             <i class="fas fa-comment-dots"></i> <span>Chat with us</span>
         </button>
@@ -169,6 +262,15 @@
             </div>
         </div>
     </div>
+    <script>
+        const hamburgerButton = document.querySelector('.hamburger-button');
+        const mainNavigation = document.querySelector('.main-navigation ul');
+
+        hamburgerButton.addEventListener('click', () => {
+            mainNavigation.classList.toggle('open');
+        });
+    </script>
     <script type="module" src="firebase-auth.js"></script>
 </body>
+
 </html>
