@@ -139,18 +139,24 @@
     </header>
 
     <main>
-        <section class="hero">
-            <div class="hero-left">
-                <img src="1st hp.jpg" alt="Left Image" class="boxed-image">
+        <section class="hero-slider">
+            <div class="slides-container">
+                <div class="slide active">
+                    <img src="slider1.jpg" alt="GJ's Beauty Lounge Service 1">
+                </div>
+                <div class="slide">
+                     <img src="slider2.jpg" alt="GJ's Beauty Lounge Service 2">
+                </div>
+                <div class="slide">
+                     <img src="slider3.jpg" alt="GJ's Beauty Lounge Interior">
+                </div>
             </div>
-            <div class="hero-center">
-                <img src="book.png" alt="Center Image" class="circular-image">
-            </div>
-            <div class="hero-right">
-                <img src="2ndhp.jpg" alt="Right Image" class="boxed-image">
+            <div class="slider-text-overlay">
+                <h1>Discover your best self at GJ’s Beauty Lounge.</h1>
+                <p>Treat yourself to a day of pampering and relaxation. Feel beautiful inside and out! ✨💕</p>
             </div>
         </section>
-    </main>
+        </main>
 
     <footer>
         <div class="footer-copyright">
@@ -262,18 +268,16 @@
             </div>
         </div>
     </div>
-<div id="adNoticeModal" class="modal-overlay">
-    <div class="modal-content ad-modal-content">
-        <span class="close-ad-button">&times;</span>
+    <div id="adNoticeModal" class="modal-overlay">
+        <div class="modal-content ad-modal-content">
+            <span class="close-ad-button">&times;</span>
 
-        <h2 class="ad-title">Summer Package Promo!</h2>
-        <p class="ad-text">Check out our special offers for the season. Great deals on lashes, facials, waxing, and more!</p>
-        <a href="services.html" class="book-now-button">Book your appointment now!</a>
-        </div>
-</div>
-</div>
-</div>
-<script>
+            <h2 class="ad-title">Summer Package Promo!</h2>
+            <p class="ad-text">Check out our special offers for the season. Great deals on lashes, facials, waxing, and more!</p>
+            <a href="services.html" class="book-now-button">Book your appointment now!</a>
+            </div>
+    </div>
+    <script>
     const hamburgerButton = document.querySelector('.hamburger-button');
     const mainNavigation = document.querySelector('.main-navigation ul');
 
@@ -282,8 +286,12 @@
     });
 
     // --- Add the new Ad Modal script below ---
+    // (Your existing Ad Modal script would go here if needed)
+
+    // --- Add the Slider Script below ---
 
 </script>
 <script type="module" src="firebase-auth.js"></script>
+
 </body>
 </html>
