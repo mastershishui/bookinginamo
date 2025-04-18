@@ -77,7 +77,67 @@ let currentUserId = null; // Store the logged-in user's ID (will be set in onAut
 let currentChatId = null; // Store the ID of the active chat document
 let unsubscribeMessages = null; // Store the listener unsubscribe function
 // *** END LIVE CHAT Global Variables ***
+ // ================================================
+    // --- Ad Notice Modal Script (ADDED HERE) ---      <--- SEE HERE
+    // ================================================
+    console.log("Ad modal script section REACHED."); // Log reaching this section
 
+    // Get the modal elements for the Ad
+    const adModal = document.getElementById('adNoticeModal');
+    const closeAdButton = adModal ? adModal.querySelector('.close-ad-button') : null;
+    const bookNowAdButton = adModal ? adModal.querySelector('.book-now-button') : null;
+
+    // Function to open the Ad modal
+    function openAdModal() {
+        console.log("openAdModal function CALLED.");
+        if (adModal) {
+             adModal.classList.add('show-modal');
+             console.log("Ad modal .show-modal class ADDED.");
+        } else {
+             // console.log("Ad modal element (#adNoticeModal) not found when trying to open.");
+        }
+    }
+
+    // Function to close the Ad modal
+    function closeAdModal() {
+        console.log("closeAdModal function CALLED."); // Add log
+        if (adModal) {
+            adModal.classList.remove('show-modal');
+            console.log("Ad modal .show-modal class REMOVED."); // Add log
+        }
+    }
+
+    // --- Triggers for Ad Modal ---
+    console.log("Setting up listener for window load to open ad modal...");
+    // Show the modal *after* the window (including images, etc.) is fully loaded
+    window.addEventListener('load', openAdModal);
+
+    // VITAL: Close the modal if the close button is clicked
+    if (closeAdButton) {
+        console.log("Found .close-ad-button, attaching click listener."); // Add log
+        closeAdButton.addEventListener('click', closeAdModal); // This line makes the 'X' work
+    } else if (adModal) {
+        console.error("Ad modal close button (.close-ad-button) not found inside #adNoticeModal!");
+    }
+
+    // Optional: Close the modal if the user clicks the "Book Now" button
+    if (bookNowAdButton) {
+       // bookNowAdButton.addEventListener('click', closeAdModal); // Uncomment if needed
+    } else if (adModal) {
+       // console.error("Ad modal book now button (.book-now-button) not found inside #adNoticeModal!"); // Optional log
+    }
+
+    // Optional: Close the Ad modal if the user clicks anywhere outside the modal content
+    // Add a separate listener specifically for the ad modal overlay
+     if (adModal) {
+        adModal.addEventListener('click', (event) => {
+            if (event.target === adModal) {
+                 console.log("Clicked on adModal overlay, closing.");
+                 closeAdModal();
+            }
+        });
+     }
+    // --- End Ad Notice Modal Script ---
 // --- Helper Function to Close Modals ---
 // (Keep your existing closeAllModals function)
 function closeAllModals() {
