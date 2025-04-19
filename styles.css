@@ -2587,10 +2587,19 @@ footer {
 .hero-slider {
     position: relative; /* Needed for absolute positioning of children */
     width: 100%;
-    height: 100vh; /* UPDATED: Make height 100% of viewport height */
+    /* Default height for slider on pages OTHER than index.html */
+    height: 60vh; /* <<< SET YOUR PREFERRED DEFAULT HEIGHT HERE */
     overflow: hidden; /* Hide parts of images that might overflow */
     background-color: #eee; /* Fallback background */
 }
+
+/* --- Styles for index.html ONLY (Requires <body class="layout-index"> in index.html) --- */
+/* This rule makes the slider fill the available space calculated by Flexbox */
+body.layout-index .hero-slider {
+    height: 100%; /* <<< SET TO 100% (of parent) FOR INDEX.HTML NO-SCROLL LAYOUT */
+}
+/* --- End of specific index.html override --- */
+
 
 .slides-container {
     width: 100%;
@@ -2649,9 +2658,11 @@ footer {
 }
 
 /* --- Responsive Adjustments --- */
+/* REMOVE any specific .hero-slider HEIGHT rules inside media queries */
+/* Keep other responsive styles for text, etc. */
 @media (max-width: 768px) {
     .hero-slider {
-        /* height: 50vh; */ /* UPDATED: Commented out or remove if 100vh is desired */
+        /* REMOVE height rule here */
     }
     .slider-text-overlay h1 {
         font-size: 1.8em;
@@ -2663,7 +2674,7 @@ footer {
 
 @media (max-width: 480px) {
      .hero-slider {
-        /* height: 45vh; */ /* UPDATED: Commented out or remove if 100vh is desired */
+        /* REMOVE height rule here */
     }
      .slider-text-overlay h1 {
         font-size: 1.5em;
