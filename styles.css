@@ -2587,7 +2587,7 @@ footer {
 .hero-slider {
     position: relative; /* Needed for absolute positioning of children */
     width: 100%;
-    height: 60vh; /* Adjust height as needed (vh = viewport height) */
+    height: 100vh; /* UPDATED: Make height 100% of viewport height */
     overflow: hidden; /* Hide parts of images that might overflow */
     background-color: #eee; /* Fallback background */
 }
@@ -2651,7 +2651,7 @@ footer {
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
     .hero-slider {
-        height: 50vh; /* Slightly smaller height on tablets/phones */
+        /* height: 50vh; */ /* UPDATED: Commented out or remove if 100vh is desired */
     }
     .slider-text-overlay h1 {
         font-size: 1.8em;
@@ -2663,7 +2663,7 @@ footer {
 
 @media (max-width: 480px) {
      .hero-slider {
-        height: 45vh; /* Even smaller on small phones */
+        /* height: 45vh; */ /* UPDATED: Commented out or remove if 100vh is desired */
     }
      .slider-text-overlay h1 {
         font-size: 1.5em;
