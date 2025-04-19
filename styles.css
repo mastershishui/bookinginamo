@@ -2583,106 +2583,71 @@ footer {
 
 /* --- End Ad Notice Modal Styles --- */
 
-/* --- Hero Slider Section --- */
+/* --- Default Slider Styles (All Pages BUT index.html) --- */
+/* =========================================== */
 .hero-slider {
-    position: relative; /* Needed for absolute positioning of children */
+    position: relative;
     width: 100%;
-    /* Default height for slider on pages OTHER than index.html */
-    height: 60vh; /* <<< SET YOUR PREFERRED DEFAULT HEIGHT HERE */
-    overflow: hidden; /* Hide parts of images that might overflow */
-    background-color: #eee; /* Fallback background */
+    height: 60vh; /* <<< Your DEFAULT height for pages like About, Services, etc. */
+    overflow: hidden;
+    background-color: #eee;
 }
 
-/* --- Styles for index.html ONLY (Requires <body class="layout-index"> in index.html) --- */
-/* This rule makes the slider fill the available space calculated by Flexbox */
+/* Keep other slider styles (.slides-container, .slide, .slide img, .slider-text-overlay) */
+.slides-container { width: 100%; height: 100%; }
+.slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; z-index: 1; }
+.slide.active { opacity: 1; z-index: 2; }
+.slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.slider-text-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; color: #fff; text-align: center; padding: 20px; background-color: rgba(0, 0, 0, 0.4); border-radius: 5px; max-width: 80%; }
+.slider-text-overlay h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 600; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); }
+.slider-text-overlay p { font-size: 1.2em; line-height: 1.6; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); }
+
+
+/* =========================================== */
+/* --- Layout Rules ONLY for index.html --- */
+/* =========================================== */
+
+/* Apply flex container behavior only to the body of index.html */
+body.layout-index {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;     /* Force body height to viewport */
+    overflow: hidden;  /* Prevent body itself from scrolling */
+}
+
+/* Make main section grow only on index.html */
+body.layout-index main {
+    flex-grow: 1; /* Make main take all available vertical space */
+    display: flex; /* Needed for child % height */
+    flex-direction: column; /* Needed for child % height */
+    min-height: 0; /* Fix potential flexbox overflow issue */
+}
+
+/* Make the slider fill the 'main' area ONLY on index.html */
 body.layout-index .hero-slider {
-    height: 100%; /* <<< SET TO 100% (of parent) FOR INDEX.HTML NO-SCROLL LAYOUT */
-}
-/* --- End of specific index.html override --- */
-
-
-.slides-container {
-    width: 100%;
-    height: 100%;
+    height: 100%; /* <<< Make slider fill the flexible 'main' area */
 }
 
-.slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0; /* Start hidden */
-    transition: opacity 1s ease-in-out; /* Smooth fade transition */
-    z-index: 1; /* Base layer */
+/* Prevent footer from shrinking only on index.html */
+body.layout-index footer {
+    flex-shrink: 0; /* Ensure footer height is respected */
 }
 
-.slide.active {
-    opacity: 1; /* Show active slide */
-    z-index: 2; /* Bring active slide to the front */
-}
 
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Cover the slide area, cropping if needed */
-    object-position: center; /* Center the image within the slide */
-}
-
-/* --- Slider Text Overlay --- */
-.slider-text-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center the text block */
-    z-index: 3; /* Ensure text is above images */
-    color: #fff; /* White text */
-    text-align: center;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark background for readability */
-    border-radius: 5px;
-    max-width: 80%; /* Limit width on large screens */
-}
-
-.slider-text-overlay h1 {
-    font-size: 2.5em; /* Adjust size as needed */
-    margin-bottom: 10px;
-    font-weight: 600; /* Use Montserrat bold */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Add shadow for better contrast */
-}
-
-.slider-text-overlay p {
-    font-size: 1.2em; /* Adjust size as needed */
-    line-height: 1.6;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-
+/* =========================================== */
 /* --- Responsive Adjustments --- */
-/* REMOVE any specific .hero-slider HEIGHT rules inside media queries */
-/* Keep other responsive styles for text, etc. */
+/* =========================================== */
+/* Remove specific HERO SLIDER HEIGHT rules inside media queries */
+/* Keep other responsive rules (e.g., for text size) */
 @media (max-width: 768px) {
-    .hero-slider {
-        /* REMOVE height rule here */
-    }
-    .slider-text-overlay h1 {
-        font-size: 1.8em;
-    }
-    .slider-text-overlay p {
-        font-size: 1em;
-    }
+    /* Remove any .hero-slider { height: ... } rules here */
+    .slider-text-overlay h1 { font-size: 1.8em; }
+    .slider-text-overlay p { font-size: 1em; }
 }
 
 @media (max-width: 480px) {
-     .hero-slider {
-        /* REMOVE height rule here */
-    }
-     .slider-text-overlay h1 {
-        font-size: 1.5em;
-    }
-    .slider-text-overlay p {
-        font-size: 0.9em;
-    }
-    .slider-text-overlay {
-        max-width: 90%;
-    }
+    /* Remove any .hero-slider { height: ... } rules here */
+    .slider-text-overlay h1 { font-size: 1.5em; }
+    .slider-text-overlay p { font-size: 0.9em; }
+    .slider-text-overlay { max-width: 90%; }
 }
