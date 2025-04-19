@@ -376,5 +376,3 @@
 
 
     }); // End of DOMContentLoaded listener
-
-</script>
