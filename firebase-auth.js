@@ -737,6 +737,5 @@ async function sendMessage() {
             // }
         }
         // --- End Hero Slider Script ---
-});
 
  
