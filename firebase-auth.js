@@ -699,46 +699,4 @@ async function sendMessage() {
 // --- Optional: Add Exports if needed ---
 // export { auth, db, app };
 
- // ========================================
-        // === NEW: Hero Slider Script Added Here ===
-        // ========================================
-        const slides = document.querySelectorAll('.hero-slider .slide');
-        // Check if the slider elements actually exist on the current page
-        if (slides.length > 0) {
-            let currentSlide = 0;
-            const slideInterval = 5000; // Time per slide in milliseconds (5000ms = 5 seconds)
-
-            function nextSlide() {
-                // Hide the current slide (handle potential race condition if user clicks fast)
-                if (slides[currentSlide]) {
-                    slides[currentSlide].classList.remove('active');
-                }
-
-                // Calculate the next slide index
-                currentSlide = (currentSlide + 1) % slides.length; // Loop back to 0 if at the end
-
-                // Show the next slide
-                 if (slides[currentSlide]) {
-                    slides[currentSlide].classList.add('active');
-                 }
-            }
-
-            // Make sure the first slide is active initially
-            if (slides[currentSlide]) { // Check slide exists before adding class
-               slides[currentSlide].classList.add('active');
-            }
-
-            // Start the automatic sliding
-            const intervalID = setInterval(nextSlide, slideInterval);
-
-             console.log("Hero slider initialized.");
-
-            // Optional: Clear interval if the element is removed (less critical for simple pages)
-            // slides[0]?.closest('.hero-slider')?.addEventListener('DOMNodeRemoved', () => clearInterval(intervalID));
-        } else {
-            // Optional: Log if slider isn't found on index.html (if expected)
-            // if (window.location.pathname === '/' || window.location.pathname.includes('index.html')) {
-            //     console.log("Hero slider HTML elements not found on this page.");
-            // }
-        }
-        // --- End Hero Slider Script ---
+ 
