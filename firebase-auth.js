@@ -701,7 +701,7 @@ async function sendMessage() {
         // Check if the slider elements actually exist on the current page
         if (slides.length > 0) {
             let currentSlide = 0;
-            const slideInterval = 3000; // Time per slide in milliseconds (5000ms = 5 seconds)
+            const slideInterval = 2500; // Time per slide in milliseconds (5000ms = 5 seconds)
 
             function nextSlide() {
                 // Hide the current slide (handle potential race condition if user clicks fast)
