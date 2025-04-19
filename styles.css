@@ -1953,6 +1953,10 @@ footer {
    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional: subtle shadow */
 }
 
+/* ================================= */
+/* == About Us Page Styles ======= */
+/* ================================= */
+
 /* UPDATED .about-text rules */
 .about-text {
     flex: 1; /* Allow text to take available space */
@@ -1961,19 +1965,19 @@ footer {
 }
 
 .about-text h2 {
-    color: #e91e63; /* Use a theme color (example pink) */
+    color: #e91e63; /* Theme Pink */
     margin-top: 0; /* Remove default top margin */
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #fce4ec; /* Light underline with theme color */
+    border-bottom: 2px solid #fce4ec; /* Theme Light Pink */
     font-size: 1.8em; /* Example size */
 }
 
 .about-text h3 {
-     color: #333; /* Darker heading for sub-sections */
-     margin-top: 25px;
-     margin-bottom: 10px;
-     font-size: 1.4em; /* Example size */
+    color: #333; /* Darker heading for sub-sections */
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 1.4em; /* Example size */
 }
 
 .about-text p {
@@ -2008,14 +2012,13 @@ footer {
         gap: 20px; /* Reduce gap when stacked */
     }
     .about-text {
-        /* padding-right: 0; Ensure right padding is removed when stacked */ /* Not needed if flex basis handles width */
-        margin-bottom: 0; /* Remove space below text when stacked if gap handles it */
+        margin-bottom: 0;
         min-width: unset; /* Remove min-width when stacked */
     }
     .about-text h2 {
         font-size: 1.6em; /* Adjust heading size */
     }
-     .about-text h3 {
+    .about-text h3 {
         font-size: 1.3em; /* Adjust heading size */
     }
     .about-photo {
@@ -2024,9 +2027,17 @@ footer {
     }
 }
 
-/* Styles added for Map Section (conceptually part of About Us page content) */
+/* --- End of About Us Page Styles --- */
+
+
+/* ================================= */
+/* == Map Section Styles ========== */
+/* (Used on About/Contact Pages)   */
+/* ================================= */
+
+/* Styles added for Map Section */
 .map-container h2 {
-    color: #e91e63;
+    color: #e91e63; /* Theme Pink */
     font-size: 1.8em;
     font-weight: 600;
     margin-bottom: 15px;
@@ -2041,11 +2052,9 @@ footer {
 /* End of added Map Section styles */
 
 
-/* --- End of About Us Page Styles --- */
-
-
 /* ================================= */
-/* Contact Info Section (Forced Single Row) */ /* <<< CODE YOU GAVE STARTS HERE */
+/* == Contact Info Bar Styles ===== */
+/* (Forced Single Row - Used on About Page) */
 /* ================================= */
 
 .contact-info-before-map {
@@ -2053,14 +2062,14 @@ footer {
     padding: 25px 15px;      /* Reduced side padding */
     margin: 30px auto;
     max-width: 1200px;       /* Increased max-width */
-    background-color: #f8f8f8;
+    background-color: #f8f8f8; /* Light grey background */
     border-radius: 8px;
     display: flex;
     justify-content: center; /* Center the group */
     align-items: center;     /* Vertically align */
-    flex-wrap: nowrap;       /* *** Force items onto one line - IMPORTANT *** */
+    flex-wrap: nowrap;       /* *** Force items onto one line *** */
     gap: 30px;               /* Adjust gap between items */
-    overflow-x: auto;        /* Add horizontal scroll for safety on small screens */
+    overflow-x: auto;        /* Add horizontal scroll for safety */
 }
 
 /* Style each distinct contact block */
@@ -2072,59 +2081,58 @@ footer {
 }
 
 .contact-info-before-map h3 {
-    font-size: 1.2em;       /* Slightly smaller heading */
-    color: #d81b60;
-    margin-bottom: 8px;     /* Reduced space below heading */
-    white-space: nowrap;    /* Prevent heading text from wrapping */
+    font-size: 1.2em;        /* Slightly smaller heading */
+    color: #d81b60; /* Theme Dark Pink/Magenta */
+    margin-bottom: 8px;      /* Reduced space below heading */
+    white-space: nowrap;     /* Prevent heading text from wrapping */
 }
 
 .contact-info-before-map .social-links {
     display: flex;
     justify-content: center;
-    gap: 12px;              /* Reduced gap between social links */
-    flex-wrap: nowrap;      /* Keep social links inline too */
+    gap: 12px;               /* Reduced gap between social links */
+    flex-wrap: nowrap;       /* Keep social links inline too */
 }
 
 /* Links (including email/phone) */
 .contact-info-before-map a {
-    color: #333;
+    color: #333; /* Dark Grey */
     text-decoration: none;
-    font-size: 0.95em;      /* Slightly smaller text */
+    font-size: 0.95em;       /* Slightly smaller text */
     display: inline-flex;
     align-items: center;
     transition: color 0.2s ease;
-    white-space: nowrap;    /* Prevent link text from wrapping */
+    white-space: nowrap;     /* Prevent link text from wrapping */
 }
 .contact-info-before-map a:hover {
-     color: #007bff;
+     color: #007bff; /* Standard Blue Hover */
 }
 
 /* Specific styling for email/phone paragraphs */
 .contact-info-before-map .contact-email p,
 .contact-info-before-map .contact-phone p {
     margin: 0;
-    font-size: 0.95em;      /* Match link size */
-    color: #333;
+    font-size: 0.95em;       /* Match link size */
+    color: #333; /* Dark Grey */
     display: inline-flex;
     align-items: center;
-    white-space: nowrap;    /* Prevent content from wrapping */
+    white-space: nowrap;     /* Prevent content from wrapping */
 }
 
 /* Icon Styling */
 .contact-info-before-map i {
-    margin-right: 6px;      /* Reduced space */
-    color: #d81b60;
-    font-size: 1em;         /* Slightly smaller icons */
+    margin-right: 6px;       /* Reduced space */
+    color: #d81b60; /* Theme Dark Pink/Magenta */
+    font-size: 1em;          /* Slightly smaller icons */
 }
 
 
-/* --- Responsive Adjustments (Keeping nowrap) --- */
-/* Adjust details for smaller screens, but items remain in one row */
+/* --- Responsive Adjustments for Contact Info Bar --- */
 @media (max-width: 768px) {
   .contact-info-before-map {
-      /* flex-wrap: wrap;  <-- ENSURE THIS IS NOT PRESENT */
-      gap: 20px;             /* Further reduce gap */
-      padding: 20px 10px;    /* Reduce padding */
+      /* flex-wrap: wrap;  <-- ENSURE THIS IS NOT PRESENT to keep single line */
+      gap: 20px;              /* Further reduce gap */
+      padding: 20px 10px;     /* Reduce padding */
       justify-content: flex-start; /* Align items to the start */
    }
     /* Further font/icon size reductions */
@@ -2140,7 +2148,6 @@ footer {
          gap: 15px;
          padding: 15px 5px;
      }
-     /* Even smaller? Adjust if needed */
      .contact-info-before-map h3 { font-size: 1em; }
      .contact-info-before-map a,
      .contact-info-before-map p { font-size: 0.85em; }
@@ -2148,27 +2155,13 @@ footer {
 }
 
 /* ===================================== */
-/* End Contact Info Section Styles       */
+/* == End Contact Info Bar Styles ==== */
 /* ===================================== */
 
-/* Styles added for Map Section (conceptually part of About Us page content) */
-.map-container h2 {
-    color: #e91e63;
-    font-size: 1.8em;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
 
-.map-container p {
-    color: #555;
-    font-size: 1em;
-    line-height: 1.7;
-    margin-bottom: 15px;
-}
-/* End of added Map Section styles */
-
-
-/* --- End of About Us Page Styles --- */
+/* ================================= */
+/* == Nav Icon Styles ============= */
+/* ================================= */
 
 /* Add space between icon and text in nav links */
 .nav-link-icon i {
@@ -2181,6 +2174,8 @@ footer {
   display: flex;
   align-items: center;
 }
+
+/* --- End of Nav Icon Styles --- */
 /* ------- Live Chat Widget Styles ------- */
 
 #chat-widget-container {
