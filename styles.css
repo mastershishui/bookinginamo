@@ -2817,3 +2817,86 @@ body.layout-index footer {
     .slider-text-overlay p { font-size: 0.9em; }
     .slider-text-overlay { max-width: 90%; }
 }
+  /* Styles for the hamburger menu */
+        .navigation-container {
+            position: relative;
+        }
+
+        .hamburger-button {
+            display: none; /* Initially hide on larger screens */
+            position: absolute;
+            top: 20px; /* Adjust as needed */
+            right: 20px; /* Adjust as needed */
+            width: 30px;
+            height: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0;
+            z-index: 20; /* Ensure it's above the navigation */
+        }
+
+        .hamburger-button span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #000; /* Adjust color as needed */
+        }
+
+        .main-navigation {
+            display: flex;
+            align-items: center; /* Align items horizontally in the header */
+            justify-content: space-between; /* Space out logo and nav */
+            padding: 15px 20px; /* Add some padding */
+        }
+
+        .main-navigation ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-navigation ul li {
+            margin-left: 20px;
+        }
+
+        .main-navigation ul li a {
+            text-decoration: none;
+            color: #000; /* Adjust color as needed */
+        }
+
+        /* Initially hide the full navigation on smaller screens */
+        @media (max-width: 768px) {
+            .main-navigation ul {
+                display: none;
+                position: absolute;
+                top: 60px; /* Adjust based on header height */
+                right: 20px;
+                background-color: #f8f8f8; /* Adjust background color */
+                flex-direction: column;
+                align-items: flex-end;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+            }
+
+            .main-navigation ul.open {
+                display: flex;
+            }
+
+            .main-navigation ul li {
+                margin: 10px 0;
+            }
+
+            .hamburger-button {
+                display: flex; /* Show the button on smaller screens */
+            }
+
+            .main-navigation {
+                padding: 15px 20px; /* Adjust header padding for smaller screens */
+            }
+        }
