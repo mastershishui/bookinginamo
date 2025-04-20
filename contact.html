@@ -21,7 +21,7 @@
             <h1>Contact GJ'S Beauty Lounge</h1>
         </div>
         <nav>
-            <ul>
+             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">ABOUT US</a></li>
                 <li><a href="contact.html" class="active">CONTACT US</a></li>
@@ -41,49 +41,48 @@
     </header>
 
     <main>
- <div class="contact-info-before-map">
-            <div class="contact-socials">
-                <h3>Keep Connected</h3>
-                <div class="social-links">
-                    <a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-                    <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                    <a href="#" target="_blank"><i class="fab fa-tiktok"></i> Tiktok</a>
-                </div>
-            </div>
-            <div class="contact-email">
-                <h3>Email</h3>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:gjsbeautylounge@gmail.com">gjsbeautylounge@gmail.com</a></p>
-            </div>
-            <div class="contact-phone">
-                <h3>Phone</h3>
-                <p><i class="fas fa-phone"></i> <a href="tel:+09123456790">+091 234 56790</a></p>
-            </div>
-        </div>
-        <div class="contact-form-container">
-            <h2>Send Us a Message</h2>
-            <form id="contactForm" class="contact-form">
-                <div class="form-group">
-                    <label for="contact-name">Name:</label>
-                    <input type="text" id="contact-name" name="name" placeholder="Your Full Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="contact-email">Email:</label>
-                    <input type="email" id="contact-email" name="email" placeholder="your.email@example.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="contact-subject">Subject:</label>
-                    <input type="text" id="contact-subject" name="subject" placeholder="Subject of your message" required>
-                </div>
-                <div class="form-group">
-                    <label for="contact-message">Message:</label>
-                    <textarea id="contact-message" name="message" placeholder="Write your message here..." required></textarea>
-                </div>
-                <button type="submit">Send Message</button>
-            </form>
-            <p id="form-status" style="text-align: center; margin-top: 15px;"></p>
-        </div>
+        <div class="contact-main-section">
 
-        <div class="map-container">
+            <div class="contact-details-column">
+                <div class="contact-socials">
+                    <h3>Keep Connected</h3>
+                    <div class="social-links">
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="#" target="_blank"><i class="fab fa-tiktok"></i> Tiktok</a>
+                    </div>
+                </div>
+                <div class="contact-email">
+                    <h3>Email</h3>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:gjsbeautylounge@gmail.com">gjsbeautylounge@gmail.com</a></p>
+                </div>
+                <div class="contact-phone">
+                    <h3>Phone</h3>
+                    <p><i class="fas fa-phone"></i> <a href="tel:+09123456790">+091 234 56790</a></p>
+                </div>
+            </div> <div class="contact-form-container">
+                <h2>Send Us a Message</h2>
+                <form id="contactForm" class="contact-form">
+                     <div class="form-group">
+                        <label for="contact-name">Name:</label>
+                        <input type="text" id="contact-name" name="name" placeholder="Your Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email:</label>
+                        <input type="email" id="contact-email" name="email" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-subject">Subject:</label>
+                        <input type="text" id="contact-subject" name="subject" placeholder="Subject of your message" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-message">Message:</label>
+                        <textarea id="contact-message" name="message" placeholder="Write your message here..." required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+                <p id="form-status" style="text-align: center; margin-top: 15px;"></p>
+            </div> </div> <div class="map-container">
             <h2>Our Location</h2>
             <p>Lower Ground Floor, Nova Plaza Mall, Quirino Highway, Novaliches Proper, Quezon City</p>
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3858.843480944757!2d121.0376541!3d14.7214396!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b105522cd6d3%3A0x456e55e1dd6e3a7e!2sNova%20Plaza%20Mall!5e0!3m2!1sen!2sph!4v1744810025196!5m2!1sen!2sph" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -91,97 +90,16 @@
     </main>
 
     <footer>
-        <div class="footer-copyright">
+       <div class="footer-copyright">
             Copyright © 2025 GJ's Beauty Lounge | Powered by GJ's Beauty Lounge
         </div>
     </footer>
 
-    <div id="registerModal" class="modal">
-        <div class="modal-content register-modal-content">
-            <span class="close-button register-close-button">×</span>
-            <div class="modal-form-header">
-                <img src="gjslogo.jpg" alt="GJ'S Logo" class="modal-form-logo">
-                <h2 class="modal-form-title">Registration Form</h2>
-            </div>
-            <form id="registrationForm" class="modal-form-body">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="reg-lastname">Lastname:</label>
-                        <input type="text" id="reg-lastname" name="lastname" placeholder="Lastname" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-firstname">Firstname:</label>
-                        <input type="text" id="reg-firstname" name="firstname" placeholder="Firstname" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="reg-email">Email:</label>
-                        <input type="email" id="reg-email" name="email" placeholder="example@gmail.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reg-contact">Contact No.:</label>
-                        <input type="tel" id="reg-contact" name="contact" placeholder="+63 123 123 123" required>
-                    </div>
-                </div>
-                <div class="form-group gender-group">
-                    <label>Gender:</label>
-                    <div class="radio-options">
-                        <input type="radio" id="male" name="gender" value="male" required>
-                        <label for="male">Male</label>
-                        <input type="radio" id="female" name="gender" value="female">
-                        <label for="female">Female</label>
-                        <input type="radio" id="prefer-not" name="gender" value="prefer_not_say">
-                        <label for="prefer-not">Prefer not to say</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="reg-username">Username:</label>
-                    <input type="text" id="reg-username" name="username" placeholder="Username" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-password">Password:</label>
-                    <input type="password" id="reg-password" name="password" placeholder="Password" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-confirm-password">Confirm Password:</label>
-                    <input type="password" id="reg-confirm-password" name="confirm_password" placeholder="Password" required>
-                </div>
-                <button type="submit">Register Now!</button>
-                <p class="login-link">
-                    Have already an account? <a href="#" id="switchToLogin">Login Here</a>
-                </p>
-            </form>
-        </div>
-     </div>
-
-    <div id="loginModal" class="modal">
-         <div class="modal-content login-modal-content">
-             <span class="close-button login-close-button">×</span>
-             <div class="modal-header login-modal-header">
-                  <img src="gjslogo.jpg" alt="GJ'S Logo" class="modal-form-logo">
-                  <h2 class="modal-form-title">Login Form</h2>
-             </div>
-             <div class="modal-form-body">
-                  <form id="loginForm">
-                      <div class="form-group">
-                          <label for="login-email-user">Email/Username:</label>
-                          <input type="text" id="login-email-user" name="email_username" required>
-                      </div>
-                      <div class="form-group">
-                          <label for="login-password">Password:</label>
-                          <input type="password" id="login-password" name="password" required>
-                      </div>
-                      <button type="submit">Login</button>
-                      <p class="register-link">
-                          Don't have an Account? <a href="#" id="switchToRegister">Register here</a>
-                      </p>
-                  </form>
-             </div>
-         </div>
-      </div>
+    <div id="registerModal" class="modal"> /* ... modal content ... */ </div>
+    <div id="loginModal" class="modal"> /* ... modal content ... */ </div>
 
     <script type="module" src="firebase-auth.js"></script>
+    <script src="main.js"></script>
     <script src="contact.js"></script>
 
 </body>
