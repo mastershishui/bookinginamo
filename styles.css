@@ -2894,7 +2894,7 @@ body.layout-index footer {
         top: 50px;      /* Position below header (adjust as needed based on header height) */
         left: 0;        /* Use left: 0 instead of right: 0 for full width */
         width: 100%;    /* Full width */
-        background-color: white; /* Needs a background to be visible */
+        background-color: #FFEFF0; /* Needs a background to be visible */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
         z-index: 1000;  /* IMPORTANT: Below button, but above page content */
         height: auto;     /* Ensure height isn't fixed */
