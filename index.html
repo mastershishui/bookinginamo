@@ -199,13 +199,15 @@
             </div>
     </div>
     <script>
-    const hamburgerButton = document.querySelector('.hamburger-button');
-    const mainNavigation = document.querySelector('.main-navigation ul');
+        const hamburgerButton = document.querySelector('.hamburger-button');
+        const mainNavigationUl = document.querySelector('.main-navigation ul'); // Target the UL directly
 
-    hamburgerButton.addEventListener('click', () => {
-        mainNavigation.classList.toggle('open');
-    });
-
+        hamburgerButton.addEventListener('click', () => {
+            // Toggle the 'open' class on the <ul> for the menu dropdown
+            mainNavigationUl.classList.toggle('open');
+            // Toggle the 'active' class on the button itself for the animation
+            hamburgerButton.classList.toggle('active');
+        });
     // --- Add the new Ad Modal script below ---
     // (Your existing Ad Modal script would go here if needed)
 
