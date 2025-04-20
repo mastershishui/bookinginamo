@@ -19,7 +19,12 @@
         <div class="header-text">
              <h1>Frequently Asked Questions</h1>
         </div>
-     <nav>
+     <button class="hamburger-button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="main-navigation">
            <ul>
              <li><a href="index.html">Home</a></li>
              <li><a href="about.html">ABOUT US</a></li>
@@ -191,6 +196,22 @@
             </div>
         </div>
     </div>
+<script>
+        const hamburgerButton = document.querySelector('.hamburger-button');
+        const mainNavigationUl = document.querySelector('.main-navigation ul'); // Target the UL directly
+
+        hamburgerButton.addEventListener('click', () => {
+            // Toggle the 'open' class on the <ul> for the menu dropdown
+            mainNavigationUl.classList.toggle('open');
+            // Toggle the 'active' class on the button itself for the animation
+            hamburgerButton.classList.toggle('active');
+        });
+    // --- Add the new Ad Modal script below ---
+    // (Your existing Ad Modal script would go here if needed)
+
+    // --- Add the Slider Script below ---
+
+</script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
