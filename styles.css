@@ -224,82 +224,189 @@ main.dashboard-container {
 }
 
 /* ============================ */
-/* New Contact Info Section Styles*/
-/* ============================ */
+/* === Styles for Contact Page Specific Elements === */
 
-.contact-info-before- {
-    text-align: center; /* Center align the content */
-    padding: 30px 20px; /* Add some padding */
-    margin: 30px auto; /* Center block and add margin top/bottom */
-    max-width: 800px; /* Optional: constrain width */
-    background-color: #f8f8f8; /* Light background color */
-    border-radius: 8px; /* Slightly rounded corners */
-    display: flex; /* Use flexbox for layout */
-    justify-content: space-around; /* Space out children */
-    align-items: flex-start; /* Align items to the top */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 20px; /* Space between items when wrapped */
+/* Style for the active navigation link */
+nav ul li a.active {
+    font-weight: bold; /* Example: Make the active link bold */
+    color: #a37b83; /* Example: Slightly different color - adjust to your theme */
+    /* Add any other styling for the active link */
 }
 
-.contact-info-before- h3 {
-    font-size: 1.4em; /* Slightly larger heading */
-    color: #d81b60; /* Use a brand color (adjust if needed) */
-    margin-bottom: 15px;
+
+/* Container for the contact form */
+.contact-form-container {
+    max-width: 600px;
+    margin: 30px auto; /* Center the form */
+    padding: 25px 30px; /* More padding */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fdf9f9; /* Slightly off-white background */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-.contact-info-before- .social-links {
-    display: flex;
-    justify-content: center; /* Center links below heading */
-    gap: 20px; /* Space between social links */
-    flex-wrap: wrap; /* Allow links to wrap */
-}
-
-.contact-info-before- .social-links a,
-.contact-info-before- .contact-email a {
-    color: #333; /* Darker text color for links */
-    text-decoration: none;
-    font-size: 1em;
-    display: inline-flex; /* Align icon and text nicely */
-    align-items: center;
-    transition: color 0.2s ease;
-}
-
-.contact-info-before- .social-links a:hover,
-.contact-info-before-map .contact-email a:hover {
-    color: #007bff; /* Standard link hover color */
-}
-
-.contact-info-before-map i {
-    margin-right: 8px; /* Space between icon and text */
-    color: #d81b60; /* Match icon color to heading */
-    font-size: 1.1em; /* Slightly larger icons */
-}
-
-.contact-info-before-map .contact-email p {
-    margin: 0; /* Remove default paragraph margin */
-    font-size: 1em;
+.contact-form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
     color: #333;
-    display: inline-flex;
-    align-items: center;
+    font-weight: 600;
 }
 
-/* Responsive adjustments for the new section */
-@media (max-width: 576px) {
-    .contact-info-before-map {
-        flex-direction: column; /* Stack items vertically */
-        align-items: center; /* Center align stacked items */
-        padding: 20px 15px;
-    }
-
-    .contact-info-before-map .contact-socials,
-    .contact-info-before-map .contact-email {
-        width: 100%; /* Make sections full width */
-        margin-bottom: 15px; /* Add space between stacked sections */
-    }
-     .contact-info-before- .contact-email {
-        margin-bottom: 0;
-     }
+/* General styling for form groups (you might have this already) */
+.contact-form .form-group {
+    margin-bottom: 18px; /* Slightly more space */
 }
+
+/* General styling for labels (you might have this already) */
+.contact-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Styling for text inputs, email inputs, and textareas */
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 12px; /* More padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit; /* Use the body's font */
+    font-size: 1rem; /* Standard font size */
+}
+
+/* Specific styling for the textarea */
+.contact-form textarea {
+    height: 150px;
+    resize: vertical; /* Allow only vertical resizing */
+}
+
+/* Styling for the submit button */
+.contact-form button {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #d8a7b1; /* Match your theme's button color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Added transform transition */
+    text-transform: uppercase; /* Example: Uppercase text */
+    letter-spacing: 0.5px; /* Example: Slight letter spacing */
+}
+
+.contact-form button:hover {
+    background-color: #b38d95; /* Darker shade on hover */
+}
+
+.contact-form button:active {
+    transform: scale(0.98); /* Slightly shrink button when clicked */
+}
+
+
+/* === Styles for Reused Contact Info & Map Sections (if not already global) === */
+/* Container for the sections before the map */
+.contact-info-before-map {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start; /* Align items top */
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 40px auto; /* More vertical margin */
+    padding: 20px;
+    text-align: center;
+    gap: 25px; /* More space between items */
+    border-top: 1px solid #eee; /* Add a separator line */
+    border-bottom: 1px solid #eee; /* Add a separator line */
+}
+
+/* Styling for individual sections within the container */
+.contact-info-before-map > div {
+    flex: 1;
+    min-width: 220px; /* Slightly wider minimum */
+    margin-bottom: 20px;
+}
+
+/* Heading style within contact info sections */
+.contact-info-before-map h3 {
+    margin-bottom: 18px;
+    color: #444; /* Slightly darker heading */
+    font-weight: 600;
+    font-size: 1.15rem;
+}
+
+/* Paragraph and link styling within contact info sections */
+.contact-info-before-map p,
+.contact-info-before-map a {
+    color: #666; /* Slightly darker text */
+    text-decoration: none;
+    line-height: 1.7; /* More line spacing */
+    font-size: 0.95rem;
+}
+
+.contact-info-before-map a:hover {
+    color: #d8a7b1; /* Use theme color on hover */
+    text-decoration: none; /* Keep underline off or add if preferred */
+}
+
+/* Styling for social media links */
+.contact-info-before-map .social-links a {
+    display: block;
+    margin-bottom: 12px;
+    color: #555; /* Standard color */
+    transition: color 0.3s ease;
+}
+
+.contact-info-before-map .social-links a:hover {
+    color: #d8a7b1; /* Theme color on hover */
+}
+
+/* Styling for icons within links */
+.contact-info-before-map i { /* Applied to all icons in this section */
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+    color: #d8a7b1; /* Give icons the theme color */
+}
+
+/* Styling for the map container */
+.map-container {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 0 15px; /* Add padding on smaller screens */
+}
+
+/* Heading for the map section */
+.map-container h2 {
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Text description for the map location */
+.map-container p {
+    margin-bottom: 20px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Styling for the iframe map */
+.map-container iframe {
+    max-width: 100%; /* Ensures responsiveness */
+    border-radius: 5px; /* Slightly rounded corners for the map */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional shadow */
+}
+
+/* === Add General Modal Styles Here if not already present in styles.css === */
+/* Ensure your modal styles (.modal, .modal-content, .close-button, etc.)
+   are defined in this file if they are not already. */
 
 
 /* ============================ */
