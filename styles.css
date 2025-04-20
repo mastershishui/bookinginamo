@@ -2777,27 +2777,28 @@ footer {
 body.layout-index {
     display: flex;
     flex-direction: column;
-    height: 100vh;     /* Force body height to viewport */
-    overflow: hidden;  /* Prevent body itself from scrolling */
+    height: 100vh;         /* Keep this if you want the initial view to try and fit */
+    /* overflow: hidden; */ /* <<< COMMENT OUT or DELETE this line */
 }
 
 /* Make main section grow only on index.html */
 body.layout-index main {
-    flex-grow: 1; /* Make main take all available vertical space */
-    display: flex; /* Needed for child % height */
-    flex-direction: column; /* Needed for child % height */
-    min-height: 0; /* Fix potential flexbox overflow issue */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
 /* Make the slider fill the 'main' area ONLY on index.html */
 body.layout-index .hero-slider {
-    height: 100%; /* <<< Make slider fill the flexible 'main' area */
+    height: 100%;
 }
 
 /* Prevent footer from shrinking only on index.html */
 body.layout-index footer {
-    flex-shrink: 0; /* Ensure footer height is respected */
+    flex-shrink: 0;
 }
+
 
 
 /* =========================================== */
