@@ -11,7 +11,7 @@
        referrerpolicy="no-referrer" />
     </head>
 <body>
-    <header>
+   <header class="navigation-container">
         <div class="logo">
             <a href="index.html"> <img src="gjslogo.jpg" alt="GJ'S Beauty Lounge Logo">
             </a>
@@ -25,7 +25,7 @@
             <span></span>
             <span></span>
         </button>
-    <nav>
+    <nav class="main-navigation">
            <ul>
              <li><a href="index.html">Home</a></li>
              <li><a href="about.html">ABOUT US</a></li>
@@ -157,19 +157,24 @@
               </div>
           </div>
      </div>
-<script>
-    const hamburgerButton = document.querySelector('.hamburger-button');
-    const mainNavigation = document.querySelector('.main-navigation ul');
 
-    hamburgerButton.addEventListener('click', () => {
-        mainNavigation.classList.toggle('open');
-    });
+    <script>
+        const hamburgerButton = document.querySelector('.hamburger-button');
+        // Ensure we select the UL inside the nav with the correct class
+        const mainNavigationUl = document.querySelector('.main-navigation ul');
 
-    // --- Add the new Ad Modal script below ---
-    // (Your existing Ad Modal script would go here if needed)
-
-    // --- Add the Slider Script below ---
-
+        // Check if both elements were found before adding listener
+        if (hamburgerButton && mainNavigationUl) {
+            hamburgerButton.addEventListener('click', () => {
+                // Toggle the 'open' class on the <ul> for the menu dropdown
+                mainNavigationUl.classList.toggle('open');
+                // Toggle the 'active' class on the button itself for the animation
+                hamburgerButton.classList.toggle('active');
+            });
+        } else {
+            // Log an error if elements aren't found (helps debugging)
+            console.error("Hamburger button or main navigation UL not found!");
+        }
 </script>
     <script type="module" src="firebase-auth.js"></script>
 
