@@ -2875,45 +2875,113 @@ body.layout-index footer {
         top: 12px;   /* Might need slight adjustment */
     }
 
-    /* (Keep the rest of your @media rules for .main-navigation, ul, li, etc. as they were) */
-    /* ... other styles from the previous @media query ... */
+   /* === Corrected Media Query Section === */
+@media (max-width: 768px) {
 
-    .main-navigation {
-        display: none;
-        position: absolute;
-        /* Adjust top position if header height changed */
-        top: 50px; /* Example: Adjust if needed */
-        right: 0;
-        width: 100%;
-        background-color: white;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    .hamburger-button {
+        display: block; /* Show the button */
+        position: absolute; /* Position relative to header */
+        right: 10px;
+        top: 12px;
+        z-index: 1002;  /* IMPORTANT: Ensure button is above nav menu */
     }
 
+    /* Style the main navigation container for mobile */
+    .main-navigation {
+        /* REMOVED display: none; */
+        display: block; /* Ensure it's block or initial state */
+        position: absolute; /* Take it out of flow, position relative to header */
+        top: 50px;      /* Position below header (adjust as needed based on header height) */
+        left: 0;        /* Use left: 0 instead of right: 0 for full width */
+        width: 100%;    /* Full width */
+        background-color: white; /* Needs a background to be visible */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+        z-index: 1000;  /* IMPORTANT: Below button, but above page content */
+        height: auto;     /* Ensure height isn't fixed */
+        overflow: hidden; /* Hide overflowing content initially (helps with transition) */
+    }
+
+    /* Style the <ul> list itself */
     .main-navigation ul {
+        /* Reset potential desktop styles */
         flex-direction: column;
         width: 100%;
         padding: 0;
         margin: 0;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        list-style: none;
+
+        /* --- Collapsed State --- */
+        max-height: 0;      /* Start collapsed */
+        overflow: hidden;   /* Hide content within the UL when collapsed */
+        /* --- Smooth Transition --- */
+        transition: max-height 0.4s ease-out, padding 0.4s ease-out;
     }
 
+    /* --- Styles when the menu is OPEN --- */
     .main-navigation ul.open {
-        display: block;
-        max-height: 500px;
-        padding: 10px 0;
+        max-height: 500px; /* Set a max-height large enough for ALL menu items */
+        padding: 10px 0;   /* Add some padding when open for spacing */
     }
 
-     .main-navigation ul li {
+    /* Style individual list items */
+    .main-navigation ul li {
         text-align: center;
-        margin: 10px 0;
-        width: 100%;
+        margin: 0;
+        border-bottom: 1px solid #eee; /* Optional separator lines */
+    }
+    .main-navigation ul li:last-child {
+        border-bottom: none;
     }
 
-     .main-navigation ul li a {
-        padding: 10px 20px;
+    /* Style the links */
+    .main-navigation ul li a {
+        padding: 12px 20px;
         display: block;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+    }
+    .main-navigation ul li a:hover,
+    .main-navigation ul li a:focus {
+        background-color: #f4f4f4;
+    }
+}
+
+/* --- Optional: Add Desktop Reset Styles (if not already present) --- */
+/* This ensures styles revert correctly on larger screens */
+@media (min-width: 769px) {
+    .main-navigation {
+        position: static;
         width: auto;
+        background-color: transparent;
+        box-shadow: none;
+        overflow: visible;
+        display: block !important; /* Ensure it's visible */
+    }
+    .main-navigation ul {
+        flex-direction: row;
+        max-height: none;
+        overflow: visible;
+        padding: 0;
+        margin: 0; /* Reset margin */
+        display: flex !important; /* Ensure flex display if used */
+    }
+     .main-navigation ul li {
+        border-bottom: none;
+        margin: 0; /* Reset margin */
      }
+     .main-navigation ul li a {
+        padding: 15px; /* Example desktop padding */
+        display: inline-block; /* Or your default desktop display */
+     }
+     /* Ensure hamburger is hidden on desktop */
+     .hamburger-button {
+        display: none;
+     }
+}
+
+/* --- Ensure Header has relative positioning --- */
+.navigation-container { /* Or your actual header class/element */
+    position: relative; /* Crucial for absolute positioning of children */
+    /* Other header styles */
 }
